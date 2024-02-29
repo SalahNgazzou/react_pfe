@@ -1,10 +1,14 @@
-import Button from '@mui/material/Button';
 import React from 'react';
+import './App.css';
+import Main from './pages/Main/Main';
+
+
 function App() {
   return (
-    <Button variant="contained" color="primary">
-    Click me
-  </Button>
+    <div>
+      
+      <Main/>
+    </div>
   );
 }
 

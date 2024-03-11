@@ -1,47 +1,46 @@
-import React, { useEffect } from 'react';
+
 import './login.css';
-import { useState } from 'react';
+import {  useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-
 export const Login = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Vérification de la présence d'informations utilisateur dans le stockage local
-    const userInfoString = localStorage.getItem('user-info');
-
-    if (userInfoString) {
-      // Conversion de la chaîne JSON en objet JavaScript
-      const userInfo = JSON.parse(userInfoString);
-
-      // Vérification du rôle de l'utilisateur
-      if (userInfo && userInfo.role === 'Admin') {
-        // Redirection vers la page d'ajout de produit en cas de connexion réussie
-        navigate("/Sidebar");
-      }
-    }
-  }, [navigate]);
-
   async function login() {
-
-
-    let item = { email, password };
-    let result = await fetch("http://localhost:8000/api/login", {
-      method: "POST",                     // La méthode HTTP est POST
-      body: JSON.stringify(item),        // Le corps de la requête contient les données de l'utilisateur au format JSON
-      headers: {
-        "Content-Type": 'application/json',   // Le corps de la requête est au format JSON
-        "Accept": 'application/json'         // Attend de recevoir du JSON dans la réponse
+    try {
+      let item = { email, password };
+      let result = await fetch("http://localhost:8000/api/login", {
+        method: "POST",
+        body: JSON.stringify(item),
+        headers: {
+          "Content-Type": 'application/json',
+          "Accept": 'application/json'
+        }
+      });
+  
+      result = await result.json();
+  
+      if (result && result.user && result.user.role) {
+        if (result.user.role === 'Admin') {
+          navigate('/Users');
+        } else {
+          navigate('/Courtier/biens');
+        }
+  
+        localStorage.setItem("user-info", JSON.stringify(result));
+      } else {
+        console.error('Invalid user data:', result);
+        // Handle the case when user data is invalid or incomplete
       }
-    });
-    result = await result.json();
-    localStorage.setItem("user-info", JSON.stringify(result));
-
-  }
+    } catch (error) {
+      console.error('Login failed:', error);
+      // Handle login failure (e.g., show an error message)
+    }
+  }  
   return (
 
     <Container>
@@ -77,7 +76,9 @@ export const Login = () => {
         </Col>
       </Row>
     </Container>
+
   );
+
 }
 
 

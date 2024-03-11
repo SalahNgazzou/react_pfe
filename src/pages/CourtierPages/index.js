@@ -1,0 +1,1 @@
+export {ConsulterBien} from "./ConsulterBiens";

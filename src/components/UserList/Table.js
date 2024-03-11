@@ -3,13 +3,13 @@ import DataTable from 'react-data-table-component'
 import { useState, useEffect } from "react";
 import { getData } from "../../utils/getData";
 import './useers.css';
-import Popup from './add';
-import EditPopup from './edit';
+import Popup from './Add';
+import EditPopup from './Edit';
 import { deleteData } from '../../utils/deleteData';
 
 
 
-export default function Table() {
+export const Table = () => {
     const columns = [
         {
             name: 'id',
@@ -58,30 +58,31 @@ export default function Table() {
     //modifier
     async function handleShowEdit(id) {
         setShowEdit(true);
-        let res = await fetch("http://localhost:8000/api/edit/" + id, {
-            method: 'GET'
-        });
-        res = await res.json();
-        setUserData(res);
-console.log(userdata)
+        getData({ setData: (res) => setUserData(res), url: "users/" + id });
     };
 
     const handleCloseEdit = () => setUserData(null);
 
     useEffect(() => {
-        getData({ setData, url: "liste" });
+        getData({ setData, url: "users" });
     }, [])
 
     useEffect(() => {
-        const res = data.filter((item) => {
-            return item.name.toLowerCase().match(recherche.toLocaleLowerCase())
-        });
-        setFilter(res);
-    }, [recherche])
+        if (Array.isArray(data)) {
+            const res = data.filter((item) => {
+                return item.name.toLowerCase().match(recherche.toLocaleLowerCase());
+            });
+            setFilter(res);
+        } else {
+            // Handle the case where data is not an array (e.g., setFilter to an empty array)
+            setFilter([]);
+        }
+    }, [data, recherche]);
+
 
     async function Supprimer(id) {
-        deleteData({ url: "liste", id })
-        getData({ setData, url: "liste" });
+        deleteData({ url: "users", id })
+        getData({ setData, url: "users" });
     }
 
     const tableHeaderstyle = {
@@ -109,19 +110,21 @@ console.log(userdata)
                 fixedHeader
                 selectableRowsHighlight
                 highlightOnHover
+                
                 actions={
                     <button className='btn btn-success' onClick={handleShow} >
-                        Ajouter utlilsateur
+                        Add User
                     </button>
                 }
                 subHeader
                 subHeaderComponent={
                     <input type='text'
-                        className='w-25form-control'
-                        placeholder='Recherche...'
+                        className='w-25 form-control'
+                        placeholder='Search...'
                         value={recherche}
                         onChange={(e) => setRecherche(e.target.value)} />
                 }
+                
             />
             <Popup showModal={showModal} handleClose={handleClose} />
             {

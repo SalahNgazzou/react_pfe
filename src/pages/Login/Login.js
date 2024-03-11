@@ -48,7 +48,6 @@ export const Login = () => {
         <Col md={6}>
           <Form style={{ borderRadius: '10px', border: '1px solid #ddd', padding: '20px' }}>
             <h3 className="mb-4">Login</h3>
-
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control
@@ -59,7 +58,6 @@ export const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </Form.Group>
-
             <Form.Group controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
@@ -70,7 +68,6 @@ export const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </Form.Group>
-
             <Button variant="primary" type="button" onClick={login}>
               Login
             </Button>

@@ -54,6 +54,7 @@ export const Login = () => {
               <Form.Control
                 type="email"
                 placeholder="Enter email"
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -64,6 +65,7 @@ export const Login = () => {
               <Form.Control
                 type="password"
                 placeholder="Password"
+                required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

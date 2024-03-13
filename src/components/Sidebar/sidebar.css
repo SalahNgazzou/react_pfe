@@ -11,11 +11,13 @@
     top: 0;
     left: 0;
     overflow-y: auto;
+    
   }
   
   .profile {
     text-align: center;
     margin-bottom: 20px;
+    font-weight: bold;
   }
   
   .profile img {
@@ -37,6 +39,12 @@
   }
   
   nav li:hover {
-    background-color: #555;
+    background-color: #4A536B;
   }
+  li a {
+    color: #fff;
+    text-decoration-line:none;
+  }
+ 
+ 
   

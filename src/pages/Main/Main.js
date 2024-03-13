@@ -1,22 +1,21 @@
-import React from 'react'
+import {React} from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Login } from '../Login'
-import { Sidebar } from '../../components/Sidebar'
-import Table from '../UserList/Table'
-
-
-
+import { UsersPage } from '../AdminPages/UsersPage'
+import {ProtectRoute} from '../../utils/protectroute'
+import {ConsulterBien} from '../CourtierPages/ConsulterBiens'
 function Main() {
+ 
   return (
     <div>
-     
-      <Sidebar/>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Table />} />
-          <Route path="/login" element={<Login />} />
+        <Route path="/Users" element={<ProtectRoute cmp={<UsersPage />}/>} />
+          <Route path="/" element={<Login />} />
+          <Route path="/Courtier/biens" element={<ConsulterBien/>} />
         </Routes>
       </BrowserRouter>
+
     </div>
 
   )

@@ -1,1 +1,1 @@
-export {fetchData} from "./getData"
+

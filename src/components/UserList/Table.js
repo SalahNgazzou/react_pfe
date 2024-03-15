@@ -5,10 +5,11 @@ import { getData } from "../../utils/getData";
 import './useers.css';
 import Popup from './Add';
 import EditPopup from './Edit';
-import { deleteData } from '../../utils/deleteData';
-
-
-
+import AddIcon from '@mui/icons-material/Add';
+import { putStatue } from '../../utils/putStatue'
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import { CheckCircleOutline, HighlightOff } from '@mui/icons-material';
 export const Table = () => {
     const columns = [
         {
@@ -34,13 +35,27 @@ export const Table = () => {
         {
             name: 'Action',
             cell: (row) => (
-                <button className='btn btn-danger' onClick={() => Supprimer(row.id)}>Delete</button>
+                <IconButton
+                onClick={() => ChangeStatue(row.id)}
+                className={`btn ${row.statue === 'Active' ? 'btn-success' : 'btn-danger'}`}
+                aria-label={row.statue === 'Active' ? 'Activer' : 'Désactiver'}
+                style={{ color: row.statue === 'Active' ? 'green' : 'red' }}
+            >
+                {row.statue === 'Active' ? <CheckCircleOutline /> : <HighlightOff />}
+            </IconButton>
+
+
+
+              
             )
         },
         {
             name: '  ',
             cell: (row) => (
-                <button className='btn btn-info' onClick={() => handleShowEdit(row.id)}>Edit</button>
+                <IconButton aria-label="Modifier" onClick={() => handleShowEdit(row.id)}>
+                    <EditIcon />
+                </IconButton>
+
             )
         }
     ];
@@ -79,11 +94,15 @@ export const Table = () => {
         }
     }, [data, recherche]);
 
-
-    async function Supprimer(id) {
-        deleteData({ url: "users", id })
-        getData({ setData, url: "users" });
+    async function ChangeStatue(id) {
+        try {
+            await putStatue({ id });
+            getData({ setData, url: "users" });
+        } catch (error) {
+            // Gérer les erreurs de manière appropriée
+        }
     }
+   
 
     const tableHeaderstyle = {
         headCells: {
@@ -110,11 +129,18 @@ export const Table = () => {
                 fixedHeader
                 selectableRowsHighlight
                 highlightOnHover
-                
+
                 actions={
-                    <button className='btn btn-success' onClick={handleShow} >
-                        Add User
-                    </button>
+                    <IconButton aria-label="Ajouter" onClick={handleShow} 
+                    style={{
+                        backgroundColor: '#FF9A8D', // couleur d'arrière-plan
+                        borderRadius: '50%', // pour faire un cercle
+                        width: '50px', // taille du bouton
+                        height: '50px' // taille du bouton
+                    }}>
+                        <AddIcon style={{ color: 'white' }} />
+                    </IconButton>
+
                 }
                 subHeader
                 subHeaderComponent={
@@ -124,7 +150,7 @@ export const Table = () => {
                         value={recherche}
                         onChange={(e) => setRecherche(e.target.value)} />
                 }
-                
+
             />
             <Popup showModal={showModal} handleClose={handleClose} />
             {

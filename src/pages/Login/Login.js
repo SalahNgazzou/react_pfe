@@ -24,18 +24,22 @@ export const Login = () => {
   
       result = await result.json();
   
-      if (result && result.user && result.user.role) {
-        if (result.user.role === 'Admin') {
-          navigate('/Users');
-        } else {
-          navigate('/Courtier/biens');
+      if (result && result.user && result.user.role && result.user.statue) {
+        if (result.user.statue === 'Inactive') {
+            // Si le statut de l'utilisateur est "Inactive", affichez un message d'erreur ou effectuez une autre action appropriée
+            console.log("Votre compte est inactif. Veuillez contacter l'administrateur.");
+        } else if (result.user.role === 'Admin') {
+            // Si l'utilisateur est un admin et son statut est "Active", redirigez-le vers la page '/Users'
+            navigate('/Users');
+        } else if(result.user.role === 'Courtier'){
+            // Sinon, redirigez-le vers la page '/Courtier/biens'
+            navigate('/Courtier/biens');
         }
+    }
   
         localStorage.setItem("user-info", JSON.stringify(result));
-      } else {
-        console.error('Invalid user data:', result);
-        // Handle the case when user data is invalid or incomplete
-      }
+     
+     
     } catch (error) {
       console.error('Login failed:', error);
       // Handle login failure (e.g., show an error message)

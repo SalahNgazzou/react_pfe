@@ -3,12 +3,14 @@ import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { postData } from '../../utils/postData';
 
-const Popup = ({ showModal, handleClose }) => {
+ export const Popup = ({ showModal, handleClose }) => {
   const roles = [{ key: "Admin", value: "Admin" }, { key: "Sécritaire", value: "Sécritaire" }, { key: "Courtier", value: " Courtier" }]
+  const statues = [{ key: "Active", value: "Active" }, { key: "Inactive", value: "Inactive" }]
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [role, setRole] = useState(roles[0].value)
+  const [statue, setStatue] = useState(statues[0].value)
   const [password, setPassword] = useState('')
   const [addresse, setAddress] = useState('')
   const [num_phone, setPhone] = useState('')
@@ -17,7 +19,7 @@ const Popup = ({ showModal, handleClose }) => {
   const [birth, setBirth] = useState('')
 
   async function Ajouter() {
-    let item = { name, last_name, cin, birth, email, role, password, addresse, num_phone };
+    let item = { name, last_name, cin, birth, email, role, password, addresse, num_phone,statue };
     console.log(item);
     postData({ url: "users", data: item })
     handleClose();
@@ -106,6 +108,15 @@ const Popup = ({ showModal, handleClose }) => {
                 required
               />
             </Form.Group>
+            <Form.Group controlId="statue">
+              <Form.Label>Statue</Form.Label>
+              <Form.Select
+                name="statue"
+                onChange={(e) => setStatue(e.target.value)}
+              >
+                {statues.map(statue => <option value={statue.value}>{statue.key}</option>)}
+              </Form.Select>
+            </Form.Group>
             <br />
             <Button variant="primary" onClick={Ajouter}>
               Save
@@ -118,4 +129,4 @@ const Popup = ({ showModal, handleClose }) => {
   );
 };
 
-export default Popup;
+

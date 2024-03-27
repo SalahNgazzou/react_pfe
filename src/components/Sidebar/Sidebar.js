@@ -23,7 +23,7 @@ export const Sidebar = () => {
     <div className="sidebar">
       {user && (
         <div className="profile">
-          <img src="/img/profile.png" alt="Profile" />
+          <img src="/img/sedkii.jpg" alt="Profile" />
           <h4>{user.name}</h4>
         </div>
       )}
@@ -31,6 +31,7 @@ export const Sidebar = () => {
         {user && (
         <ul>
           {user.role === "Admin" ? (<li><a href='UsersPage'>Users</a></li>):null}
+          <li><a href=''>Biens</a></li>
           <li> <Button variant="primary" onClick={LogOut} style={{ border: 'none', background: 'none', color: 'red', padding: '0px' }}>
             Logout
           </Button>

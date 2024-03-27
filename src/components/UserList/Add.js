@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { postData } from '../../utils/postData';
 
-const Popup = ({ showModal, handleClose }) => {
+ export const Popup = ({ showModal, handleClose }) => {
   const roles = [{ key: "Admin", value: "Admin" }, { key: "Sécritaire", value: "Sécritaire" }, { key: "Courtier", value: " Courtier" }]
   const statues = [{ key: "Active", value: "Active" }, { key: "Inactive", value: "Inactive" }]
 
@@ -129,4 +129,4 @@ const Popup = ({ showModal, handleClose }) => {
   );
 };
 
-export default Popup;
+

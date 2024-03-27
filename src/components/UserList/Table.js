@@ -3,7 +3,7 @@ import DataTable from 'react-data-table-component'
 import { useState, useEffect } from "react";
 import { getData } from "../../utils/getData";
 import './useers.css';
-import Popup from './Add';
+import {Popup} from './Add';
 import EditPopup from './Edit';
 import AddIcon from '@mui/icons-material/Add';
 import { putStatue } from '../../utils/putStatue'
@@ -37,11 +37,11 @@ export const Table = () => {
             cell: (row) => (
                 <IconButton
                 onClick={() => ChangeStatue(row.id)}
-                className={`btn ${row.statue === 'Active' ? 'btn-success' : 'btn-danger'}`}
-                aria-label={row.statue === 'Active' ? 'Activer' : 'Désactiver'}
-                style={{ color: row.statue === 'Active' ? 'green' : 'red' }}
+                className={`btn ${row.statue === 'Activer' ? 'btn-success' : 'btn-danger'}`}
+                aria-label={row.statue === 'Activer' ? 'Activer' : 'Désactiver'}
+                style={{ color: row.statue === 'Activer' ? 'green' : 'red' }}
             >
-                {row.statue === 'Active' ? <CheckCircleOutline /> : <HighlightOff />}
+                {row.statue === 'Activer' ? <CheckCircleOutline /> : <HighlightOff />}
             </IconButton>
 
 

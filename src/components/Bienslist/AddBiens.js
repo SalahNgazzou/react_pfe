@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import './add.css';
+import { postBien } from '../../utils/postData';
+import { Prev } from "react-bootstrap/esm/PageItem";
 
 export const Biens = ({ showModal, handleClose }) => {
     const types = [
@@ -16,19 +18,8 @@ export const Biens = ({ showModal, handleClose }) => {
     ];
 
     const dispo = [{ key: "En cours", value: "En cours" }, { key: "Vendu", value: "Vendu" }, { key: "Louée", value: "Louée" }];
-    /*  const meublé = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
-     const jardin = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
-     const piscin = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
-     const garage = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
-     const chauffage = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
-     const climatisation = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
-     const balcon = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
-     const etages = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
-     const ascenceur = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
-     const parking = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
-     const vues = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
-     const terasses = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }]; */
     const exicte = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
+    const annonces = [{ key: "Masquer", value: "Masquer" }, { key: "Publier", value: "Publier" }];
     const commerces = [{ key: "Boutique", value: "Boutique" }, { key: "Restaurant", value: "Restaurant" }, { key: "Bureau", value: "Bureau" }, { key: "Autre", value: "Autre" }];
     const immeubles = [{ key: "Résidentiel", value: "Résidentiel" }, { key: "Commercial", value: "Commercial" }, { key: "Mixte", value: "Mixte" }]
     const accessibilités = [{ key: "24h/24h", value: "24h/24h" }];
@@ -66,14 +57,70 @@ export const Biens = ({ showModal, handleClose }) => {
 
 
     const [user, setUser] = useState(null);
-    const [selectedType, setSelectedType] = useState('');
-    const [images, setImages] = useState([]);
+    const [data, setData] = useState({});
+    const [inputsData, setInputsData] = useState({
+        type_biens: '',
+        categorie: '',
+        propritair_name: '',
+        proritaire_phone: '',
+        disponibilté: '',
+        description: '',
+        etat: '',
+        addresse: '',
+        gouvernorats: '',
+        ville: '',
+        surface: '',
+        nbr_chombre: '',
+        nbr_salle_de_bain: '',
+        proximité: '',
+        meublé: '',
+        annonce: '',
+        jardin: '',
+        piscin: '',
+        garage: '',
+        balcon: '',
+        etage: '',
+        vue: '',
+        terasse: '',
+        ascenceur: '',
+        parking: '',
+        chauffage: '',
+        climatisation: '',
+        nbr_place: '',
+        dimension: '',
+        secuirité: '',
+        accessibilité: '',
+        service: '',
+        superficie: '',
+        type_commerce_autorisé: '',
+        visibilité: '',
+        usage_autorisé: '',
+        service_public: '',
+        cloture: '',
+        titre_proprité: '',
+        nbr_appartement: '',
+        nbr_etage: '',
+        année_construction: '',
+        superficie_total: '',
+        superficie_appartement: '',
+        type_immeuble: '',
+        espace_commun: '',
+        superficie_batie: '',
+        superficie_terre: '',
+        type_industrie: '',
+        equipement: '',
+        acces_tansport: '',
+        capacité_stockage: '',
+        heuteur: '',
+        condition_stockage: '',
+        user_id: '',
+        user_name: '',
+        user_lastName: '',
+        user_email: '',
+        user_phone: '',
+        images: [],
+    });
 
-
-    const handleImageUpload = (e) => {
-        const files = Array.from(e.target.files);
-        setImages(files);
-    };
     useEffect(() => {
         // Récupérer les données de l'utilisateur depuis le localStorage
         const userData = localStorage.getItem('user-info');
@@ -82,37 +129,41 @@ export const Biens = ({ showModal, handleClose }) => {
         setUser(parsedUser);
     }, []);
 
-    /*  const handleSubmit = async (e) => {
-         e.preventDefault();
-         const formData = new FormData();
-         formData.append('title', title);
-         formData.append('description', description);
-         images.forEach((image) => {
-           formData.append('images[]', image);
-         });
-     
-         try {
-           const response = await fetch('YOUR_API_ENDPOINT', {
-             method: 'POST',
-             body: formData,
-           });
-           if (!response.ok) {
-             throw new Error('Network response was not ok');
-           }
-           const data = await response.json();
-           console.log(data);
-         } catch (error) {
-           console.error(error);
-         }
-       }; */
-
-    const handleTypeChange = (event) => {
-        setSelectedType(event.target.value);
+    const handleImageChange = (e) => {
+        const files = e.target.files;
+        setInputsData((prev) => ({
+            ...prev,
+            images: files,
+        }));
     };
-    console.log(selectedType)
+
+    const ajouterBiens = async () => {
+
+        const formData = new FormData();
+        console.log(inputsData)
+        const data = {
+            ...inputsData,
+            user_id: user.id,
+            user_name: user.name,
+            user_lastName: user.last_name,
+            user_email: user.email,
+            user_phone: user.num_phone,
+        };
+        // Ajouter les champs à FormData en fonction de leur nom
+        Object.keys(data).forEach((key) => {
+            formData.append(key, data[key]);
+        });
+
+        await fetch('http://localhost:8000/api/coutiers', {
+            method: 'POST',
+            body: formData,
+        });;
+    };
+
+
 
     const renderInputsBasedOnType = () => {
-        switch (selectedType) {
+        switch (inputsData.type_biens) {
             case 'Villa':
                 return (
                     <div>
@@ -123,9 +174,10 @@ export const Biens = ({ showModal, handleClose }) => {
                             <div className="input-group">
                                 <Form.Control
                                     type="number"
-                                    id="surface"
+                                    name="surface"
                                     placeholder="Entrer la surface en m²"
                                     aria-describedby="m2-addon"
+                                    onChange={(e) => setInputsData({ ...inputsData, surface: e.target.value })}
                                 />
                                 <div className="input-group-append">
                                     <span className="input-group-text" id="m2-addon">m²</span>
@@ -138,7 +190,10 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Label>Nombre de chambres :</Form.Label>
                                     <Form.Control
                                         type="number"
+                                        name="nbr_chombre"
                                         placeholder="Entrer le nombre de chambres"
+                                        onChange={(e) => setInputsData({ ...inputsData, nbr_chombre: e.currentTarget.value })}
+
                                     />
                                 </Form.Group>
                             </Col>
@@ -147,28 +202,42 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Label>Nombre de salles de bain :</Form.Label>
                                     <Form.Control
                                         type="number"
+                                        name="nbr_salle_de_bain"
                                         placeholder="Entrer le nombre de salles de bain"
+                                        onChange={(e) => setInputsData({ ...inputsData, nbr_salle_de_bain: e.currentTarget.value })}
+
                                     />
                                 </Form.Group>
                             </Col>
+
                         </Row>
                         <Form.Group className="custom-padding">
                             <Form.Label>proximité</Form.Label>
-                            <Form.Control type="text" name="proximité" />
+                            <Form.Control type="text" name="proximité"
+                                onChange={(e) => setInputsData({ ...inputsData, proximité: e.currentTarget.value })}
+                            />
                         </Form.Group>
                         <Row>
                             <Col>
                                 <Form.Group className="custom-padding">
                                     <Form.Label>meublé</Form.Label>
-                                    <Form.Select name="meublé">
+                                    <Form.Select name="meublé"
+                                        onChange={(e) => setInputsData({ ...inputsData, meublé: e.target.value })}
+
+                                    >
+
                                         {exicte.map(meub => <option key={meub.key} value={meub.value}>{meub.key}</option>)}
+
                                     </Form.Select>
+
                                 </Form.Group>
                             </Col>
                             <Col>
                                 <Form.Group className="custom-padding">
                                     <Form.Label>jardin</Form.Label>
-                                    <Form.Select name="jardin">
+                                    <Form.Select name="jardin"
+                                        onChange={(e) => setInputsData({ ...inputsData, jardin: e.target.value })}
+                                    >
                                         {exicte.map(jard => <option key={jard.key} value={jard.value}>{jard.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -176,7 +245,10 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group className="custom-padding">
                                     <Form.Label>piscin</Form.Label>
-                                    <Form.Select name="climatisation">
+                                    <Form.Select name="piscin"
+                                        onChange={(e) => setInputsData({ ...inputsData, piscin: e.target.value })}
+
+                                    >
                                         {exicte.map(pis => <option key={pis.key} value={pis.value}>{pis.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -186,7 +258,10 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group className="custom-padding">
                                     <Form.Label>garage</Form.Label>
-                                    <Form.Select name="garage">
+                                    <Form.Select name="garage"
+                                        onChange={(e) => setInputsData({ ...inputsData, garage: e.target.value })}
+
+                                    >
                                         {exicte.map(gara => <option key={gara.key} value={gara.value}>{gara.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -194,7 +269,9 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group className="custom-padding">
                                     <Form.Label>chauffage</Form.Label>
-                                    <Form.Select name="chauffage">
+                                    <Form.Select name="chauffage"
+                                        onChange={(e) => setInputsData({ ...inputsData, chauffage: e.target.value })}
+                                    >
                                         {exicte.map(chouff => <option key={chouff.key} value={chouff.value}>{chouff.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -202,7 +279,10 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group className="custom-padding">
                                     <Form.Label>climatisation</Form.Label>
-                                    <Form.Select name="climatisation">
+                                    <Form.Select name="climatisation"
+                                        onChange={(e) => setInputsData({ ...inputsData, climatisation: e.target.value })}
+                                    >
+
                                         {exicte.map(clim => <option key={clim.key} value={clim.value}>{clim.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -221,9 +301,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <div className="input-group">
                                 <Form.Control
                                     type="number"
-                                    id="surface"
+                                    name="surface"
                                     placeholder="Entrer la surface en m²"
                                     aria-describedby="m2-addon"
+                                    onChange={(e) => setInputsData({ ...inputsData, surface: e.currentTarget.value })}
+
                                 />
                                 <div className="input-group-append">
                                     <span className="input-group-text" id="m2-addon">m²</span>
@@ -236,7 +318,10 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Label>Nombre de chambres :</Form.Label>
                                     <Form.Control
                                         type="number"
+                                        name="nbr_chombre"
                                         placeholder="Entrer le nombre de chambres"
+                                        onChange={(e) => setInputsData({ ...inputsData, nbr_chombre: e.currentTarget.value })}
+
                                     />
                                 </Form.Group>
                             </Col>
@@ -245,21 +330,31 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Label>Nombre de salles de bain :</Form.Label>
                                     <Form.Control
                                         type="number"
+                                        name="nbr_salle_de_bain"
                                         placeholder="Entrer le nombre de salles de bain"
+                                        onChange={(e) => setInputsData({ ...inputsData, nbr_salle_de_bain: e.currentTarget.value })}
+
                                     />
                                 </Form.Group>
                             </Col>
                         </Row>
                         <Form.Group controlId="proximité" className="custom-padding">
                             <Form.Label>proximité</Form.Label>
-                            <Form.Control type="text" name="proximité" />
+                            <Form.Control type="text" name="proximité"
+
+                                onChange={(e) => setInputsData({ ...inputsData, proximité: e.currentTarget.value })}
+
+                            />
                         </Form.Group>
                         <Col>
                             <Form.Group controlId="etage" className="custom-padding">
                                 <Form.Label>etage</Form.Label>
                                 <Form.Control
                                     type="number"
+                                    name="etage"
                                     placeholder="Etage numéro ..."
+                                    onChange={(e) => setInputsData({ ...inputsData, etage: e.currentTarget.value })}
+
                                 />
                             </Form.Group>
                         </Col>
@@ -267,7 +362,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="balcon" className="custom-padding">
                                     <Form.Label>balcon</Form.Label>
-                                    <Form.Select name="balcon">
+                                    <Form.Select name="balcon"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, balcon: e.target.value })}
+
+                                    >
                                         {exicte.map(bal => <option key={bal.key} value={bal.value}>{bal.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -275,7 +374,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="ascenceur" className="custom-padding">
                                     <Form.Label>ascenceur</Form.Label>
-                                    <Form.Select name="ascenceur">
+                                    <Form.Select name="ascenceur"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, ascenceur: e.target.value })}
+
+                                    >
                                         {exicte.map(asc => <option key={asc.key} value={asc.value}>{asc.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -286,7 +389,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="meublé" className="custom-padding">
                                     <Form.Label>meublé</Form.Label>
-                                    <Form.Select name="meublé">
+                                    <Form.Select name="meublé"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, meublé: e.target.value })}
+
+                                    >
                                         {exicte.map(meub => <option key={meub.key} value={meub.value}>{meub.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -295,7 +402,12 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Parking" className="custom-padding">
                                     <Form.Label>Parking</Form.Label>
-                                    <Form.Select name="parking">
+                                    <Form.Select name="parking"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, parking: e.target.value })}
+
+
+                                    >
                                         {exicte.map(park => <option key={park.key} value={park.value}>{park.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -304,7 +416,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="chauffage" className="custom-padding">
                                     <Form.Label>chauffage</Form.Label>
-                                    <Form.Select name="chauffage">
+                                    <Form.Select name="chauffage"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, chauffage: e.target.value })}
+
+                                    >
                                         {exicte.map(chouff => <option key={chouff.key} value={chouff.value}>{chouff.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -313,7 +429,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="climatisation" className="custom-padding">
                                     <Form.Label>climatisation</Form.Label>
-                                    <Form.Select name="climatisation">
+                                    <Form.Select name="climatisation"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, climatisation: e.target.value })}
+
+                                    >
                                         {exicte.map(clim => <option key={clim.key} value={clim.value}>{clim.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -331,9 +451,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <div className="input-group">
                                 <Form.Control
                                     type="number"
-                                    id="surface"
+                                    name="surface"
                                     placeholder="Entrer la surface en m²"
                                     aria-describedby="m2-addon"
+                                    onChange={(e) => setInputsData({ ...inputsData, surface: e.currentTarget.value })}
+
                                 />
                                 <div className="input-group-append">
                                     <span className="input-group-text" id="m2-addon">m²</span>
@@ -346,7 +468,10 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Label>Nombre de chambres :</Form.Label>
                                     <Form.Control
                                         type="number"
+                                        name="nbr_chombre"
                                         placeholder="Entrer le nombre de chambres"
+                                        onChange={(e) => setInputsData({ ...inputsData, nbr_chombre: e.currentTarget.value })}
+
                                     />
                                 </Form.Group>
                             </Col>
@@ -355,21 +480,31 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Label>Nombre de salles de bain :</Form.Label>
                                     <Form.Control
                                         type="number"
+                                        name="nbr_salle_de_bain"
                                         placeholder="Entrer le nombre de salles de bain"
+                                        onChange={(e) => setInputsData({ ...inputsData, nbr_salle_de_bain: e.currentTarget.value })}
+
                                     />
                                 </Form.Group>
                             </Col>
                         </Row>
                         <Form.Group controlId="proximité" className="custom-padding">
                             <Form.Label>proximité</Form.Label>
-                            <Form.Control type="text" name="proximité" />
+                            <Form.Control type="text" name="proximité"
+
+                                onChange={(e) => setInputsData({ ...inputsData, proximité: e.currentTarget.value })}
+
+                            />
                         </Form.Group>
                         <Col>
                             <Form.Group controlId="etage" className="custom-padding">
                                 <Form.Label>etage</Form.Label>
                                 <Form.Control
                                     type="number"
+                                    name="etage"
                                     placeholder="Etage numéro ..."
+                                    onChange={(e) => setInputsData({ ...inputsData, etage: e.currentTarget.value })}
+
                                 />
                             </Form.Group>
                         </Col>
@@ -377,7 +512,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Parking" className="custom-padding">
                                     <Form.Label>Parking</Form.Label>
-                                    <Form.Select name="parking">
+                                    <Form.Select name="parking"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, parking: e.target.value })}
+
+                                    >
                                         {exicte.map(park => <option key={park.key} value={park.value}>{park.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -386,7 +525,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="ascenceur" className="custom-padding">
                                     <Form.Label>ascenceur</Form.Label>
-                                    <Form.Select name="ascenceur">
+                                    <Form.Select name="ascenceur"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, ascenceur: e.target.value })}
+
+                                    >
                                         {exicte.map(asc => <option key={asc.key} value={asc.value}>{asc.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -397,7 +540,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="meublé" className="custom-padding">
                                     <Form.Label>meublé</Form.Label>
-                                    <Form.Select name="meublé">
+                                    <Form.Select name="meublé"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, meublé: e.target.value })}
+
+                                    >
                                         {exicte.map(meub => <option key={meub.key} value={meub.value}>{meub.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -405,7 +552,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="balcon" className="custom-padding">
                                     <Form.Label>balcon</Form.Label>
-                                    <Form.Select name="balcon">
+                                    <Form.Select name="balcon"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, balcon: e.target.value })}
+
+                                    >
                                         {exicte.map(bal => <option key={bal.key} value={bal.value}>{bal.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -413,7 +564,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="vue" className="custom-padding">
                                     <Form.Label>vue</Form.Label>
-                                    <Form.Select name="vue">
+                                    <Form.Select name="vue"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, vue: e.target.value })}
+
+                                    >
                                         {exicte.map(vue => <option key={vue.key} value={vue.value}>{vue.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -421,7 +576,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="terasse" className="custom-padding">
                                     <Form.Label>terasse</Form.Label>
-                                    <Form.Select name="terasse">
+                                    <Form.Select name="terasse"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, terasse: e.target.value })}
+
+                                    >
                                         {exicte.map(terasse => <option key={terasse.key} value={terasse.value}>{terasse.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -432,7 +591,12 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="chauffage" className="custom-padding">
                                     <Form.Label>chauffage</Form.Label>
-                                    <Form.Select name="chauffage">
+                                    <Form.Select name="chauffage"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, chauffage: e.target.value })}
+
+
+                                    >
                                         {exicte.map(chouff => <option key={chouff.key} value={chouff.value}>{chouff.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -441,7 +605,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="climatisation" className="custom-padding">
                                     <Form.Label>climatisation</Form.Label>
-                                    <Form.Select name="climatisation">
+                                    <Form.Select name="climatisation"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, climatisation: e.target.value })}
+
+                                    >
                                         {exicte.map(clim => <option key={clim.key} value={clim.value}>{clim.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -462,6 +630,8 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Control
                                         type="number"
                                         name="nbr_place"
+                                        onChange={(e) => setInputsData({ ...inputsData, nbr_place: e.currentTarget.value })}
+
                                     />
                                 </Form.Group>
                             </Col>
@@ -471,6 +641,8 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Control
                                         type="text"
                                         name="dimension"
+                                        onChange={(e) => setInputsData({ ...inputsData, dimension: e.currentTarget.value })}
+
                                     />
                                 </Form.Group>
                             </Col>
@@ -479,7 +651,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Securité" className="custom-padding">
                                     <Form.Label>Securité</Form.Label>
-                                    <Form.Select name="secuirité">
+                                    <Form.Select name="secuirité"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, secuirité: e.target.value })}
+
+                                    >
                                         {exicte.map(sec => <option key={sec.key} value={sec.value}>{sec.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -487,7 +663,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Accessibilité" className="custom-padding">
                                     <Form.Label>Accessibilité</Form.Label>
-                                    <Form.Select name="accessibilité">
+                                    <Form.Select name="accessibilité"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, accessibilité: e.target.value })}
+
+                                    >
                                         {accessibilités.map(accessibilité => <option key={accessibilité.key} value={accessibilité.value}>{accessibilité.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -495,7 +675,12 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Service" className="custom-padding">
                                     <Form.Label>Service</Form.Label>
-                                    <Form.Select name="service">
+                                    <Form.Select name="service"
+
+
+                                        onChange={(e) => setInputsData({ ...inputsData, service: e.target.value })}
+
+                                    >
                                         {services.map(service => <option key={service.key} value={service.value}>{service.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -515,7 +700,12 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Usage autorisé" className="custom-padding">
                                     <Form.Label>Usage autorisé</Form.Label>
-                                    <Form.Select name="usage_autorisé">
+                                    <Form.Select name="usage_autorisé"
+
+
+                                        onChange={(e) => setInputsData({ ...inputsData, usage_autorisé: e.target.value })}
+
+                                    >
                                         {usage_autorisé.map(usage => <option key={usage.key} value={usage.value}>{usage.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -523,7 +713,10 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Acces aux services publique" className="custom-padding">
                                     <Form.Label>Acces aux services publique</Form.Label>
-                                    <Form.Select name="service_public">
+                                    <Form.Select name="service_public"
+                                        onChange={(e) => setInputsData({ ...inputsData, service_public: e.target.value })}
+
+                                    >
                                         {exicte.map(acces => <option key={acces.key} value={acces.value}>{acces.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -531,7 +724,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Cloture" className="custom-padding">
                                     <Form.Label>Cloture</Form.Label>
-                                    <Form.Select name="cloture">
+                                    <Form.Select name="cloture"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, cloture: e.target.value })}
+
+                                    >
                                         {exicte.map(Cloture => <option key={Cloture.key} value={Cloture.value}>{Cloture.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -539,7 +736,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Titre de propriéte" className="custom-padding">
                                     <Form.Label>Titre de propriéte</Form.Label>
-                                    <Form.Select name="titre_proprité">
+                                    <Form.Select name="titre_proprité"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, titre_proprité: e.target.value })}
+
+                                    >
                                         {exicte.map(titire => <option key={titire.key} value={titire.value}>{titire.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -552,7 +753,11 @@ export const Biens = ({ showModal, handleClose }) => {
                     <div>
                         <Form.Group controlId="Type Immeuble" className="custom-padding">
                             <Form.Label>Type Immeuble</Form.Label>
-                            <Form.Select name="type_immeuble">
+                            <Form.Select name="type_immeuble"
+
+                                onChange={(e) => setInputsData({ ...inputsData, type_immeuble: e.target.value })}
+
+                            >
                                 {immeubles.map(immeuble => <option key={immeuble.key} value={immeuble.value}>{immeuble.key}</option>)}
                             </Form.Select>
                         </Form.Group>
@@ -564,6 +769,8 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Control
                                         type="number"
                                         name="nbr_appartement"
+                                        onChange={(e) => setInputsData({ ...inputsData, nbr_appartement: e.currentTarget.value })}
+
                                     />
                                 </Form.Group>
                             </Col>
@@ -573,6 +780,8 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Control
                                         type="number"
                                         name="nbr_etage"
+                                        onChange={(e) => setInputsData({ ...inputsData, nbr_etage: e.currentTarget.value })}
+
                                     />
                                 </Form.Group>
                             </Col>
@@ -582,6 +791,8 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Control
                                         type="text"
                                         name="année_construction"
+                                        onChange={(e) => setInputsData({ ...inputsData, année_construction: e.currentTarget.value })}
+
                                     />
                                 </Form.Group>
                             </Col>
@@ -593,7 +804,9 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <div className="input-group">
                                         <Form.Control
                                             type="number"
-                                            id="Superficie total"
+                                            name="superficie_total"
+                                            onChange={(e) => setInputsData({ ...inputsData, superficie_total: e.currentTarget.value })}
+
                                             placeholder="Entrer la Superficie en m²"
                                             aria-describedby="m2-addon"
                                         />
@@ -609,7 +822,9 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <div className="input-group">
                                         <Form.Control
                                             type="number"
-                                            id="Superficie par appartement "
+                                            name="superficie_appartement"
+                                            onChange={(e) => setInputsData({ ...inputsData, superficie_appartement: e.currentTarget.value })}
+
                                             placeholder="Entrer la Superficie par appartement  en m²"
                                             aria-describedby="m2-addon"
                                         />
@@ -624,7 +839,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Espace Communs" className="custom-padding">
                                     <Form.Label>Espace Communs</Form.Label>
-                                    <Form.Select name="espace_commun">
+                                    <Form.Select name="espace_commun"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, espace_commun: e.target.value })}
+
+                                    >
                                         {exicte.map(asc => <option key={asc.key} value={asc.value}>{asc.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -632,7 +851,10 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="ascenceur" className="custom-padding">
                                     <Form.Label>ascenceur</Form.Label>
-                                    <Form.Select name="ascenceur">
+                                    <Form.Select name="ascenceur"
+                                        onChange={(e) => setInputsData({ ...inputsData, ascenceur: e.target.value })}
+
+                                    >
                                         {exicte.map(asc => <option key={asc.key} value={asc.value}>{asc.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -640,7 +862,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Parking" className="custom-padding">
                                     <Form.Label>Parking</Form.Label>
-                                    <Form.Select name="parking">
+                                    <Form.Select name="parking"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, parking: e.target.value })}
+
+                                    >
                                         {exicte.map(park => <option key={park.key} value={park.value}>{park.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -653,7 +879,11 @@ export const Biens = ({ showModal, handleClose }) => {
                     <div>
                         <Form.Group controlId="Type de commerce autorisé" className="custom-padding">
                             <Form.Label>Type de commerce autorisé</Form.Label>
-                            <Form.Select name="type_commerce_autorisé">
+                            <Form.Select name="type_commerce_autorisé"
+
+                                onChange={(e) => setInputsData({ ...inputsData, type_commerce_autorisé: e.target.value })}
+
+                            >
                                 {commerces.map(commerce => <option key={commerce.key} value={commerce.value}>{commerce.key}</option>)}
                             </Form.Select>
                         </Form.Group>
@@ -663,6 +893,8 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Control
                                     type="number"
                                     name="superficie"
+                                    onChange={(e) => setInputsData({ ...inputsData, superficie: e.currentTarget.value })}
+
                                     placeholder="Entrer la Superficie en m²"
                                     aria-describedby="m2-addon"
                                 />
@@ -675,7 +907,12 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Visibilté" className="custom-padding">
                                     <Form.Label>Visibilté</Form.Label>
-                                    <Form.Select name="visibilité">
+                                    <Form.Select name="visibilité"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, visibilité: e.target.value })}
+
+
+                                    >
                                         {exicte.map(vis => <option key={vis.key} value={vis.value}>{vis.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -683,7 +920,10 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Equipement" className="custom-padding">
                                     <Form.Label>Equipement</Form.Label>
-                                    <Form.Select name="equipement">
+                                    <Form.Select name="equipement"
+                                        onChange={(e) => setInputsData({ ...inputsData, equipement: e.target.value })}
+
+                                    >
                                         {exicte.map(equip => <option key={equip.key} value={equip.value}>{equip.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -691,7 +931,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Parking" className="custom-padding">
                                     <Form.Label>Parking</Form.Label>
-                                    <Form.Select name="parking">
+                                    <Form.Select name="parking"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, parking: e.target.value })}
+
+                                    >
                                         {exicte.map(park => <option key={park.key} value={park.value}>{park.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -704,7 +948,11 @@ export const Biens = ({ showModal, handleClose }) => {
                     <div>
                         <Form.Group controlId="Type d'industrie" className="custom-padding">
                             <Form.Label>Type d'industrie</Form.Label>
-                            <Form.Select name="type_industrie">
+                            <Form.Select name="type_industrie"
+
+                                onChange={(e) => setInputsData({ ...inputsData, type_industrie: e.target.value })}
+
+                            >
                                 {industries.map(industrie => <option key={industrie.key} value={industrie.value}>{industrie.key}</option>)}
                             </Form.Select>
                         </Form.Group>
@@ -716,6 +964,8 @@ export const Biens = ({ showModal, handleClose }) => {
                                         <Form.Control
                                             type="number"
                                             name="superficie_total"
+                                            onChange={(e) => setInputsData({ ...inputsData, superficie_total: e.currentTarget.value })}
+
                                             placeholder="Entrer la Superficie en m²"
                                             aria-describedby="m2-addon"
                                         />
@@ -732,6 +982,8 @@ export const Biens = ({ showModal, handleClose }) => {
                                         <Form.Control
                                             type="number"
                                             name="superficie_batie"
+                                            onChange={(e) => setInputsData({ ...inputsData, superficie_batie: e.currentTarget.value })}
+
                                             placeholder="Entrer la Superficie batie  en m²"
                                             aria-describedby="m2-addon"
                                         />
@@ -748,6 +1000,8 @@ export const Biens = ({ showModal, handleClose }) => {
                                         <Form.Control
                                             type="number"
                                             name="superficie_terre"
+                                            onChange={(e) => setInputsData({ ...inputsData, superficie_terre: e.currentTarget.value })}
+
                                             placeholder="Entrer la Superficie de terre  en m²"
                                             aria-describedby="m2-addon"
                                         />
@@ -762,7 +1016,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Equipement" className="custom-padding">
                                     <Form.Label>Equipement</Form.Label>
-                                    <Form.Select name="equipement">
+                                    <Form.Select name="equipement"
+                                        onChange={(e) => setInputsData({ ...inputsData, equipement: e.target.value })}
+
+
+                                    >
                                         {exicte.map(equip => <option key={equip.key} value={equip.value}>{equip.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -770,7 +1028,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Acces aux transport " className="custom-padding">
                                     <Form.Label>Acces aux transport </Form.Label>
-                                    <Form.Select name="acces_tansport">
+                                    <Form.Select name="acces_tansport"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, acces_tansport: e.target.value })}
+
+                                    >
                                         {exicte.map(acces => <option key={acces.key} value={acces.value}>{acces.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -789,6 +1051,8 @@ export const Biens = ({ showModal, handleClose }) => {
                                         <Form.Control
                                             type="number"
                                             name="superficie"
+                                            onChange={(e) => setInputsData({ ...inputsData, superficie: e.currentTarget.value })}
+
                                             placeholder="Entrer la Superficie en m²"
                                             aria-describedby="m2-addon"
                                         />
@@ -805,6 +1069,8 @@ export const Biens = ({ showModal, handleClose }) => {
                                         <Form.Control
                                             type="number"
                                             name="capacité_stockage"
+                                            onChange={(e) => setInputsData({ ...inputsData, capacité_stockage: e.currentTarget.value })}
+
                                             placeholder="Entrer la Capacité en m²"
                                             aria-describedby="m2-addon"
                                         />
@@ -821,6 +1087,8 @@ export const Biens = ({ showModal, handleClose }) => {
                                         <Form.Control
                                             type="number"
                                             name="heuteur"
+                                            onChange={(e) => setInputsData({ ...inputsData, heuteur: e.currentTarget.value })}
+
                                             placeholder="Entrer la heuteur en m"
                                             aria-describedby="m2-addon"
                                         />
@@ -835,7 +1103,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Equipement" className="custom-padding">
                                     <Form.Label>Equipement</Form.Label>
-                                    <Form.Select name="equipement">
+                                    <Form.Select name="equipement"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, equipement: e.target.value })}
+
+                                    >
                                         {exicte.map(equip => <option key={equip.key} value={equip.value}>{equip.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -843,7 +1115,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Securité" className="custom-padding">
                                     <Form.Label>Securité</Form.Label>
-                                    <Form.Select name="secuirité">
+                                    <Form.Select name="secuirité"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, secuirité: e.target.value })}
+
+                                    >
                                         {exicte.map(sec => <option key={sec.key} value={sec.value}>{sec.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -851,7 +1127,11 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group controlId="Condition de stockage " className="custom-padding">
                                     <Form.Label>Condition de stockage </Form.Label>
-                                    <Form.Select name="condition_stockage">
+                                    <Form.Select name="condition_stockage"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, condition_stockage: e.target.value })}
+
+                                    >
                                         {stokages.map(stockage => <option key={stockage.key} value={stockage.value}>{stockage.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -878,7 +1158,11 @@ export const Biens = ({ showModal, handleClose }) => {
 
                         <Form.Group className="custom-padding">
                             <Form.Label>Type</Form.Label>
-                            <Form.Select name="type_biens" onChange={handleTypeChange}>
+                            <Form.Select name="type_biens"
+
+                                onChange={(e) => setInputsData({ ...inputsData, type_biens: e.target.value })}
+                                value={inputsData.type_biens}
+                            >
                                 {types.map((type, index) => (
                                     <option key={type.value} value={type.value}>{type.key}</option>
                                 ))}
@@ -887,58 +1171,43 @@ export const Biens = ({ showModal, handleClose }) => {
 
                         <Form.Group className="custom-padding">
                             <Form.Label>Categorie</Form.Label>
-                            <Form.Select name="categorie">
+                            <Form.Select name="categorie"
+
+                                onChange={(e) => setInputsData({ ...inputsData, categorie: e.target.value })}
+
+                            >
                                 {categories.map(cat => <option key={cat.value} value={cat.value}>{cat.key}</option>)}
                             </Form.Select>
                         </Form.Group>
-                        {user && (
-                            <div>
-                                <Row>
-                                    <Col>
-                                        <Form.Group className="custom-padding">
-                                            <Form.Label>user name</Form.Label>
-                                            <Form.Control type="text" name="user_name" value={user.name} />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col>
-                                        <Form.Group className="custom-padding">
-                                            <Form.Label>user lastname</Form.Label>
-                                            <Form.Control type="text" name="user_lastName" value={user.last_name} />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col>
-                                        <Form.Group className="custom-padding">
-                                            <Form.Label>user email</Form.Label>
-                                            <Form.Control type="text" name="user_email" value={user.email} />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col>
-                                        <Form.Group className="custom-padding">
-                                            <Form.Label>user phone</Form.Label>
-                                            <Form.Control type="text" name="user_phone" value={user.num_phone} />
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
-                            </div>
-                        )}
+
                         <Row>
                             <Col>
                                 <Form.Group className="custom-padding">
                                     <Form.Label>propritair name</Form.Label>
-                                    <Form.Control type="text" name="propritair_name" />
+                                    <Form.Control type="text" name="propritair_name"
+                                        onChange={(e) => setInputsData({ ...inputsData, propritair_name: e.currentTarget.value })}
+
+                                    />
                                 </Form.Group>
                             </Col>
 
                             <Col>
                                 <Form.Group className="custom-padding">
                                     <Form.Label>proritaire phone</Form.Label>
-                                    <Form.Control type="text" name="proritaire_phone" />
+                                    <Form.Control type="text" name="proritaire_phone"
+                                        onChange={(e) => setInputsData({ ...inputsData, proritaire_phone: e.currentTarget.value })}
+
+                                    />
                                 </Form.Group>
                             </Col>
                         </Row>
                         <Form.Group className="custom-padding">
-                            <Form.Label>Disponibilité</Form.Label>
-                            <Form.Select name="disponibilité">
+                            <Form.Label>disponibilté</Form.Label>
+                            <Form.Select name="disponibilté"
+
+                                onChange={(e) => setInputsData({ ...inputsData, disponibilté: e.target.value })}
+
+                            >
                                 {dispo.map(disp => <option key={disp.value} value={disp.value}>{disp.key}</option>)}
                             </Form.Select>
                         </Form.Group>
@@ -949,22 +1218,37 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Form.Control
                                 as="textarea"
                                 name="description"
+                                onChange={(e) => setInputsData({ ...inputsData, description: e.currentTarget.value })}
+
                                 rows={4} // Adjust the number of rows as needed
                                 placeholder="Enter description"
                             />
                         </Form.Group>
+                        <Form.Group className="custom-padding">
+                            <Form.Label>etat</Form.Label>
+                            <Form.Control type="text" name="etat"
+                                onChange={(e) => setInputsData({ ...inputsData, etat: e.currentTarget.value })}
 
+                            />
+                        </Form.Group>
                         <Row>
                             <Col>
                                 <Form.Group className="custom-padding">
                                     <Form.Label>Adresse</Form.Label>
-                                    <Form.Control type="text" name="addresse" />
+                                    <Form.Control type="text" name="addresse"
+                                        onChange={(e) => setInputsData({ ...inputsData, addresse: e.currentTarget.value })}
+
+                                    />
                                 </Form.Group>
                             </Col>
                             <Col>
                                 <Form.Group className="custom-padding">
                                     <Form.Label>Gouvernorat</Form.Label>
-                                    <Form.Select name="gouvernorats">
+                                    <Form.Select name="gouvernant"
+
+                                        onChange={(e) => setInputsData({ ...inputsData, gouvernorats: e.target.value })}
+
+                                    >
                                         {gouvernorats.map(gouv => <option key={gouv.key} value={gouv.value}>{gouv.key}</option>)}
                                     </Form.Select>
                                 </Form.Group>
@@ -972,7 +1256,12 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group className="custom-padding">
                                     <Form.Label>Ville</Form.Label>
-                                    <Form.Control type="text" name="ville" />
+                                    <Form.Control type="text" name="ville"
+
+
+                                        onChange={(e) => setInputsData({ ...inputsData, ville: e.currentTarget.value })}
+
+                                    />
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -982,26 +1271,48 @@ export const Biens = ({ showModal, handleClose }) => {
                             <div className="input-group">
                                 <Form.Control
                                     type="number"
-                                    id="prix"
+                                    name="prix"
+                                    onChange={(e) => setInputsData({ ...inputsData, prix: e.currentTarget.value })}
+
                                     placeholder="Entrer le prix en DT"
                                     aria-describedby="dt-addon"
+
                                 />
                                 <div className="input-group-append">
                                     <span className="input-group-text" id="dt-addon">DT</span>
                                 </div>
                             </div>
                         </Form.Group>
+                        <Form.Group className="custom-padding">
+                            <Form.Label>Annonce</Form.Label>
+                            <Form.Select name="annonce"
+
+                                onChange={(e) => setInputsData({ ...inputsData, annonce: e.target.value })}
+
+                            >
+                                {annonces.map(annonce => <option key={annonce.key} value={annonce.value}>{annonce.key}</option>)}
+                            </Form.Select>
+                        </Form.Group>
                         {renderInputsBasedOnType()}
+                        <label>
+                            Images :
+                            <input
+                                type="file"
+                                name="images"
+                                onChange={handleImageChange}
+                                multiple
+                            />
+                        </label>
+
                     </div>
-                    
-
-
 
                 </Form>
 
             </Modal.Body>
             <Modal.Footer>
-
+                <Button variant="primary" onClick={ajouterBiens}>
+                    Save
+                </Button>
             </Modal.Footer>
         </Modal>
     );

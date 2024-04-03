@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import './add.css';
+import { postBien } from '../../utils/postData';
+import { Prev } from "react-bootstrap/esm/PageItem";
 
 export const Biens = ({ showModal, handleClose }) => {
     const types = [
@@ -17,6 +19,7 @@ export const Biens = ({ showModal, handleClose }) => {
 
     const dispo = [{ key: "En cours", value: "En cours" }, { key: "Vendu", value: "Vendu" }, { key: "Louée", value: "Louée" }];
     const exicte = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
+    const annonces = [{ key: "Masquer", value: "Masquer" }, { key: "Publier", value: "Publier" }];
     const commerces = [{ key: "Boutique", value: "Boutique" }, { key: "Restaurant", value: "Restaurant" }, { key: "Bureau", value: "Bureau" }, { key: "Autre", value: "Autre" }];
     const immeubles = [{ key: "Résidentiel", value: "Résidentiel" }, { key: "Commercial", value: "Commercial" }, { key: "Mixte", value: "Mixte" }]
     const accessibilités = [{ key: "24h/24h", value: "24h/24h" }];
@@ -54,15 +57,15 @@ export const Biens = ({ showModal, handleClose }) => {
 
 
     const [user, setUser] = useState(null);
-    const [fromdata, setFormData] = useState([])
-    const [selectedType, setSelectedType] = useState('');
+    const [data, setData] = useState({});
     const [inputsData, setInputsData] = useState({
         type_biens: '',
         categorie: '',
         propritair_name: '',
         proritaire_phone: '',
-        disponibilité: '',
+        disponibilté: '',
         description: '',
+        etat: '',
         addresse: '',
         gouvernorats: '',
         ville: '',
@@ -71,6 +74,7 @@ export const Biens = ({ showModal, handleClose }) => {
         nbr_salle_de_bain: '',
         proximité: '',
         meublé: '',
+        annonce: '',
         jardin: '',
         piscin: '',
         garage: '',
@@ -109,11 +113,13 @@ export const Biens = ({ showModal, handleClose }) => {
         capacité_stockage: '',
         heuteur: '',
         condition_stockage: '',
+        user_id: '',
+        user_name: '',
+        user_lastName: '',
+        user_email: '',
+        user_phone: '',
         images: [],
     });
-
-
-
 
     useEffect(() => {
         // Récupérer les données de l'utilisateur depuis le localStorage
@@ -123,14 +129,6 @@ export const Biens = ({ showModal, handleClose }) => {
         setUser(parsedUser);
     }, []);
 
-    /*  const handleChange = (e) => {
-         const { name, value } = e.target;
-         setFormData((prevFormData) => ({
-             ...prevFormData,
-             [name]: value,
-         }));
-     }; */
-
     const handleImageChange = (e) => {
         const files = e.target.files;
         setInputsData((prev) => ({
@@ -139,43 +137,29 @@ export const Biens = ({ showModal, handleClose }) => {
         }));
     };
 
-    const handleSubmit = async () => {
-        console.log(inputsData)
+    const ajouterBiens = async () => {
+
         const formData = new FormData();
-
-
-
-        const keyInputData = Object.keys(inputsData)
-        keyInputData.forEach((key) => {
-            formData.append(key, inputsData[key]);
-
-        })
+        console.log(inputsData)
+        const data = {
+            ...inputsData,
+            user_id: user.id,
+            user_name: user.name,
+            user_lastName: user.last_name,
+            user_email: user.email,
+            user_phone: user.num_phone,
+        };
         // Ajouter les champs à FormData en fonction de leur nom
+        Object.keys(data).forEach((key) => {
+            formData.append(key, data[key]);
+        });
 
-        if (user) {
-            formData.append('id_user', user.id);
-            formData.append('user_name', user.name);
-            formData.append('user_lastName', user.last_name);
-            formData.append('user_email', user.email);
-            formData.append('user_phone', user.num_phone);
-        }
-
-
-        try {
-            const response = await fetch('http://localhost:8000/api/biens/ajouter', {
-                method: 'POST',
-                body: formData,
-
-            });
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            console.log(data);
-        } catch (error) {
-            console.error(error);
-        }
+        await fetch('http://localhost:8000/api/coutiers', {
+            method: 'POST',
+            body: formData,
+        });;
     };
+
 
 
     const renderInputsBasedOnType = () => {
@@ -225,6 +209,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                     />
                                 </Form.Group>
                             </Col>
+
                         </Row>
                         <Form.Group className="custom-padding">
                             <Form.Label>proximité</Form.Label>
@@ -1194,36 +1179,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 {categories.map(cat => <option key={cat.value} value={cat.value}>{cat.key}</option>)}
                             </Form.Select>
                         </Form.Group>
-                        {user && (
-                            <div>
-                                <Row>
-                                    <Col>
-                                        <Form.Group className="custom-padding">
-                                            <Form.Label>user name</Form.Label>
-                                            <Form.Control type="text" name="user_name" value={user.name} />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col>
-                                        <Form.Group className="custom-padding">
-                                            <Form.Label>user lastname</Form.Label>
-                                            <Form.Control type="text" name="user_lastName" value={user.last_name} />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col>
-                                        <Form.Group className="custom-padding">
-                                            <Form.Label>user email</Form.Label>
-                                            <Form.Control type="text" name="user_email" value={user.email} />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col>
-                                        <Form.Group className="custom-padding">
-                                            <Form.Label>user phone</Form.Label>
-                                            <Form.Control type="text" name="user_phone" value={user.num_phone} />
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
-                            </div>
-                        )}
+
                         <Row>
                             <Col>
                                 <Form.Group className="custom-padding">
@@ -1246,10 +1202,10 @@ export const Biens = ({ showModal, handleClose }) => {
                             </Col>
                         </Row>
                         <Form.Group className="custom-padding">
-                            <Form.Label>Disponibilité</Form.Label>
-                            <Form.Select name="disponibilité"
+                            <Form.Label>disponibilté</Form.Label>
+                            <Form.Select name="disponibilté"
 
-                                onChange={(e) => setInputsData({ ...inputsData, disponibilité: e.target.value })}
+                                onChange={(e) => setInputsData({ ...inputsData, disponibilté: e.target.value })}
 
                             >
                                 {dispo.map(disp => <option key={disp.value} value={disp.value}>{disp.key}</option>)}
@@ -1268,7 +1224,13 @@ export const Biens = ({ showModal, handleClose }) => {
                                 placeholder="Enter description"
                             />
                         </Form.Group>
+                        <Form.Group className="custom-padding">
+                            <Form.Label>etat</Form.Label>
+                            <Form.Control type="text" name="etat"
+                                onChange={(e) => setInputsData({ ...inputsData, etat: e.currentTarget.value })}
 
+                            />
+                        </Form.Group>
                         <Row>
                             <Col>
                                 <Form.Group className="custom-padding">
@@ -1282,7 +1244,7 @@ export const Biens = ({ showModal, handleClose }) => {
                             <Col>
                                 <Form.Group className="custom-padding">
                                     <Form.Label>Gouvernorat</Form.Label>
-                                    <Form.Select name="gouvernorats"
+                                    <Form.Select name="gouvernant"
 
                                         onChange={(e) => setInputsData({ ...inputsData, gouvernorats: e.target.value })}
 
@@ -1321,6 +1283,16 @@ export const Biens = ({ showModal, handleClose }) => {
                                 </div>
                             </div>
                         </Form.Group>
+                        <Form.Group className="custom-padding">
+                            <Form.Label>Annonce</Form.Label>
+                            <Form.Select name="annonce"
+
+                                onChange={(e) => setInputsData({ ...inputsData, annonce: e.target.value })}
+
+                            >
+                                {annonces.map(annonce => <option key={annonce.key} value={annonce.value}>{annonce.key}</option>)}
+                            </Form.Select>
+                        </Form.Group>
                         {renderInputsBasedOnType()}
                         <label>
                             Images :
@@ -1338,7 +1310,7 @@ export const Biens = ({ showModal, handleClose }) => {
 
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" onClick={handleSubmit}>
+                <Button variant="primary" onClick={ajouterBiens}>
                     Save
                 </Button>
             </Modal.Footer>

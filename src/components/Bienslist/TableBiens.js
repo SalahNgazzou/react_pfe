@@ -3,9 +3,12 @@ import DataTable from 'react-data-table-component'
 import { useState, useEffect } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
-import  {Biens}  from './AddBiens'
+import { Biens } from './AddBiens'
 import { getData } from '../../utils/getData';
-
+import Edit_biens from './Edit';
+import EditIcon from '@mui/icons-material/Edit';
+import { CheckCircleOutline, HighlightOff } from '@mui/icons-material';
+import { putAnnonce} from '../../utils/putAnnonce';
 
 export const Table = () => {
     const columns = [
@@ -26,33 +29,49 @@ export const Table = () => {
             selector: (row) => row.disponibilté,
         },
         {
-            name: 'Ajouter Par',
-            selector: (row) => row.user_name + " " + row.user_lastName,
+            name: 'Action',
+            cell: (row) => (
+                <IconButton
+                    onClick={() => ChangeStatue(row.id)}
+                    className={`btn ${row.annonce === 'Publier' ? 'btn-success' : 'btn-danger'}`}
+                    aria-label={row.statue === 'Publier' ? 'Publier' : 'Masquer'}
+                    style={{ color: row.statue === 'Publier' ? 'green' : 'red' }}
+                >
+                    {row.statue === 'Publier' ? <CheckCircleOutline /> : <HighlightOff />}
+                </IconButton>
 
+
+
+
+            )
         },
+        {
+            name: '  ',
+            cell: (row) => (
+                <IconButton aria-label="Modifier" onClick={() => handleShowEdit(row.id)}>
+                    <EditIcon />
+                </IconButton>
+
+            )
+        }
 
     ];
-  
+
     const [data, setData] = useState([]);
+    const [userdata, setUserData] = useState();
     const [recherche, setRecherche] = useState("");
     const [filter, setFilter] = useState([]);
     //ajouter
     const [showModal, setShowModal] = useState(false);
     //modifier
-   
+
     const handleShow = () => setShowModal(true);
+    const [showEdit, setShowEdit] = useState(false);
     const handleClose = () => setShowModal(false);
     console.log(showModal)
-    //modifier
-    /*   async function handleShowEdit(id) {
-          setShowEdit(true);
-         
-      }; */
 
-    /*  const handleCloseEdit = () => setUserData(null);
-  */
     useEffect(() => {
-        getData({ setData, url: "getbiens" });
+        getData({ setData, url: "biens" });
     }, [])
 
     useEffect(() => {
@@ -67,6 +86,21 @@ export const Table = () => {
         }
     }, [data, recherche]);
 
+    async function handleShowEdit(id) {
+        setShowEdit(true);
+        getData({ setData: (res) => setUserData(res), url: "biens/" + id });
+    };
+
+    const handleCloseEdit = () => setUserData(null);
+
+    async function ChangeStatue(id) {
+        try {
+            await putAnnonce({ url:"biens/", id });
+            getData({ setData, url: "biens" });
+        } catch (error) {
+            // Gérer les erreurs de manière appropriée
+        }
+    }
 
     const tableHeaderstyle = {
         headCells: {
@@ -77,6 +111,7 @@ export const Table = () => {
                 color: "white"
             },
         },
+
     }
 
 
@@ -117,6 +152,12 @@ export const Table = () => {
 
             />
             <Biens showModal={showModal} handleClose={handleClose} />
+            {
+
+                !userdata ? null
+
+                    : <Edit_biens handleCloseEdit={handleCloseEdit} userdata={userdata} />
+            }
         </div>
     )
 }

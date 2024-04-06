@@ -11,3 +11,10 @@ import { getToken } from "./getToken";
       }
     });
 }
+
+export const putBien = async ({url,data,id}) => {
+  await fetch("http://localhost:8000/api/"+url+"/"+id, {
+    method: 'PUT',
+    body: data,
+  });
+}

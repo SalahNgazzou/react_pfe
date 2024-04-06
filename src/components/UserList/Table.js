@@ -38,7 +38,7 @@ export const Table = () => {
                 <IconButton
                 onClick={() => ChangeStatue(row.id)}
                 className={`btn ${row.statue === 'Activer' ? 'btn-success' : 'btn-danger'}`}
-                aria-label={row.statue === 'Activer' ? 'Activer' : 'Désactiver'}
+                aria-label={row.statue === 'Activer' ? 'Activer' : 'Inactive'}
                 style={{ color: row.statue === 'Activer' ? 'green' : 'red' }}
             >
                 {row.statue === 'Activer' ? <CheckCircleOutline /> : <HighlightOff />}
@@ -96,7 +96,7 @@ export const Table = () => {
 
     async function ChangeStatue(id) {
         try {
-            await putStatue({ id });
+            await putStatue({url:'users/', id });
             getData({ setData, url: "users" });
         } catch (error) {
             // Gérer les erreurs de manière appropriée

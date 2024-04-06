@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from 'react'
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
-import './add.css';
-import { postBien } from '../../utils/postData';
+import { putBien } from '../../utils/putData';
 
+function Edit_biens({ handleCloseEdit, userdata }) {
 
-export const Biens = ({ showModal, handleClose }) => {
     const types = [
         { key: "Duplex", value: "Duplex" },
         { key: "Local Commercial", value: "Local Commercial" },
@@ -16,7 +15,7 @@ export const Biens = ({ showModal, handleClose }) => {
         { key: "Entrepot", value: "Entrepot" },
         { key: "Immeuble", value: "Immeuble" }
     ];
-
+    console.log(userdata);
     const dispo = [{ key: "En cours", value: "En cours" }, { key: "Vendu", value: "Vendu" }, { key: "Louée", value: "Louée" }];
     const exicte = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
     const annonces = [{ key: "Masquer", value: "Masquer" }, { key: "Publier", value: "Publier" }];
@@ -54,76 +53,66 @@ export const Biens = ({ showModal, handleClose }) => {
         { key: 'Tunis', value: 'Tunis' },
         { key: 'Zaghouan', value: 'Zaghouan' }
     ];
-
-
-    const [user, setUser] = useState(null);
-    const [data, setData] = useState({});
     const [inputsData, setInputsData] = useState({
-        type_biens: '',
-        categorie: '',
-        propritair_name: '',
-        proritaire_phone: '',
-        disponibilté: '',
-        description: '',
-        etat: '',
-        addresse: '',
-        gouvernorats: '',
-        ville: '',
-        surface: '',
-        nbr_chombre: '',
-        nbr_salle_de_bain: '',
-        proximité: '',
-        meublé: '',
-        annonce: '',
-        jardin: '',
-        piscin: '',
-        garage: '',
-        balcon: '',
-        etage: '',
-        vue: '',
-        terasse: '',
-        ascenceur: '',
-        parking: '',
-        chauffage: '',
-        climatisation: '',
-        nbr_place: '',
-        dimension: '',
-        secuirité: '',
-        accessibilité: '',
-        service: '',
-        superficie: '',
-        type_commerce_autorisé: '',
-        visibilité: '',
-        usage_autorisé: '',
-        service_public: '',
-        cloture: '',
-        titre_proprité: '',
-        nbr_appartement: '',
-        nbr_etage: '',
-        année_construction: '',
-        superficie_total: '',
-        superficie_appartement: '',
-        type_immeuble: '',
-        espace_commun: '',
-        superficie_batie: '',
-        superficie_terre: '',
-        type_industrie: '',
-        equipement: '',
-        acces_tansport: '',
-        capacité_stockage: '',
-        heuteur: '',
-        condition_stockage: '',
-        user_id: '',
+
+        type_biens: userdata?.type_biens,
+        categorie: userdata?.categorie,
+        propritair_name: userdata?.propritair_name,
+        proritaire_phone: userdata?.proritaire_phone,
+        disponibilté: userdata?.disponibilté,
+        description: userdata?.description,
+        etat: userdata?.etat,
+        addresse: userdata?.addresse,
+        gouvernorats: userdata?.gouvernorats,
+        ville: userdata?.ville,
+        surface: userdata?.surface,
+        nbr_chombre: userdata?.nbr_chombre,
+        nbr_salle_de_bain: userdata?.nbr_salle_de_bain,
+        proximité: userdata?.proximité,
+        meublé: userdata?.meublé,
+        annonce: userdata?.annonce,
+        jardin: userdata?.jardin,
+        piscin: userdata?.piscin,
+        garage: userdata?.garage,
+        balcon: userdata?.balcon,
+        etage: userdata?.etage,
+        vue: userdata?.vue,
+        terasse: userdata?.terasse,
+        ascenceur: userdata?.ascenceur,
+        parking: userdata?.parking,
+        chauffage: userdata?.chauffage,
+        climatisation: userdata?.climatisation,
+        nbr_place: userdata?.nbr_place,
+        dimension: userdata?.dimension,
+        secuirité: userdata?.secuirité,
+        accessibilité: userdata?.accessibilité,
+        service: userdata?.service,
+        superficie: userdata?.superficie,
+        type_commerce_autorisé: userdata?.type_commerce_autorisé,
+        visibilité: userdata?.visibilité,
+        usage_autorisé: userdata?.usage_autorisé,
+        service_public: userdata?.service_public,
+        cloture: userdata?.cloture,
+        titre_proprité: userdata?.titre_proprité,
+        nbr_appartement: userdata?.nbr_appartement,
+        nbr_etage: userdata?.nbr_etage,
+        année_construction: userdata?.année_construction,
+        superficie_total: userdata?.superficie_total,
+        superficie_appartement: userdata?.superficie_appartement,
+        type_immeuble: userdata?.type_immeuble,
+        espace_commun: userdata?.espace_commun,
+        superficie_batie: userdata?.superficie_batie,
+        superficie_terre: userdata?.superficie_terre,
+        type_industrie: userdata?.type_industrie,
+        equipement: userdata?.equipement,
+        acces_tansport: userdata?.acces_tansport,
+        capacité_stockage: userdata?.capacité_stockage,
+        heuteur: userdata?.heuteur,
+        condition_stockage: userdata?.condition_stockage,
         images: [],
+
     });
-
-    useEffect(() => {
-        // Récupérer les données de l'utilisateur depuis le localStorage
-        const userData = localStorage.getItem('user-info');
-        const parsedUser = userData ? JSON.parse(userData).user ?? "" : null;
-
-        setUser(parsedUser);
-    }, []);
+    console.log(inputsData)
 
     const handleImageChange = (e) => {
         const files = e.target.files;
@@ -133,25 +122,18 @@ export const Biens = ({ showModal, handleClose }) => {
         }));
     };
 
-    const ajouterBiens = async () => {
+    const modifierBiens = async () => {
 
         const formData = new FormData();
         console.log(inputsData)
-        const data = {
-            ...inputsData,
-            user_id: user.id,
 
-        };
         // Ajouter les champs à FormData en fonction de leur nom
-        Object.keys(data).forEach((key) => {
-            formData.append(key, data[key]);
+        Object.keys(inputsData).forEach((key) => {
+            formData.append(key, inputsData[key]);
         });
-        postBien({ url: "biens", data: formData })
-        handleClose();
+        putBien({ url: "biens", data: formData, id: userdata.id })
+        handleCloseEdit();
     };
-
-
-
     const renderInputsBasedOnType = () => {
         switch (inputsData.type_biens) {
             case 'Villa':
@@ -167,6 +149,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                     name="surface"
                                     placeholder="Entrer la surface en m²"
                                     aria-describedby="m2-addon"
+                                    value={inputsData.surface}
                                     onChange={(e) => setInputsData({ ...inputsData, surface: e.target.value })}
                                 />
                                 <div className="input-group-append">
@@ -182,6 +165,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                         type="number"
                                         name="nbr_chombre"
                                         placeholder="Entrer le nombre de chambres"
+                                        value={inputsData.nbr_chombre}
                                         onChange={(e) => setInputsData({ ...inputsData, nbr_chombre: e.currentTarget.value })}
 
                                     />
@@ -194,6 +178,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                         type="number"
                                         name="nbr_salle_de_bain"
                                         placeholder="Entrer le nombre de salles de bain"
+                                        value={inputsData.nbr_salle_de_bain}
                                         onChange={(e) => setInputsData({ ...inputsData, nbr_salle_de_bain: e.currentTarget.value })}
 
                                     />
@@ -204,6 +189,7 @@ export const Biens = ({ showModal, handleClose }) => {
                         <Form.Group className="custom-padding">
                             <Form.Label>proximité</Form.Label>
                             <Form.Control type="text" name="proximité"
+                                value={inputsData.proximité}
                                 onChange={(e) => setInputsData({ ...inputsData, proximité: e.currentTarget.value })}
                             />
                         </Form.Group>
@@ -212,6 +198,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group className="custom-padding">
                                     <Form.Label>meublé</Form.Label>
                                     <Form.Select name="meublé"
+                                        value={inputsData.meublé}
                                         onChange={(e) => setInputsData({ ...inputsData, meublé: e.target.value })}
 
                                     >
@@ -226,6 +213,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group className="custom-padding">
                                     <Form.Label>jardin</Form.Label>
                                     <Form.Select name="jardin"
+                                        value={inputsData.jardin}
                                         onChange={(e) => setInputsData({ ...inputsData, jardin: e.target.value })}
                                     >
                                         {exicte.map(jard => <option key={jard.key} value={jard.value}>{jard.key}</option>)}
@@ -236,6 +224,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group className="custom-padding">
                                     <Form.Label>piscin</Form.Label>
                                     <Form.Select name="piscin"
+                                        value={inputsData.piscin}
                                         onChange={(e) => setInputsData({ ...inputsData, piscin: e.target.value })}
 
                                     >
@@ -249,6 +238,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group className="custom-padding">
                                     <Form.Label>garage</Form.Label>
                                     <Form.Select name="garage"
+                                        value={inputsData.garage}
                                         onChange={(e) => setInputsData({ ...inputsData, garage: e.target.value })}
 
                                     >
@@ -260,6 +250,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group className="custom-padding">
                                     <Form.Label>chauffage</Form.Label>
                                     <Form.Select name="chauffage"
+                                        value={inputsData.chauffage}
                                         onChange={(e) => setInputsData({ ...inputsData, chauffage: e.target.value })}
                                     >
                                         {exicte.map(chouff => <option key={chouff.key} value={chouff.value}>{chouff.key}</option>)}
@@ -270,6 +261,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group className="custom-padding">
                                     <Form.Label>climatisation</Form.Label>
                                     <Form.Select name="climatisation"
+                                        value={inputsData.climatisation}
                                         onChange={(e) => setInputsData({ ...inputsData, climatisation: e.target.value })}
                                     >
 
@@ -294,6 +286,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                     name="surface"
                                     placeholder="Entrer la surface en m²"
                                     aria-describedby="m2-addon"
+                                    value={inputsData.surface}
                                     onChange={(e) => setInputsData({ ...inputsData, surface: e.currentTarget.value })}
 
                                 />
@@ -310,6 +303,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                         type="number"
                                         name="nbr_chombre"
                                         placeholder="Entrer le nombre de chambres"
+                                        value={inputsData.nbr_chombre}
                                         onChange={(e) => setInputsData({ ...inputsData, nbr_chombre: e.currentTarget.value })}
 
                                     />
@@ -322,6 +316,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                         type="number"
                                         name="nbr_salle_de_bain"
                                         placeholder="Entrer le nombre de salles de bain"
+                                        value={inputsData.nbr_salle_de_bain}
                                         onChange={(e) => setInputsData({ ...inputsData, nbr_salle_de_bain: e.currentTarget.value })}
 
                                     />
@@ -331,7 +326,7 @@ export const Biens = ({ showModal, handleClose }) => {
                         <Form.Group controlId="proximité" className="custom-padding">
                             <Form.Label>proximité</Form.Label>
                             <Form.Control type="text" name="proximité"
-
+                                value={inputsData.proximité}
                                 onChange={(e) => setInputsData({ ...inputsData, proximité: e.currentTarget.value })}
 
                             />
@@ -343,6 +338,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                     type="number"
                                     name="etage"
                                     placeholder="Etage numéro ..."
+                                    value={inputsData.etage}
                                     onChange={(e) => setInputsData({ ...inputsData, etage: e.currentTarget.value })}
 
                                 />
@@ -353,7 +349,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="balcon" className="custom-padding">
                                     <Form.Label>balcon</Form.Label>
                                     <Form.Select name="balcon"
-
+                                        value={inputsData.balcon}
                                         onChange={(e) => setInputsData({ ...inputsData, balcon: e.target.value })}
 
                                     >
@@ -365,7 +361,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="ascenceur" className="custom-padding">
                                     <Form.Label>ascenceur</Form.Label>
                                     <Form.Select name="ascenceur"
-
+                                        value={inputsData.ascenceur}
                                         onChange={(e) => setInputsData({ ...inputsData, ascenceur: e.target.value })}
 
                                     >
@@ -380,7 +376,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="meublé" className="custom-padding">
                                     <Form.Label>meublé</Form.Label>
                                     <Form.Select name="meublé"
-
+                                        value={inputsData.meublé}
                                         onChange={(e) => setInputsData({ ...inputsData, meublé: e.target.value })}
 
                                     >
@@ -393,7 +389,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Parking" className="custom-padding">
                                     <Form.Label>Parking</Form.Label>
                                     <Form.Select name="parking"
-
+                                        value={inputsData.parking}
                                         onChange={(e) => setInputsData({ ...inputsData, parking: e.target.value })}
 
 
@@ -407,7 +403,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="chauffage" className="custom-padding">
                                     <Form.Label>chauffage</Form.Label>
                                     <Form.Select name="chauffage"
-
+                                        value={inputsData.chauffage}
                                         onChange={(e) => setInputsData({ ...inputsData, chauffage: e.target.value })}
 
                                     >
@@ -420,7 +416,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="climatisation" className="custom-padding">
                                     <Form.Label>climatisation</Form.Label>
                                     <Form.Select name="climatisation"
-
+                                        value={inputsData.climatisation}
                                         onChange={(e) => setInputsData({ ...inputsData, climatisation: e.target.value })}
 
                                     >
@@ -444,6 +440,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                     name="surface"
                                     placeholder="Entrer la surface en m²"
                                     aria-describedby="m2-addon"
+                                    value={inputsData.surface}
                                     onChange={(e) => setInputsData({ ...inputsData, surface: e.currentTarget.value })}
 
                                 />
@@ -460,6 +457,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                         type="number"
                                         name="nbr_chombre"
                                         placeholder="Entrer le nombre de chambres"
+                                        value={inputsData.nbr_chombre}
                                         onChange={(e) => setInputsData({ ...inputsData, nbr_chombre: e.currentTarget.value })}
 
                                     />
@@ -472,6 +470,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                         type="number"
                                         name="nbr_salle_de_bain"
                                         placeholder="Entrer le nombre de salles de bain"
+                                        value={inputsData.nbr_salle_de_bain}
                                         onChange={(e) => setInputsData({ ...inputsData, nbr_salle_de_bain: e.currentTarget.value })}
 
                                     />
@@ -481,7 +480,7 @@ export const Biens = ({ showModal, handleClose }) => {
                         <Form.Group controlId="proximité" className="custom-padding">
                             <Form.Label>proximité</Form.Label>
                             <Form.Control type="text" name="proximité"
-
+                                value={inputsData.proximité}
                                 onChange={(e) => setInputsData({ ...inputsData, proximité: e.currentTarget.value })}
 
                             />
@@ -493,6 +492,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                     type="number"
                                     name="etage"
                                     placeholder="Etage numéro ..."
+                                    value={inputsData.etage}
                                     onChange={(e) => setInputsData({ ...inputsData, etage: e.currentTarget.value })}
 
                                 />
@@ -503,7 +503,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Parking" className="custom-padding">
                                     <Form.Label>Parking</Form.Label>
                                     <Form.Select name="parking"
-
+                                        value={inputsData.parking}
                                         onChange={(e) => setInputsData({ ...inputsData, parking: e.target.value })}
 
                                     >
@@ -516,7 +516,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="ascenceur" className="custom-padding">
                                     <Form.Label>ascenceur</Form.Label>
                                     <Form.Select name="ascenceur"
-
+                                        value={inputsData.ascenceur}
                                         onChange={(e) => setInputsData({ ...inputsData, ascenceur: e.target.value })}
 
                                     >
@@ -531,7 +531,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="meublé" className="custom-padding">
                                     <Form.Label>meublé</Form.Label>
                                     <Form.Select name="meublé"
-
+                                        value={inputsData.meublé}
                                         onChange={(e) => setInputsData({ ...inputsData, meublé: e.target.value })}
 
                                     >
@@ -543,7 +543,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="balcon" className="custom-padding">
                                     <Form.Label>balcon</Form.Label>
                                     <Form.Select name="balcon"
-
+                                        value={inputsData.balcon}
                                         onChange={(e) => setInputsData({ ...inputsData, balcon: e.target.value })}
 
                                     >
@@ -555,7 +555,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="vue" className="custom-padding">
                                     <Form.Label>vue</Form.Label>
                                     <Form.Select name="vue"
-
+                                        value={inputsData.vue}
                                         onChange={(e) => setInputsData({ ...inputsData, vue: e.target.value })}
 
                                     >
@@ -567,7 +567,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="terasse" className="custom-padding">
                                     <Form.Label>terasse</Form.Label>
                                     <Form.Select name="terasse"
-
+                                        value={inputsData.terasse}
                                         onChange={(e) => setInputsData({ ...inputsData, terasse: e.target.value })}
 
                                     >
@@ -582,7 +582,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="chauffage" className="custom-padding">
                                     <Form.Label>chauffage</Form.Label>
                                     <Form.Select name="chauffage"
-
+                                        value={inputsData.chauffage}
                                         onChange={(e) => setInputsData({ ...inputsData, chauffage: e.target.value })}
 
 
@@ -596,7 +596,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="climatisation" className="custom-padding">
                                     <Form.Label>climatisation</Form.Label>
                                     <Form.Select name="climatisation"
-
+                                        value={inputsData.climatisation}
                                         onChange={(e) => setInputsData({ ...inputsData, climatisation: e.target.value })}
 
                                     >
@@ -620,6 +620,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Control
                                         type="number"
                                         name="nbr_place"
+                                        value={inputsData.nbr_place}
                                         onChange={(e) => setInputsData({ ...inputsData, nbr_place: e.currentTarget.value })}
 
                                     />
@@ -631,6 +632,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Control
                                         type="text"
                                         name="dimension"
+                                        value={inputsData.dimension}
                                         onChange={(e) => setInputsData({ ...inputsData, dimension: e.currentTarget.value })}
 
                                     />
@@ -642,7 +644,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Securité" className="custom-padding">
                                     <Form.Label>Securité</Form.Label>
                                     <Form.Select name="secuirité"
-
+                                        value={inputsData.secuirité}
                                         onChange={(e) => setInputsData({ ...inputsData, secuirité: e.target.value })}
 
                                     >
@@ -654,7 +656,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Accessibilité" className="custom-padding">
                                     <Form.Label>Accessibilité</Form.Label>
                                     <Form.Select name="accessibilité"
-
+                                        value={inputsData.accessibilité}
                                         onChange={(e) => setInputsData({ ...inputsData, accessibilité: e.target.value })}
 
                                     >
@@ -666,7 +668,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Service" className="custom-padding">
                                     <Form.Label>Service</Form.Label>
                                     <Form.Select name="service"
-
+                                        value={inputsData.service}
 
                                         onChange={(e) => setInputsData({ ...inputsData, service: e.target.value })}
 
@@ -692,7 +694,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Label>Usage autorisé</Form.Label>
                                     <Form.Select name="usage_autorisé"
 
-
+                                        value={inputsData.usage_autorisé}
                                         onChange={(e) => setInputsData({ ...inputsData, usage_autorisé: e.target.value })}
 
                                     >
@@ -704,6 +706,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Acces aux services publique" className="custom-padding">
                                     <Form.Label>Acces aux services publique</Form.Label>
                                     <Form.Select name="service_public"
+                                        value={inputsData.service_public}
                                         onChange={(e) => setInputsData({ ...inputsData, service_public: e.target.value })}
 
                                     >
@@ -715,7 +718,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Cloture" className="custom-padding">
                                     <Form.Label>Cloture</Form.Label>
                                     <Form.Select name="cloture"
-
+                                        value={inputsData.cloture}
                                         onChange={(e) => setInputsData({ ...inputsData, cloture: e.target.value })}
 
                                     >
@@ -727,7 +730,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Titre de propriéte" className="custom-padding">
                                     <Form.Label>Titre de propriéte</Form.Label>
                                     <Form.Select name="titre_proprité"
-
+                                        value={inputsData.titre_proprité}
                                         onChange={(e) => setInputsData({ ...inputsData, titre_proprité: e.target.value })}
 
                                     >
@@ -744,7 +747,7 @@ export const Biens = ({ showModal, handleClose }) => {
                         <Form.Group controlId="Type Immeuble" className="custom-padding">
                             <Form.Label>Type Immeuble</Form.Label>
                             <Form.Select name="type_immeuble"
-
+                                value={inputsData.type_immeuble}
                                 onChange={(e) => setInputsData({ ...inputsData, type_immeuble: e.target.value })}
 
                             >
@@ -759,6 +762,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Control
                                         type="number"
                                         name="nbr_appartement"
+                                        value={inputsData.nbr_appartement}
                                         onChange={(e) => setInputsData({ ...inputsData, nbr_appartement: e.currentTarget.value })}
 
                                     />
@@ -770,6 +774,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Control
                                         type="number"
                                         name="nbr_etage"
+                                        value={inputsData.nbr_etage}
                                         onChange={(e) => setInputsData({ ...inputsData, nbr_etage: e.currentTarget.value })}
 
                                     />
@@ -781,6 +786,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Control
                                         type="text"
                                         name="année_construction"
+                                        value={inputsData.année_construction}
                                         onChange={(e) => setInputsData({ ...inputsData, année_construction: e.currentTarget.value })}
 
                                     />
@@ -795,6 +801,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                         <Form.Control
                                             type="number"
                                             name="superficie_total"
+                                            value={inputsData.superficie_total}
                                             onChange={(e) => setInputsData({ ...inputsData, superficie_total: e.currentTarget.value })}
 
                                             placeholder="Entrer la Superficie en m²"
@@ -813,6 +820,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                         <Form.Control
                                             type="number"
                                             name="superficie_appartement"
+                                            value={inputsData.superficie_appartement}
                                             onChange={(e) => setInputsData({ ...inputsData, superficie_appartement: e.currentTarget.value })}
 
                                             placeholder="Entrer la Superficie par appartement  en m²"
@@ -830,7 +838,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Espace Communs" className="custom-padding">
                                     <Form.Label>Espace Communs</Form.Label>
                                     <Form.Select name="espace_commun"
-
+                                        value={inputsData.espace_commun}
                                         onChange={(e) => setInputsData({ ...inputsData, espace_commun: e.target.value })}
 
                                     >
@@ -842,6 +850,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="ascenceur" className="custom-padding">
                                     <Form.Label>ascenceur</Form.Label>
                                     <Form.Select name="ascenceur"
+                                        value={inputsData.ascenceur}
                                         onChange={(e) => setInputsData({ ...inputsData, ascenceur: e.target.value })}
 
                                     >
@@ -853,7 +862,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Parking" className="custom-padding">
                                     <Form.Label>Parking</Form.Label>
                                     <Form.Select name="parking"
-
+                                        value={inputsData.parking}
                                         onChange={(e) => setInputsData({ ...inputsData, parking: e.target.value })}
 
                                     >
@@ -870,7 +879,7 @@ export const Biens = ({ showModal, handleClose }) => {
                         <Form.Group controlId="Type de commerce autorisé" className="custom-padding">
                             <Form.Label>Type de commerce autorisé</Form.Label>
                             <Form.Select name="type_commerce_autorisé"
-
+                                value={inputsData.type_commerce_autorisé}
                                 onChange={(e) => setInputsData({ ...inputsData, type_commerce_autorisé: e.target.value })}
 
                             >
@@ -883,6 +892,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Control
                                     type="number"
                                     name="superficie"
+                                    value={inputsData.superficie}
                                     onChange={(e) => setInputsData({ ...inputsData, superficie: e.currentTarget.value })}
 
                                     placeholder="Entrer la Superficie en m²"
@@ -898,7 +908,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Visibilté" className="custom-padding">
                                     <Form.Label>Visibilté</Form.Label>
                                     <Form.Select name="visibilité"
-
+                                        value={inputsData.visibilité}
                                         onChange={(e) => setInputsData({ ...inputsData, visibilité: e.target.value })}
 
 
@@ -911,6 +921,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Equipement" className="custom-padding">
                                     <Form.Label>Equipement</Form.Label>
                                     <Form.Select name="equipement"
+                                        value={inputsData.equipement}
                                         onChange={(e) => setInputsData({ ...inputsData, equipement: e.target.value })}
 
                                     >
@@ -922,7 +933,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Parking" className="custom-padding">
                                     <Form.Label>Parking</Form.Label>
                                     <Form.Select name="parking"
-
+                                        value={inputsData.parking}
                                         onChange={(e) => setInputsData({ ...inputsData, parking: e.target.value })}
 
                                     >
@@ -939,7 +950,7 @@ export const Biens = ({ showModal, handleClose }) => {
                         <Form.Group controlId="Type d'industrie" className="custom-padding">
                             <Form.Label>Type d'industrie</Form.Label>
                             <Form.Select name="type_industrie"
-
+                                value={inputsData.type_industrie}
                                 onChange={(e) => setInputsData({ ...inputsData, type_industrie: e.target.value })}
 
                             >
@@ -954,6 +965,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                         <Form.Control
                                             type="number"
                                             name="superficie_total"
+                                            value={inputsData.superficie_total}
                                             onChange={(e) => setInputsData({ ...inputsData, superficie_total: e.currentTarget.value })}
 
                                             placeholder="Entrer la Superficie en m²"
@@ -972,6 +984,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                         <Form.Control
                                             type="number"
                                             name="superficie_batie"
+                                            value={inputsData.superficie_batie}
                                             onChange={(e) => setInputsData({ ...inputsData, superficie_batie: e.currentTarget.value })}
 
                                             placeholder="Entrer la Superficie batie  en m²"
@@ -990,6 +1003,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                         <Form.Control
                                             type="number"
                                             name="superficie_terre"
+                                            value={inputsData.superficie_terre}
                                             onChange={(e) => setInputsData({ ...inputsData, superficie_terre: e.currentTarget.value })}
 
                                             placeholder="Entrer la Superficie de terre  en m²"
@@ -1007,6 +1021,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Equipement" className="custom-padding">
                                     <Form.Label>Equipement</Form.Label>
                                     <Form.Select name="equipement"
+                                        value={inputsData.equipement}
                                         onChange={(e) => setInputsData({ ...inputsData, equipement: e.target.value })}
 
 
@@ -1019,7 +1034,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Acces aux transport " className="custom-padding">
                                     <Form.Label>Acces aux transport </Form.Label>
                                     <Form.Select name="acces_tansport"
-
+                                        value={inputsData.acces_tansport}
                                         onChange={(e) => setInputsData({ ...inputsData, acces_tansport: e.target.value })}
 
                                     >
@@ -1041,6 +1056,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                         <Form.Control
                                             type="number"
                                             name="superficie"
+                                            value={inputsData.superficie}
                                             onChange={(e) => setInputsData({ ...inputsData, superficie: e.currentTarget.value })}
 
                                             placeholder="Entrer la Superficie en m²"
@@ -1059,6 +1075,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                         <Form.Control
                                             type="number"
                                             name="capacité_stockage"
+                                            value={inputsData.capacité_stockage}
                                             onChange={(e) => setInputsData({ ...inputsData, capacité_stockage: e.currentTarget.value })}
 
                                             placeholder="Entrer la Capacité en m²"
@@ -1077,6 +1094,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                         <Form.Control
                                             type="number"
                                             name="heuteur"
+                                            value={inputsData.heuteur}
                                             onChange={(e) => setInputsData({ ...inputsData, heuteur: e.currentTarget.value })}
 
                                             placeholder="Entrer la heuteur en m"
@@ -1094,7 +1112,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Equipement" className="custom-padding">
                                     <Form.Label>Equipement</Form.Label>
                                     <Form.Select name="equipement"
-
+                                        value={inputsData.equipement}
                                         onChange={(e) => setInputsData({ ...inputsData, equipement: e.target.value })}
 
                                     >
@@ -1106,7 +1124,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Securité" className="custom-padding">
                                     <Form.Label>Securité</Form.Label>
                                     <Form.Select name="secuirité"
-
+                                        value={inputsData.secuirité}
                                         onChange={(e) => setInputsData({ ...inputsData, secuirité: e.target.value })}
 
                                     >
@@ -1118,7 +1136,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group controlId="Condition de stockage " className="custom-padding">
                                     <Form.Label>Condition de stockage </Form.Label>
                                     <Form.Select name="condition_stockage"
-
+                                        value={inputsData.condition_stockage}
                                         onChange={(e) => setInputsData({ ...inputsData, condition_stockage: e.target.value })}
 
                                     >
@@ -1134,7 +1152,7 @@ export const Biens = ({ showModal, handleClose }) => {
         }
     }
     return (
-        <Modal show={showModal} onHide={handleClose} size="lg">
+        <Modal show={!userdata ? false : true} onHide={handleCloseEdit} size="lg">
             <Modal.Header closeButton>
                 <Modal.Title>Add Biens</Modal.Title>
             </Modal.Header>
@@ -1162,7 +1180,7 @@ export const Biens = ({ showModal, handleClose }) => {
                         <Form.Group className="custom-padding">
                             <Form.Label>Categorie</Form.Label>
                             <Form.Select name="categorie"
-
+                                value={inputsData.categorie}
                                 onChange={(e) => setInputsData({ ...inputsData, categorie: e.target.value })}
 
                             >
@@ -1175,6 +1193,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                 <Form.Group className="custom-padding">
                                     <Form.Label>propritair name</Form.Label>
                                     <Form.Control type="text" name="propritair_name"
+                                        value={inputsData.propritair_name}
                                         onChange={(e) => setInputsData({ ...inputsData, propritair_name: e.currentTarget.value })}
 
                                     />
@@ -1300,10 +1319,12 @@ export const Biens = ({ showModal, handleClose }) => {
 
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" onClick={ajouterBiens}>
+                <Button variant="primary" onClick={modifierBiens}>
                     Save
                 </Button>
             </Modal.Footer>
         </Modal>
-    );
-};
+    )
+}
+
+export default Edit_biens

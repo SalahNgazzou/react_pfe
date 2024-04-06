@@ -11,3 +11,9 @@ export const postData = async ({ url, data }) => {
     }
   });
 }
+export const postBien = async ({ url, data }) => {
+  await fetch("http://localhost:8000/api/" + url, {
+    method: 'POST',
+    body:data,
+  });
+}

@@ -1,9 +1,11 @@
+import { getToken } from "./getToken";
 
 export const putStatue = async ({ url, id }) => {
     try {
         let result = await fetch('http://localhost:8000/api/' + url + id, {
             method: 'PUT',
             headers: {
+                'Authorization': `Bearer ${getToken()}`,
                 'Content-Type': 'application/json',
             },
         });

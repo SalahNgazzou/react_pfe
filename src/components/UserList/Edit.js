@@ -41,6 +41,7 @@ const EditPopup = ({ handleCloseEdit, userdata }) => {
                 name="role"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
+                required
               >
                 {roles.map(role => <option value={role.value}>{role.key}</option>)}
               </Form.Select>
@@ -53,6 +54,7 @@ const EditPopup = ({ handleCloseEdit, userdata }) => {
                 name="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                required
               />
             </Form.Group>
             <Form.Group controlId="last_name">
@@ -62,6 +64,7 @@ const EditPopup = ({ handleCloseEdit, userdata }) => {
                 name="last_name"
                 value={last_name}
                 onChange={(e) => setLastName(e.target.value)}
+                required
               />
             </Form.Group>
             <Form.Group controlId="email">
@@ -71,6 +74,7 @@ const EditPopup = ({ handleCloseEdit, userdata }) => {
                 name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </Form.Group>
             <Form.Group controlId="cin">
@@ -80,6 +84,7 @@ const EditPopup = ({ handleCloseEdit, userdata }) => {
                 name="cin"
                 value={cin}
                 onChange={(e) => setCin(e.target.value)}
+                required
               />
               <Form.Group controlId="birth">
                 <Form.Label>birthday</Form.Label>
@@ -88,6 +93,7 @@ const EditPopup = ({ handleCloseEdit, userdata }) => {
                   name="birth"
                   value={birth}
                   onChange={(e) => setBirth(e.target.value)}
+                  required
                 />
               </Form.Group>
               <Form.Group controlId="address">
@@ -97,6 +103,7 @@ const EditPopup = ({ handleCloseEdit, userdata }) => {
                   name="address"
                   value={addresse}
                   onChange={(e) => setAddress(e.target.value)}
+                  required
                 />
               </Form.Group>
 
@@ -107,6 +114,7 @@ const EditPopup = ({ handleCloseEdit, userdata }) => {
                   name="num_phone"
                   value={num_phone}
                   onChange={(e) => setPhone(e.target.value)}
+                  required
                 />
               </Form.Group>
             </Form.Group>

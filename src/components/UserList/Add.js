@@ -22,7 +22,7 @@ import { postData } from '../../utils/postData';
     let item = { name, last_name, cin, birth, email, role, password, addresse, num_phone,statue };
     console.log(item);
     postData({ url: "users", data: item })
-    handleClose();
+    
   }
   return (
     <Modal show={showModal} onHide={handleClose}>
@@ -37,6 +37,7 @@ import { postData } from '../../utils/postData';
               <Form.Select
                 name="role"
                 onChange={(e) => setRole(e.target.value)}
+                required
               >
                 {roles.map(role => <option value={role.value}>{role.key}</option>)}
               </Form.Select>
@@ -48,6 +49,7 @@ import { postData } from '../../utils/postData';
                 type="text"
                 name="name"
                 onChange={(e) => setName(e.target.value)}
+                required
               />
             </Form.Group>
             <Form.Group controlId="last_name">
@@ -56,6 +58,7 @@ import { postData } from '../../utils/postData';
                 type="text"
                 name="last_name"
                 onChange={(e) => setLastName(e.target.value)}
+                required
               />
             </Form.Group>
             <Form.Group controlId="email">
@@ -64,6 +67,7 @@ import { postData } from '../../utils/postData';
                 type="email"
                 name="email"
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </Form.Group>
             <Form.Group controlId="cin">
@@ -72,6 +76,7 @@ import { postData } from '../../utils/postData';
                 type="text"
                 name="cin"
                 onChange={(e) => setCin(e.target.value)}
+                required
               />
               <Form.Group controlId="birth">
                 <Form.Label>birthday</Form.Label>
@@ -79,6 +84,7 @@ import { postData } from '../../utils/postData';
                   type="date"
                   name="birth"
                   onChange={(e) => setBirth(e.target.value)}
+                  required
                 />
               </Form.Group>
               <Form.Group controlId="address">
@@ -87,6 +93,7 @@ import { postData } from '../../utils/postData';
                   type="text"
                   name="address"
                   onChange={(e) => setAddress(e.target.value)}
+                  required
                 />
               </Form.Group>
 
@@ -96,6 +103,7 @@ import { postData } from '../../utils/postData';
                   type="text"
                   name="num_phone"
                   onChange={(e) => setPhone(e.target.value)}
+                  required
                 />
               </Form.Group>
             </Form.Group>
@@ -113,6 +121,7 @@ import { postData } from '../../utils/postData';
               <Form.Select
                 name="statue"
                 onChange={(e) => setStatue(e.target.value)}
+                required
               >
                 {statues.map(statue => <option value={statue.value}>{statue.key}</option>)}
               </Form.Select>

@@ -3,7 +3,7 @@ import DataTable from 'react-data-table-component'
 import { useState, useEffect } from "react";
 import { getData } from "../../utils/getData";
 import './useers.css';
-import {Popup} from './Add';
+import { Popup } from './Add';
 import EditPopup from './Edit';
 import AddIcon from '@mui/icons-material/Add';
 import { putStatue } from '../../utils/putStatue'
@@ -36,17 +36,17 @@ export const Table = () => {
             name: 'Action',
             cell: (row) => (
                 <IconButton
-                onClick={() => ChangeStatue(row.id)}
-                className={`btn ${row.statue === 'Activer' ? 'btn-success' : 'btn-danger'}`}
-                aria-label={row.statue === 'Activer' ? 'Activer' : 'Inactive'}
-                style={{ color: row.statue === 'Activer' ? 'green' : 'red' }}
-            >
-                {row.statue === 'Activer' ? <CheckCircleOutline /> : <HighlightOff />}
-            </IconButton>
+                    onClick={() => ChangeStatue(row.id)}
+                    className={`btn ${row.statue === 'Activer' ? 'btn-success' : 'btn-danger'}`}
+                    aria-label={row.statue === 'Activer' ? 'Activer' : 'Inactive'}
+                    style={{ color: row.statue === 'Activer' ? 'green' : 'red' }}
+                >
+                    {row.statue === 'Activer' ? <CheckCircleOutline /> : <HighlightOff />}
+                </IconButton>
 
 
 
-              
+
             )
         },
         {
@@ -59,7 +59,7 @@ export const Table = () => {
             )
         }
     ];
-    const [userdata, setUserData] = useState();
+    const [userdata, setUserData] = useState(null);
     const [data, setData] = useState([]);
     const [recherche, setRecherche] = useState("");
     const [filter, setFilter] = useState([]);
@@ -74,6 +74,7 @@ export const Table = () => {
     async function handleShowEdit(id) {
         setShowEdit(true);
         getData({ setData: (res) => setUserData(res), url: "users/" + id });
+
     };
 
     const handleCloseEdit = () => setUserData(null);
@@ -96,13 +97,13 @@ export const Table = () => {
 
     async function ChangeStatue(id) {
         try {
-            await putStatue({url:'users/', id });
+            await putStatue({ url: 'users/', id });
             getData({ setData, url: "users" });
         } catch (error) {
             // Gérer les erreurs de manière appropriée
         }
     }
-   
+
 
     const tableHeaderstyle = {
         headCells: {
@@ -131,13 +132,13 @@ export const Table = () => {
                 highlightOnHover
 
                 actions={
-                    <IconButton aria-label="Ajouter" onClick={handleShow} 
-                    style={{
-                        backgroundColor: '#FF9A8D', // couleur d'arrière-plan
-                        borderRadius: '50%', // pour faire un cercle
-                        width: '50px', // taille du bouton
-                        height: '50px' // taille du bouton
-                    }}>
+                    <IconButton aria-label="Ajouter" onClick={handleShow}
+                        style={{
+                            backgroundColor: '#FF9A8D', // couleur d'arrière-plan
+                            borderRadius: '50%', // pour faire un cercle
+                            width: '50px', // taille du bouton
+                            height: '50px' // taille du bouton
+                        }}>
                         <AddIcon style={{ color: 'white' }} />
                     </IconButton>
 
@@ -155,9 +156,9 @@ export const Table = () => {
             <Popup showModal={showModal} handleClose={handleClose} />
             {
 
-                !userdata ? null
+                userdata ?
 
-                    : <EditPopup handleCloseEdit={handleCloseEdit} userdata={userdata} />
+                    <EditPopup handleCloseEdit={handleCloseEdit} userdata={userdata} /> : null
             }
         </div>
     )

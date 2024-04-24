@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import './add.css';
 import { postBien } from '../../utils/postData';
-
+import IconButton from '@mui/material/IconButton';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import SaveIcon from '@mui/icons-material/Save';
 
 export const Biens = ({ showModal, handleClose }) => {
     const types = [
@@ -17,18 +19,19 @@ export const Biens = ({ showModal, handleClose }) => {
         { key: "Immeuble", value: "Immeuble" }
     ];
 
-    const dispo = [{ key: "En cours", value: "En cours" }, { key: "Vendu", value: "Vendu" }, { key: "Louée", value: "Louée" }];
-    const exicte = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
-    const annonces = [{ key: "Masquer", value: "Masquer" }, { key: "Publier", value: "Publier" }];
-    const commerces = [{ key: "Boutique", value: "Boutique" }, { key: "Restaurant", value: "Restaurant" }, { key: "Bureau", value: "Bureau" }, { key: "Autre", value: "Autre" }];
-    const immeubles = [{ key: "Résidentiel", value: "Résidentiel" }, { key: "Commercial", value: "Commercial" }, { key: "Mixte", value: "Mixte" }]
-    const accessibilités = [{ key: "24h/24h", value: "24h/24h" }];
-    const stokages = [{ key: "Température contrôlée", value: "Température contrôlée" }, { key: "Contrôle de l'humidité ", value: "Contrôle de l'humidité " }, { key: "Contrôle de la lumière ", value: "Contrôle de la lumière " }, { key: "Sécurité contre les incendies  ", value: "Sécurité contre les incendies  " }, { key: "Autre", value: "Autre" }]
-    const industries = [{ key: "Alimentaire", value: "Alimentaire" }, { key: "Chimique", value: "Chimique" }, { key: "Électronique ", value: "Électronique " }, { key: "Textile ", value: "Textile " }, { key: "Autre", value: "Autre" }]
-    const usage_autorisé = [{ key: "Résidentiel", value: "Résidentiel" }, { key: "Commercial", value: "Commercial" }, { key: "Industriel", value: "Industriel" }, { key: "Récréatif", value: "Récréatif" }, { key: "Agricole", value: "Agricole" }, { key: "Mixte", value: "Mixte" }];
-    const services = [{ key: "Nettoyage", value: "Nettoyage" }, { key: "Réparation", value: "Réparation" }];
-    const categories = [{ key: "A vendre", value: "A vendre" }, { key: "A louer", value: "A louer" }];
+    const dispo = [{ key: "", value: "" }, { key: "En cours", value: "En cours" }, { key: "Vendu", value: "Vendu" }, { key: "Louée", value: "Louée" }];
+    const exicte = [{ key: "", value: "" }, { key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
+    const annonces = [{ key: "", value: "" }, { key: "Masquer", value: "Masquer" }, { key: "Publier", value: "Publier" }];
+    const commerces = [{ key: "", value: "" }, { key: "Boutique", value: "Boutique" }, { key: "Restaurant", value: "Restaurant" }, { key: "Bureau", value: "Bureau" }, { key: "Autre", value: "Autre" }];
+    const immeubles = [{ key: "", value: "" }, { key: "Résidentiel", value: "Résidentiel" }, { key: "Commercial", value: "Commercial" }, { key: "Mixte", value: "Mixte" }]
+    const accessibilités = [{ key: "", value: "" }, { key: "24h/24h", value: "24h/24h" }];
+    const stokages = [{ key: "", value: "" }, { key: "Température contrôlée", value: "Température contrôlée" }, { key: "Contrôle de l'humidité ", value: "Contrôle de l'humidité " }, { key: "Contrôle de la lumière ", value: "Contrôle de la lumière " }, { key: "Sécurité contre les incendies  ", value: "Sécurité contre les incendies  " }, { key: "Autre", value: "Autre" }]
+    const industries = [{ key: "", value: "" }, { key: "Alimentaire", value: "Alimentaire" }, { key: "Chimique", value: "Chimique" }, { key: "Électronique ", value: "Électronique " }, { key: "Textile ", value: "Textile " }, { key: "Autre", value: "Autre" }]
+    const usage_autorisé = [{ key: "", value: "" }, { key: "Résidentiel", value: "Résidentiel" }, { key: "Commercial", value: "Commercial" }, { key: "Industriel", value: "Industriel" }, { key: "Récréatif", value: "Récréatif" }, { key: "Agricole", value: "Agricole" }, { key: "Mixte", value: "Mixte" }];
+    const services = [{ key: "", value: "" }, { key: "Nettoyage", value: "Nettoyage" }, { key: "Réparation", value: "Réparation" }];
+    const categories = [{ key: "", value: "" }, { key: "A vendre", value: "A vendre" }, { key: "A louer", value: "A louer" }];
     const gouvernorats = [
+        { key: "", value: "" },
         { key: 'Ariana', value: 'Ariana' },
         { key: 'Béja', value: 'Béja' },
         { key: 'Ben Arous', value: 'Ben Arous' },
@@ -58,6 +61,7 @@ export const Biens = ({ showModal, handleClose }) => {
 
     const [user, setUser] = useState(null);
     const [data, setData] = useState({});
+
     const [inputsData, setInputsData] = useState({
         type_biens: '',
         categorie: '',
@@ -69,12 +73,13 @@ export const Biens = ({ showModal, handleClose }) => {
         addresse: '',
         gouvernorats: '',
         ville: '',
+        prix: '',
         surface: '',
         nbr_chombre: '',
         nbr_salle_de_bain: '',
         proximité: '',
         meublé: '',
-        annonce: '',
+        annonce: 'Masquer',
         jardin: '',
         piscin: '',
         garage: '',
@@ -113,7 +118,7 @@ export const Biens = ({ showModal, handleClose }) => {
         capacité_stockage: '',
         heuteur: '',
         condition_stockage: '',
-        user_id: '',
+        id_user: '',
         images: [],
     });
 
@@ -126,31 +131,38 @@ export const Biens = ({ showModal, handleClose }) => {
     }, []);
 
     const handleImageChange = (e) => {
-        const files = e.target.files;
+        const files = Array.from(e.target.files);
         setInputsData((prev) => ({
             ...prev,
             images: files,
         }));
     };
 
+
+
     const ajouterBiens = async () => {
 
         const formData = new FormData();
         console.log(inputsData)
+        const { images, ...inputs } = inputsData;
         const data = {
-            ...inputsData,
-            user_id: user.id,
+            ...inputs,
+            id_user: user.id,
 
         };
         // Ajouter les champs à FormData en fonction de leur nom
+
         Object.keys(data).forEach((key) => {
             formData.append(key, data[key]);
         });
+
+        for (const file of images) {
+            formData.append("images[]", file);
+        }
+        console.log(formData)
         postBien({ url: "biens", data: formData })
         handleClose();
     };
-
-
 
     const renderInputsBasedOnType = () => {
         switch (inputsData.type_biens) {
@@ -1136,7 +1148,7 @@ export const Biens = ({ showModal, handleClose }) => {
     return (
         <Modal show={showModal} onHide={handleClose} size="lg">
             <Modal.Header closeButton>
-                <Modal.Title>Add Biens</Modal.Title>
+                <Modal.Title>Add Bien</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
@@ -1273,26 +1285,37 @@ export const Biens = ({ showModal, handleClose }) => {
                                 </div>
                             </div>
                         </Form.Group>
-                        <Form.Group className="custom-padding">
-                            <Form.Label>Annonce</Form.Label>
-                            <Form.Select name="annonce"
+                        {user && user.role === "Admin" && (
+                            <Form.Group className="custom-padding">
+                                <Form.Label>Annonce</Form.Label>
+                                <Form.Select
+                                    name="annonce"
+                                    onChange={(e) => setInputsData({ ...inputsData, annonce: e.target.value })}
+                                >
+                                    {annonces.map(annonce => (
+                                        <option key={annonce.key} value={annonce.value}>{annonce.key}</option>
+                                    ))}
+                                </Form.Select>
+                            </Form.Group>
+                        )}
 
-                                onChange={(e) => setInputsData({ ...inputsData, annonce: e.target.value })}
-
-                            >
-                                {annonces.map(annonce => <option key={annonce.key} value={annonce.value}>{annonce.key}</option>)}
-                            </Form.Select>
-                        </Form.Group>
                         {renderInputsBasedOnType()}
-                        <label>
-                            Images :
+                        <div>
                             <input
-                                type="file"
-                                name="images"
-                                onChange={handleImageChange}
+                                accept="image/*"
+                                style={{ display: 'none' }}
+                                id="upload-button"
                                 multiple
+                                type="file"
+                                onChange={handleImageChange}
                             />
-                        </label>
+                            <label htmlFor="upload-button">
+                                <IconButton color="primary" aria-label="upload picture" component="span">
+                                    <CloudUploadIcon />
+                                </IconButton>
+                                <span>Upload Images</span>
+                            </label>
+                        </div>
 
                     </div>
 
@@ -1301,6 +1324,7 @@ export const Biens = ({ showModal, handleClose }) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="primary" onClick={ajouterBiens}>
+
                     Save
                 </Button>
             </Modal.Footer>

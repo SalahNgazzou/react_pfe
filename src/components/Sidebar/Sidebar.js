@@ -31,7 +31,7 @@ export const Sidebar = () => {
         {user && (
         <ul>
           {user.role === "Admin" ? (<li><a href='UsersPage'>Users</a></li>):null}
-          <li><a href=''>Biens</a></li>
+          <li><a href='/Admin/Biens'>Biens</a></li>
           <li> <Button variant="primary" onClick={LogOut} style={{ border: 'none', background: 'none', color: 'red', padding: '0px' }}>
             Logout
           </Button>

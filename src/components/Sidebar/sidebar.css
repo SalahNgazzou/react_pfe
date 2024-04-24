@@ -3,7 +3,7 @@
 .sidebar {
     width: 250px;
     height: 100%;
-    background-color: #AED6DC;
+    background-color: #4A536B;
     color: #fff;
     padding-top: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -39,7 +39,7 @@
   }
   
   nav li:hover {
-    background-color: #4A536B;
+    background-color: #AED6DC;
   }
   li a {
     color: #fff;

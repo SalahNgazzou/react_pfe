@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
-import { putBien } from '../../utils/putData';
+import { putBien, putData } from '../../utils/putData';
+import { postBien } from '../../utils/postData';
+import { ImagesDispaly } from '../ImagesDispaly/ImagesDispaly';
+import { getData } from '../../utils/getData';
 
-function Edit_biens({ handleCloseEdit, userdata }) {
 
+export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
+    console.log(biendata);
     const types = [
         { key: "Duplex", value: "Duplex" },
         { key: "Local Commercial", value: "Local Commercial" },
@@ -15,7 +19,6 @@ function Edit_biens({ handleCloseEdit, userdata }) {
         { key: "Entrepot", value: "Entrepot" },
         { key: "Immeuble", value: "Immeuble" }
     ];
-    console.log(userdata);
     const dispo = [{ key: "En cours", value: "En cours" }, { key: "Vendu", value: "Vendu" }, { key: "Louée", value: "Louée" }];
     const exicte = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
     const annonces = [{ key: "Masquer", value: "Masquer" }, { key: "Publier", value: "Publier" }];
@@ -54,88 +57,91 @@ function Edit_biens({ handleCloseEdit, userdata }) {
         { key: 'Zaghouan', value: 'Zaghouan' }
     ];
     const [inputsData, setInputsData] = useState({
-
-        type_biens: userdata?.type_biens,
-        categorie: userdata?.categorie,
-        propritair_name: userdata?.propritair_name,
-        proritaire_phone: userdata?.proritaire_phone,
-        disponibilté: userdata?.disponibilté,
-        description: userdata?.description,
-        etat: userdata?.etat,
-        addresse: userdata?.addresse,
-        gouvernorats: userdata?.gouvernorats,
-        ville: userdata?.ville,
-        surface: userdata?.surface,
-        nbr_chombre: userdata?.nbr_chombre,
-        nbr_salle_de_bain: userdata?.nbr_salle_de_bain,
-        proximité: userdata?.proximité,
-        meublé: userdata?.meublé,
-        annonce: userdata?.annonce,
-        jardin: userdata?.jardin,
-        piscin: userdata?.piscin,
-        garage: userdata?.garage,
-        balcon: userdata?.balcon,
-        etage: userdata?.etage,
-        vue: userdata?.vue,
-        terasse: userdata?.terasse,
-        ascenceur: userdata?.ascenceur,
-        parking: userdata?.parking,
-        chauffage: userdata?.chauffage,
-        climatisation: userdata?.climatisation,
-        nbr_place: userdata?.nbr_place,
-        dimension: userdata?.dimension,
-        secuirité: userdata?.secuirité,
-        accessibilité: userdata?.accessibilité,
-        service: userdata?.service,
-        superficie: userdata?.superficie,
-        type_commerce_autorisé: userdata?.type_commerce_autorisé,
-        visibilité: userdata?.visibilité,
-        usage_autorisé: userdata?.usage_autorisé,
-        service_public: userdata?.service_public,
-        cloture: userdata?.cloture,
-        titre_proprité: userdata?.titre_proprité,
-        nbr_appartement: userdata?.nbr_appartement,
-        nbr_etage: userdata?.nbr_etage,
-        année_construction: userdata?.année_construction,
-        superficie_total: userdata?.superficie_total,
-        superficie_appartement: userdata?.superficie_appartement,
-        type_immeuble: userdata?.type_immeuble,
-        espace_commun: userdata?.espace_commun,
-        superficie_batie: userdata?.superficie_batie,
-        superficie_terre: userdata?.superficie_terre,
-        type_industrie: userdata?.type_industrie,
-        equipement: userdata?.equipement,
-        acces_tansport: userdata?.acces_tansport,
-        capacité_stockage: userdata?.capacité_stockage,
-        heuteur: userdata?.heuteur,
-        condition_stockage: userdata?.condition_stockage,
-        images: [],
-
+        id: "",
+        type_biens: '',
+        categorie: '',
+        propritair_name: '',
+        proritaire_phone: '',
+        disponibilté: '',
+        description: '',
+        etat: '',
+        addresse: '',
+        gouvernorats: '',
+        ville: '',
+        prix: '',
+        surface: '',
+        nbr_chombre: '',
+        nbr_salle_de_bain: '',
+        proximité: '',
+        meublé: '',
+        annonce: '',
+        jardin: '',
+        piscin: '',
+        garage: '',
+        balcon: '',
+        etage: '',
+        vue: '',
+        terasse: '',
+        ascenceur: '',
+        parking: '',
+        chauffage: '',
+        climatisation: '',
+        nbr_place: '',
+        dimension: '',
+        secuirité: '',
+        accessibilité: '',
+        service: '',
+        superficie: '',
+        type_commerce_autorisé: '',
+        visibilité: '',
+        usage_autorisé: '',
+        service_public: '',
+        cloture: '',
+        titre_proprité: '',
+        nbr_appartement: '',
+        nbr_etage: '',
+        année_construction: '',
+        superficie_total: '',
+        superficie_appartement: '',
+        type_immeuble: '',
+        espace_commun: '',
+        superficie_batie: '',
+        superficie_terre: '',
+        type_industrie: '',
+        equipement: '',
+        acces_tansport: '',
+        capacité_stockage: '',
+        heuteur: '',
+        condition_stockage: '',
+        
     });
-    console.log(inputsData)
 
-    const handleImageChange = (e) => {
-        const files = e.target.files;
-        setInputsData((prev) => ({
-            ...prev,
-            images: files,
-        }));
-    };
-
+    useEffect(() => {
+        getData({ setData: setInputsData, url: "biens/" + biendata });
+      }, [biendata]);
+console.log(inputsData);
     const modifierBiens = async () => {
-
-        const formData = new FormData();
-        console.log(inputsData)
-
-        // Ajouter les champs à FormData en fonction de leur nom
-        Object.keys(inputsData).forEach((key) => {
-            formData.append(key, inputsData[key]);
-        });
-        putBien({ url: "biens", data: formData, id: userdata.id })
-        handleCloseEdit();
-    };
+        try {
+            const response = await fetch(`http://localhost:8000/api/biens/edit/${inputsData.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(inputsData)
+            });
+    
+            if (!response.ok) {
+                throw new Error('Erreur lors de la mise à jour');
+            }
+    
+            console.log('Mise à jour réussie !');
+        } catch (error) {
+            console.error('Erreur lors de la mise à jour :', error);
+        }
+        
+    }
     const renderInputsBasedOnType = () => {
-        switch (inputsData.type_biens) {
+        switch (inputsData?.type_biens) {
             case 'Villa':
                 return (
                     <div>
@@ -1152,9 +1158,9 @@ function Edit_biens({ handleCloseEdit, userdata }) {
         }
     }
     return (
-        <Modal show={!userdata ? false : true} onHide={handleCloseEdit} size="lg">
+        <Modal show={showModalEdit==true } onHide={handleCloseEdit} size="lg">
             <Modal.Header closeButton>
-                <Modal.Title>Add Biens</Modal.Title>
+                <Modal.Title>Edit Biens</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
@@ -1164,18 +1170,7 @@ function Edit_biens({ handleCloseEdit, userdata }) {
 
                         <h4>Bien</h4>
 
-                        <Form.Group className="custom-padding">
-                            <Form.Label>Type</Form.Label>
-                            <Form.Select name="type_biens"
 
-                                onChange={(e) => setInputsData({ ...inputsData, type_biens: e.target.value })}
-                                value={inputsData.type_biens}
-                            >
-                                {types.map((type, index) => (
-                                    <option key={type.value} value={type.value}>{type.key}</option>
-                                ))}
-                            </Form.Select>
-                        </Form.Group>
 
                         <Form.Group className="custom-padding">
                             <Form.Label>Categorie</Form.Label>
@@ -1204,6 +1199,7 @@ function Edit_biens({ handleCloseEdit, userdata }) {
                                 <Form.Group className="custom-padding">
                                     <Form.Label>proritaire phone</Form.Label>
                                     <Form.Control type="text" name="proritaire_phone"
+                                        value={inputsData.proritaire_phone}
                                         onChange={(e) => setInputsData({ ...inputsData, proritaire_phone: e.currentTarget.value })}
 
                                     />
@@ -1213,7 +1209,7 @@ function Edit_biens({ handleCloseEdit, userdata }) {
                         <Form.Group className="custom-padding">
                             <Form.Label>disponibilté</Form.Label>
                             <Form.Select name="disponibilté"
-
+                                value={inputsData.disponibilté}
                                 onChange={(e) => setInputsData({ ...inputsData, disponibilté: e.target.value })}
 
                             >
@@ -1227,6 +1223,7 @@ function Edit_biens({ handleCloseEdit, userdata }) {
                             <Form.Control
                                 as="textarea"
                                 name="description"
+                                value={inputsData.description}
                                 onChange={(e) => setInputsData({ ...inputsData, description: e.currentTarget.value })}
 
                                 rows={4} // Adjust the number of rows as needed
@@ -1236,6 +1233,7 @@ function Edit_biens({ handleCloseEdit, userdata }) {
                         <Form.Group className="custom-padding">
                             <Form.Label>etat</Form.Label>
                             <Form.Control type="text" name="etat"
+                                value={inputsData.etat}
                                 onChange={(e) => setInputsData({ ...inputsData, etat: e.currentTarget.value })}
 
                             />
@@ -1245,6 +1243,7 @@ function Edit_biens({ handleCloseEdit, userdata }) {
                                 <Form.Group className="custom-padding">
                                     <Form.Label>Adresse</Form.Label>
                                     <Form.Control type="text" name="addresse"
+                                        value={inputsData.addresse}
                                         onChange={(e) => setInputsData({ ...inputsData, addresse: e.currentTarget.value })}
 
                                     />
@@ -1254,7 +1253,7 @@ function Edit_biens({ handleCloseEdit, userdata }) {
                                 <Form.Group className="custom-padding">
                                     <Form.Label>Gouvernorat</Form.Label>
                                     <Form.Select name="gouvernant"
-
+                                        value={inputsData.gouvernorats}
                                         onChange={(e) => setInputsData({ ...inputsData, gouvernorats: e.target.value })}
 
                                     >
@@ -1267,7 +1266,7 @@ function Edit_biens({ handleCloseEdit, userdata }) {
                                     <Form.Label>Ville</Form.Label>
                                     <Form.Control type="text" name="ville"
 
-
+                                        value={inputsData.ville}
                                         onChange={(e) => setInputsData({ ...inputsData, ville: e.currentTarget.value })}
 
                                     />
@@ -1281,6 +1280,7 @@ function Edit_biens({ handleCloseEdit, userdata }) {
                                 <Form.Control
                                     type="number"
                                     name="prix"
+                                    value={inputsData.prix}
                                     onChange={(e) => setInputsData({ ...inputsData, prix: e.currentTarget.value })}
 
                                     placeholder="Entrer le prix en DT"
@@ -1295,14 +1295,21 @@ function Edit_biens({ handleCloseEdit, userdata }) {
                         <Form.Group className="custom-padding">
                             <Form.Label>Annonce</Form.Label>
                             <Form.Select name="annonce"
-
+                                value={inputsData.annonce}
                                 onChange={(e) => setInputsData({ ...inputsData, annonce: e.target.value })}
-
                             >
                                 {annonces.map(annonce => <option key={annonce.key} value={annonce.value}>{annonce.key}</option>)}
                             </Form.Select>
                         </Form.Group>
                         {renderInputsBasedOnType()}
+
+
+                        {/* {
+                        {inputsData?.images.length>0 && <ImagesDispaly images={inputsData?.images ?? []}
+                            setImages={
+                                (imgs) => setInputsData({ ...inputsData, images: imgs })
+                            } setDeletedImages={(imgs) => setInputsData({ ...inputsData, deletedImages: [...inputsData.deletedImages,imgs] })} />
+                        }
                         <label>
                             Images :
                             <input
@@ -1311,8 +1318,8 @@ function Edit_biens({ handleCloseEdit, userdata }) {
                                 onChange={handleImageChange}
                                 multiple
                             />
-                        </label>
-
+                        </label> }
+ */}
                     </div>
 
                 </Form>
@@ -1327,4 +1334,3 @@ function Edit_biens({ handleCloseEdit, userdata }) {
     )
 }
 
-export default Edit_biens

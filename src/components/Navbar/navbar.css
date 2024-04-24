@@ -1,0 +1,133 @@
+.body{
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'Lato', sans-serif;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-font-smoothing: subpixel-antialiased;
+    color: #727272;
+    line-height: 25px;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    overflow-x: hidden;
+}
+h1, h2, h3, h4 {
+    font-size: 22px;
+    color: #272727;
+    font-weight: 700;
+    line-height: 22px;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+  }
+  a {
+    -webkit-transition: all 0.3s ease-out 0s;
+    -moz-transition: all 0.3s ease-out 0s;
+    -ms-transition: all 0.3s ease-out 0s;
+    -o-transition: all 0.3s ease-out 0s;
+    transition: all 0.3s ease-out 0s;
+  }
+  
+  a:hover {
+    text-decoration: none;
+  }
+  
+  a a:focus {
+    outline: none;
+  }
+  
+  p {
+    color: #727272;
+    font-weight: 400;
+    font-family: 'Lato', sans-serif;
+    margin: 0px;
+    font-size: 14px;
+  }
+  
+  ul, ol {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  ul li, ol li {
+    list-style: none;
+  }
+  .roof-social a {
+    color: #ffffff;
+    float: left;
+    font-size: 18px;
+    text-align: center;
+    line-height: 42px;
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all .4s ease 0s;
+    transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+  }
+  .roof-social a:hover {
+    color: #fff;
+    background: #0dcdbd;
+  }
+  
+  .roof-social a:last-child {
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  
+  .roof-social .facebook:hover {
+    background: #3b5999;
+    border-left-color: #3b5999;
+  }
+  
+  .roof-social .twitter:hover {
+    background: #4A9CEC;
+    border-left-color: #4A9CEC;
+  }
+  
+  .roof-social .instagram:hover {
+    background: #D6274D;
+    border-left-color: #D6274D;
+  }
+  
+  .roof-social .linkedin:hover {
+    background: #1260A2;
+    border-left-color: #1260A2;
+  }
+  
+.top-bar {
+    background: #0dcdbd;
+  }
+  .top-bar .links li {
+    display: inline-block;
+    line-height: 42px;
+    color: #fff;
+    margin-right: 15px;
+    font-size: 14px;
+  }
+  
+  .top-bar .links li a {
+    display: block;
+    margin-right: 15px;
+    color: #fff;
+    line-height: 32px;
+  }
+  .header-top-right {
+    margin-right: 15px;
+    line-height: 42px;
+    color: #fff;
+  }
+  
+  .header-top-right .header-top-button {
+    color: #ffffff;
+    font-size: 14px;
+    margin: 8px;
+    -webkit-transition: all 0.3s ease-out 0s;
+    -moz-transition: all 0.3s ease-out 0s;
+    -ms-transition: all 0.3s ease-out 0s;
+    -o-transition: all 0.3s ease-out 0s;
+    transition: all 0.3s ease-out 0s;
+  }
+  .header-top-right .header-top-button:hover {
+    color: #f1f1f1;
+  }  

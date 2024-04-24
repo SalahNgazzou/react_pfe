@@ -1,0 +1,38 @@
+/* Sidebar.css */
+
+.imagesDispaly {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+  }
+  .imagesContainer{
+    width: 100%;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    width: 100%;
+
+  }
+  .image{
+    width:150px ;
+    height:150px ;
+    position: relative;
+  }
+  .img{ width:150px ;
+    height:150px ;
+  object-fit: cover;}
+  .delete{
+  position: absolute;
+  top:0;
+  right: 0;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: aliceblue;
+  width: 25px;
+  width: 25px;
+  display: flex;
+  justify-content: center;
+
+  }
+  .inputFile{}

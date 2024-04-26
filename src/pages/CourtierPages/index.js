@@ -1,1 +1,1 @@
-export {ConsulterBien} from "./ConsulterBiens";
+export {BiensCourtier} from './BiensPagesCourtier';

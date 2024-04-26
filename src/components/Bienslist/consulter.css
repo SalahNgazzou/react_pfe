@@ -1,0 +1,215 @@
+/* Styles de base pour les éléments */
+.bien {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+.carousel-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.carousel {
+    width: 100%;
+}
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.button {
+    display: flex;
+    justify-content: flex-end;
+    /* Aligner les boutons à droite */
+    gap: 10px;
+    /* Espacement entre les boutons */
+}
+
+.type-container,
+.dispo-container {
+    width: 30%;
+    margin-bottom: 20px;
+}
+
+/* Styles responsives */
+@media screen and (max-width: 768px) {
+    .bien {
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        overflow-y: auto;
+    }
+    .button {
+      
+        /* Espacement entre les boutons */
+    }
+    .carousel-container {
+        width:100%;
+        /* Largeur du carrousel */
+        height: 300PX;
+        /* Hauteur du carrousel */
+       
+        /* Positionnement à droite */
+        margin-top: 10px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        /* Ombre */
+    }
+
+}
+
+/* Pour les écrans plus grands que 768px */
+@media screen and (min-width: 769px) {
+    .carousel-container {
+        width: 50%;
+        float: left;
+    }
+
+    .flex {
+        width: 50%;
+    }
+}
+
+/* Pour les écrans très grands */
+@media screen and (min-width: 1200px) {
+    .bien {
+        padding: 40px;
+    }
+}
+
+/* Pour les écrans extrêmement petits */
+@media screen and (max-width: 320px) {
+    .carousel-container {
+        width: 100%;
+    }
+}
+
+.carousel-container {
+    width: 550px;
+    /* Largeur du carrousel */
+    height: 300PX;
+    /* Hauteur du carrousel */
+    float: right;
+    /* Positionnement à droite */
+    margin-top: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    /* Ombre */
+}
+
+.carousel {
+    width: 100%;
+    height: 100%;
+    /* Assurez-vous que le carrousel occupe toute la hauteur de son conteneur */
+}
+
+.carousel img {
+    width: 100%;
+    height: 100%;
+    /* Assurez-vous que le carrousel occupe toute la hauteur de son conteneur */
+}
+
+.flex {
+    width: 550px;
+    height: 300px;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: #AED6DC;
+    /* Blanc cassé */
+    box-shadow: 0px 0px 10px #AED6DC;
+    /* Ombre */
+}
+
+.type_container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 550px;
+    max-height: 50px;
+    padding: 10px;
+    margin: 5px;
+    border: 2px solid #4A536B;
+    border-radius: 5px;
+    color: #4A536B;
+}
+
+.description {
+    max-width: 550px;
+    min-height: 230px;
+    padding: 10px;
+    margin: 5px;
+    border: 2px solid #4A536B;
+    border-radius: 5px;
+    color: #4A536B;
+    overflow-y: auto;
+}
+
+.information {
+    display: flex;
+    justify-content: space-between;
+    width: 1225px;
+    height: 50px;
+    padding: 12px;
+    border-radius: 5px;
+    background-color: #AED6DC;
+    box-shadow: 0px 0px 10px #AED6DC;
+    color: #4A536B;
+    
+   
+}
+.buttons{
+    display: flex;
+    justify-content: space-between;
+}
+.button Button{
+    gap: 10px;
+    border: none;
+    box-shadow: 0px 0px 10px #AED6DC;
+    color: #4A536B;
+}
+.back Button{
+    border: none;
+}
+.footer{
+    display: flex;
+    justify-content: flex-end;
+}
+.edit Button{
+    border: none;
+    margin: 10px;
+}
+.valider Button{
+    border: none;
+    margin: 10px;
+}
+.header-div-information {
+    color: #4A536B;
+    max-width: 150px;
+    min-height: 30px;
+    margin-top: 20px;
+    padding-left: 10px;
+   text-decoration: underline;
+}
+.table-containre{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.talble-header{
+    margin-top: 10px;
+}
+.talble-header h4{
+display: flex;
+justify-content: center;
+color: #4A536B;
+text-decoration: underline;
+}
+

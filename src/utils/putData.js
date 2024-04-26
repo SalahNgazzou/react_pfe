@@ -1,6 +1,6 @@
 import { getToken } from "./getToken";
 
- export const putData = async ({url,data,id}) => {
+ export const putData = async ({url,data,id,isFormData,needAuth}) => {
     await fetch("http://localhost:8000/api/"+url+"/"+id, {
       method: 'PUT',
       body: JSON.stringify(data),
@@ -10,4 +10,15 @@ import { getToken } from "./getToken";
         "Accept": 'application/json'
       }
     });
+}
+
+export const putBien = async ({url,data,id}) => {
+  await fetch("http://localhost:8000/api/"+url+"/"+id, {
+    method: 'PUT',
+    body: data,
+    headers:{
+      'Authorization': `Bearer ${getToken()}`,
+    }
+  });
+  console.log(data);
 }

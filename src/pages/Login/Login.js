@@ -34,6 +34,8 @@ export const Login = () => {
         } else if(result.user.role === 'Courtier'){
             // Sinon, redirigez-le vers la page '/Courtier/biens'
             navigate('/Courtier/biens');
+        }else{
+          navigate('/Secraitaire')
         }
     }
   

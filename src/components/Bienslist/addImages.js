@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { postBien} from '../../utils/postData'
 export const Images = ({ showModal, handleClose, biendata }) => {
-    console.log(biendata);
+    
     const [image, setImage] = useState([]);
    
 

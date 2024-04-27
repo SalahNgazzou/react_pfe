@@ -15,11 +15,10 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import './consulter.css';
 
 export const ConsulteBien = ({user}) => {
-console.log(user);
+
   const { id } = useParams();
   const [biendata, setBienData] = useState(null);
   const [images, setImages] = useState([]);
-  const [deletedImages, setDeletedImages] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalDelet, setShowModalDelet] = useState(false);

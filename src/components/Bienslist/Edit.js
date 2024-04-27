@@ -7,8 +7,9 @@ import { getData } from '../../utils/getData';
 
 
 export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
-    console.log(biendata);
+    
     const types = [
+        { key: "", value: "" },
         { key: "Duplex", value: "Duplex" },
         { key: "Local Commercial", value: "Local Commercial" },
         { key: "Villa", value: "Villa" },
@@ -19,17 +20,17 @@ export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
         { key: "Entrepot", value: "Entrepot" },
         { key: "Immeuble", value: "Immeuble" }
     ];
-    const dispo = [{ key: "En cours", value: "En cours" }, { key: "Vendu", value: "Vendu" }, { key: "Louée", value: "Louée" }];
-    const exicte = [{ key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
-    const annonces = [{ key: "Masquer", value: "Masquer" }, { key: "Publier", value: "Publier" }];
-    const commerces = [{ key: "Boutique", value: "Boutique" }, { key: "Restaurant", value: "Restaurant" }, { key: "Bureau", value: "Bureau" }, { key: "Autre", value: "Autre" }];
-    const immeubles = [{ key: "Résidentiel", value: "Résidentiel" }, { key: "Commercial", value: "Commercial" }, { key: "Mixte", value: "Mixte" }]
-    const accessibilités = [{ key: "24h/24h", value: "24h/24h" }];
-    const stokages = [{ key: "Température contrôlée", value: "Température contrôlée" }, { key: "Contrôle de l'humidité ", value: "Contrôle de l'humidité " }, { key: "Contrôle de la lumière ", value: "Contrôle de la lumière " }, { key: "Sécurité contre les incendies  ", value: "Sécurité contre les incendies  " }, { key: "Autre", value: "Autre" }]
-    const industries = [{ key: "Alimentaire", value: "Alimentaire" }, { key: "Chimique", value: "Chimique" }, { key: "Électronique ", value: "Électronique " }, { key: "Textile ", value: "Textile " }, { key: "Autre", value: "Autre" }]
-    const usage_autorisé = [{ key: "Résidentiel", value: "Résidentiel" }, { key: "Commercial", value: "Commercial" }, { key: "Industriel", value: "Industriel" }, { key: "Récréatif", value: "Récréatif" }, { key: "Agricole", value: "Agricole" }, { key: "Mixte", value: "Mixte" }];
-    const services = [{ key: "Nettoyage", value: "Nettoyage" }, { key: "Réparation", value: "Réparation" }];
-    const categories = [{ key: "A vendre", value: "A vendre" }, { key: "A louer", value: "A louer" }];
+    const dispo = [{ key: "", value: "" }, { key: "En cours", value: "En cours" }, { key: "Vendu", value: "Vendu" }, { key: "Louée", value: "Louée" }];
+    const exicte = [{ key: "", value: "" }, { key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
+    const annonces = [{ key: "", value: "" }, { key: "Masquer", value: "Masquer" }, { key: "Publier", value: "Publier" }];
+    const commerces = [{ key: "", value: "" }, { key: "Boutique", value: "Boutique" }, { key: "Restaurant", value: "Restaurant" }, { key: "Bureau", value: "Bureau" }, { key: "Autre", value: "Autre" }];
+    const immeubles = [{ key: "", value: "" }, { key: "Résidentiel", value: "Résidentiel" }, { key: "Commercial", value: "Commercial" }, { key: "Mixte", value: "Mixte" }]
+    const accessibilités = [{ key: "", value: "" }, { key: "24h/24h", value: "24h/24h" }];
+    const stokages = [{ key: "", value: "" }, { key: "Température contrôlée", value: "Température contrôlée" }, { key: "Contrôle de l'humidité ", value: "Contrôle de l'humidité " }, { key: "Contrôle de la lumière ", value: "Contrôle de la lumière " }, { key: "Sécurité contre les incendies  ", value: "Sécurité contre les incendies  " }, { key: "Autre", value: "Autre" }]
+    const industries = [{ key: "", value: "" }, { key: "Alimentaire", value: "Alimentaire" }, { key: "Chimique", value: "Chimique" }, { key: "Électronique ", value: "Électronique " }, { key: "Textile ", value: "Textile " }, { key: "Autre", value: "Autre" }]
+    const usage_autorisé = [{ key: "", value: "" }, { key: "Résidentiel", value: "Résidentiel" }, { key: "Commercial", value: "Commercial" }, { key: "Industriel", value: "Industriel" }, { key: "Récréatif", value: "Récréatif" }, { key: "Agricole", value: "Agricole" }, { key: "Mixte", value: "Mixte" }];
+    const services = [{ key: "", value: "" }, { key: "Nettoyage", value: "Nettoyage" }, { key: "Réparation", value: "Réparation" }];
+    const categories = [{ key: "", value: "" }, { key: "A vendre", value: "A vendre" }, { key: "A louer", value: "A louer" }];
     const gouvernorats = [
         { key: 'Ariana', value: 'Ariana' },
         { key: 'Béja', value: 'Béja' },
@@ -119,7 +120,6 @@ export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
     useEffect(() => {
         getData({ setData: setInputsData, url: "biens/" + biendata });
       }, [biendata]);
-console.log(inputsData);
     const modifierBiens = async () => {
         try {
             const response = await fetch(`http://localhost:8000/api/biens/edit/${inputsData.id}`, {

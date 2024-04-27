@@ -8,6 +8,7 @@ import SaveIcon from '@mui/icons-material/Save';
 
 export const Biens = ({ showModal, handleClose }) => {
     const types = [
+        { key: "", value: "" },
         { key: "Duplex", value: "Duplex" },
         { key: "Local Commercial", value: "Local Commercial" },
         { key: "Villa", value: "Villa" },
@@ -57,11 +58,8 @@ export const Biens = ({ showModal, handleClose }) => {
         { key: 'Tunis', value: 'Tunis' },
         { key: 'Zaghouan', value: 'Zaghouan' }
     ];
-
-
     const [user, setUser] = useState(null);
     const [data, setData] = useState({});
-
     const [inputsData, setInputsData] = useState({
         type_biens: '',
         categorie: '',
@@ -137,13 +135,8 @@ export const Biens = ({ showModal, handleClose }) => {
             images: files,
         }));
     };
-
-
-
     const ajouterBiens = async () => {
-
         const formData = new FormData();
-        console.log(inputsData)
         const { images, ...inputs } = inputsData;
         const data = {
             ...inputs,
@@ -159,7 +152,6 @@ export const Biens = ({ showModal, handleClose }) => {
         for (const file of images) {
             formData.append("images[]", file);
         }
-        console.log(formData)
         postBien({ url: "biens", data: formData })
         handleClose();
     };

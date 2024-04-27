@@ -1,0 +1,27 @@
+.title_login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+.title_login h3{
+    color: #4A536B;
+    padding: auto;
+}
+.form_container{
+    display: block;
+    margin-left: 40px;
+    color: black;
+}
+.btn-login{
+margin-top: 5px;
+}
+.btn-login button{
+    background-color: #ff9a8f;
+    border-radius: 5px;
+    float: right;
+    color: #4A536B;
+    border: none;
+    font-size: 20px;
+    padding: 3px;
+}

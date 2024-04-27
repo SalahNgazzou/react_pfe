@@ -92,12 +92,7 @@ export const Table = () => {
         }
     }, [data, recherche]);
 
-    /*   const handleShowEdit = async (id) => {
-          setShowEdit(true);
-          await getData({ setData: setUserData, url: "biens/" + id });
-         
-      }; */
-
+    
     const ChangeStatue = async (id) => {
         try {
             await putAnnonce({ url: "biens/changestatue", id });

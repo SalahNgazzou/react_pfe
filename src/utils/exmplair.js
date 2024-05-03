@@ -1,6 +1,6 @@
 //import { getToken } from "./getToken";
 
-export const getData = async ({ setData, url }) => {
+export const Examplair = async ({ setData, url }) => {
     try {
         const response = await fetch(`http://localhost:8000/api/${url}`, {
             method: 'GET',
@@ -17,8 +17,10 @@ export const getData = async ({ setData, url }) => {
 
         const data = await response.json();
 
-       
-        setData(data);
+        console.log(data);
+        // Limiter aux trois premiers biens
+        const limitedData = data.slice(0, 3);
+        setData(limitedData);
     } catch (error) {
         console.error('Error fetching data:', error);
         // Gérer l'erreur, par exemple en définissant un état d'erreur ou en affichant un message à l'utilisateur

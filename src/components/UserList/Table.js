@@ -110,8 +110,8 @@ export const Table = () => {
             style: {
                 fontWeight: "bold",
                 fontSize: '14px',
-                backgroundColor: "#4A536B",
-                color: "white"
+                backgroundColor: "#FF9A8D",
+                color: "#4A536B"
             },
         },
     }
@@ -139,7 +139,7 @@ export const Table = () => {
                             width: '50px', // taille du bouton
                             height: '50px' // taille du bouton
                         }}>
-                        <AddIcon style={{ color: 'white' }} />
+                        <AddIcon style={{  color: '#4A536B'  }} />
                     </IconButton>
 
                 }

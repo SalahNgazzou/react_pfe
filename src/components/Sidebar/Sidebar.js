@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { FaUser } from 'react-icons/fa';
+import { FaHome } from 'react-icons/fa';
+import { FaSignOutAlt } from 'react-icons/fa';
 import './sidebar.css'; // Import the CSS file
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
@@ -29,15 +32,27 @@ export const Sidebar = () => {
       )}
       <nav>
         {user && (
-        <ul>
-          {user.role === "Admin" ? (<li><a href='UsersPage'>Users</a></li>):null}
-          <li><a href='/Admin/Biens'>Biens</a></li>
-          <li> <Button variant="primary" onClick={LogOut} style={{ border: 'none', background: 'none', color: 'red', padding: '0px' }}>
-            Logout
-          </Button>
-          </li>
-        </ul>
-         )}
+          <ul>
+            {user.role === "Admin" && (
+              <li>
+                <a href='/usersPage' style={{ color: '#4A536B' }}>
+                  <FaUser /> Users {/* Icône d'utilisateur */}
+                </a>
+              </li>
+            )}
+            <li>
+              <a href='/Admin/Biens' style={{ color: '#4A536B' }}>
+                <FaHome /> Biens
+              </a>
+            </li>
+            <li>
+              <Button variant="primary" onClick={LogOut} style={{ border: 'none', background: 'none', color: 'red', padding: '0px' }}>
+                <FaSignOutAlt /> {/* Icône de déconnexion */}
+                Logout
+              </Button>
+            </li>
+          </ul>
+        )}
       </nav>
     </div>
   );

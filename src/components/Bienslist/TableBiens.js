@@ -4,7 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
-import { getData } from '../../utils/getData';
+import { getData} from '../../utils/getData';
 import { putAnnonce } from '../../utils/putAnnonce';
 
 
@@ -38,10 +38,9 @@ export const Table = () => {
                 <IconButton
                     onClick={() => ChangeStatue(row.id)}
                     className={`btn ${row.disponibilté === 'En cours' ? 'btn-danger' : 'btn-success'}`}
-                    aria-label={row.disponibilté === 'Publier' ? 'Publier' : 'Masquer'}
                     style={{ color: row.disponibilté === 'En cours' ? 'red' : 'green' }}
                 >
-                    {row.disponibilté === 'En cours' ? <HighlightOff />:<CheckCircleOutline />}
+                    {row.disponibilté === 'En cours' ?  <HighlightOff />:<CheckCircleOutline />}
                 </IconButton>
             )
         },
@@ -153,7 +152,7 @@ export const Table = () => {
                
             />
             <Biens showModal={showModal} handleClose={handleClose}  />
-            {<ConsulteBien user={user} />} 
+            {/* {<ConsulteBien user={user} />}  */}
         </div>
     );
 };

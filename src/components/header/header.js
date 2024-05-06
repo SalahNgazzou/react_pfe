@@ -38,11 +38,9 @@ export const Navbars = () => {
             navbarScroll
           >
             <Nav.Link href="/home" style={{ ...navLinkStyle}}>Home</Nav.Link>
-            <Nav.Link href="/estimation" style={{ ...navLinkStyle}}>Estimation</Nav.Link>
-
-            <Nav.Link href="/about" style={{ ...navLinkStyle}}>
-              About
-            </Nav.Link>
+            <Nav.Link href="/nos_biens" style={{ ...navLinkStyle}}>Nos Biens</Nav.Link>
+            <Nav.Link href="/estimation" style={{ ...navLinkStyle}}>Estimez Votre Bien Immobilier</Nav.Link>
+            <Nav.Link href="/demande_de_recherche" style={{ ...navLinkStyle}}>Demande de Recherche  </Nav.Link>
             <Nav.Link href="/contact" style={{ ...navLinkStyle}}>Contact</Nav.Link>
           </Nav>
           <Form className="d-flex">

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Carousel, Col, Form, Row, Table } from 'react-bootstrap'
 import { useParams } from 'react-router-dom';
-import { getData } from '../../utils/getData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import './visite.css'
 import { FaBed, FaPaperPlane, FaRuler, FaCar, FaShower, FaMapMarkerAlt, FaCouch, FaTree, FaSwimmingPool, FaFire, FaSnowflake } from 'react-icons/fa';
+import { getBien } from '../../utils/VisiteurUtils/getBien';
 export const VisiteBien = () => {
 
   const { id } = useParams();
@@ -15,7 +15,7 @@ export const VisiteBien = () => {
 
 
   useEffect(() => {
-    getData({ setData: setBienData, url: "visiteur/" + id });
+    getBien({ setData: setBienData, url: "visiteur/" + id });
   }, [id]);
   console.log(biendata);
 
@@ -436,7 +436,7 @@ export const VisiteBien = () => {
     <div className='bien'>
       <div className='buttons'>
         <div className='back'>
-          <a href='/'>
+          <a href='/home'>
             <Button style={{ backgroundColor: '#FF9A8D' }}>
               <FontAwesomeIcon icon={faArrowLeft} />
             </Button>
@@ -463,8 +463,8 @@ export const VisiteBien = () => {
             </div>
           </Col>
         </div>
-        <div className='carousel-container'>
-          <Carousel>
+        <div className='carousel_container'>
+          <Carousel className='visite_img'>
             {images.map((image, index) => (
               <Carousel.Item key={index}>
                 <img src={`http://localhost:8000/${image.src}`} alt={`Image ${index}`} />
@@ -481,7 +481,7 @@ export const VisiteBien = () => {
           <h6>Ville : <span>{biendata?.ville} | </span></h6>
         </div>
         <div className='info'>
-          <h6>Gouvernorat : <span>{!biendata?.gouvernorats ? '-' : biendata?.gouvernorats} | </span></h6>
+          <h6>Gouvernorat : <span>{!biendata?.gouvernant ? '-' : biendata?.gouvernant} | </span></h6>
         </div>
         <div className='info'>
           <h6>Prix : <span>{!biendata?.prix ? '-' : biendata?.prix} DT | </span></h6>

@@ -9,15 +9,21 @@ import { BiensCourtier } from '../CourtierPages/BiensPagesCourtier'
 import { Navbars } from '../../components/header/header'
 import { Home } from '../Home'
 import { VisiteBien } from '../visitebien/vistie'
+import { Estimation } from '../estimation/estimation'
+import { Recherche } from '../demandeRecherche/recherche'
+import { Biens } from '../biens/biens'
 
 function Main() {
 
   return (
     <div>
-      
+
       <BrowserRouter>
-      <Navbars />
+        <Navbars />
         <Routes>
+          <Route path="/estimation" element={<Estimation />} />
+          <Route path="/nos_biens" element={<Biens />} />
+          <Route path="/demande_de_recherche" element={<Recherche />} />
           <Route path="/visite/:id" element={<VisiteBien />} />
           <Route path="/Bien/:id" element={<ProtectRoute cmp={<ConsulteBien />} />} />
           <Route path="/usersPage" element={<ProtectAdmin cmp={<UsersPage />} />} />

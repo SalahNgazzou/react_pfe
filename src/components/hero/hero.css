@@ -26,12 +26,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    height: auto;
     background-color: #aed6dc;
     border-radius: 5px;
     margin-top: 50px;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 0 20px;
+    padding:20px;
 }
 
 form input {
@@ -55,7 +55,7 @@ input::placeholder {
     color: grey;
 }
 
-form .box {
+.box {
     padding: 15px;
     border-left: 1px solid rgba(128, 128, 128, 0.2);
 }
@@ -71,6 +71,7 @@ form h4 {
 }
 
 .btn1 {
+    
     background-color: #ff9A8F;
     /* couleur de fond */
     color: #4A536B;
@@ -82,6 +83,7 @@ form h4 {
     padding: 8px 16px;
     /* espacement interne */
     cursor: pointer;
+    margin-top: 33px;
 }
 .form{
     display: flex;

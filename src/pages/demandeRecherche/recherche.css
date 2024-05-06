@@ -1,0 +1,21 @@
+.recherche {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-image: url("../../../public/img/recherche.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.form_recherche {
+    width: 50%;
+    height: auto;
+    padding: 20px;
+    margin: 5px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #5b5b7e38;
+}

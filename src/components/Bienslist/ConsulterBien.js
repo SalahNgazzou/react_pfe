@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Carousel, Col, Row, Table } from 'react-bootstrap'
 import { useParams } from 'react-router-dom';
-import { getData } from '../../utils/getData';
 import { Images } from '../Bienslist/addImages'
 import { Edit_biens } from '../Bienslist/Edit'
 import { ImagesDisplay } from '../Bienslist/ImagesDispaly'
@@ -11,10 +10,11 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-
 import './consulter.css';
+import { getData } from '../../utils/getData';
 
-export const ConsulteBien = ({user}) => {
+
+export const ConsulteBien = ({ user }) => {
 
   const { id } = useParams();
   const [biendata, setBienData] = useState(null);
@@ -22,7 +22,7 @@ export const ConsulteBien = ({user}) => {
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalDelet, setShowModalDelet] = useState(false);
- 
+
 
   useEffect(() => {
     getData({ setData: setBienData, url: "biens/" + id });
@@ -467,20 +467,50 @@ export const ConsulteBien = ({user}) => {
         </div>
 
       </div>
-      <div className='carousel-container'>
-        <div className='carousel' >
-          <Carousel>
-            {images.map((image, index) => (
-              <Carousel.Item key={index}>
-                <img src={`http://localhost:8000/${image.src}`} alt={`Image ${index}`} />
-              </Carousel.Item>
-            ))}
-          </Carousel>
-        </div>
+
+      <div className='consulte_img' >
+        <Carousel >
+          {images.map((image, index) => (
+            <Carousel.Item key={index}>
+              <img src={`http://localhost:8000/${image.src}`} alt={`Image ${index}`} />
+            </Carousel.Item>
+          ))}
+        </Carousel>
       </div>
-      <div className='flex'>
-        <Col>
-          <div className='type_container'>
+      <div>
+        <div className='header-div-information'>
+          <h5>Information : </h5>
+        </div>
+        <div className='information'>
+          <div className='info'>
+            <h6>Addresse : <span>{biendata?.addresse} | </span></h6>
+          </div>
+          <div className='info'>
+            <h6>Ville : <span>{biendata?.ville} | </span></h6>
+          </div>
+          <div className='info'>
+            <h6>Gouvernorat : <span>{biendata?.gouvernant} | </span></h6>
+          </div>
+          <div className='info'>
+            <h6>Prix : <span>{!biendata?.prix ? '-' : biendata?.prix} DT | </span></h6>
+          </div>
+          <div className='info'>
+            <h6>Propriétaire : <span>{!biendata?.propritair_name ? '-' : biendata?.propritair_name} | </span></h6>
+          </div>
+          <div className='info'>
+            <h6>Téléphone : <span>{!biendata?.proritaire_phone ? '-' : biendata?.proritaire_phone}</span></h6>
+          </div>
+        </div>
+
+      </div>
+
+      <div className='talble-header'>
+        <h4> Caractéristique</h4>
+      </div>
+      <div className='conatiner2'>
+        <div className='type_container'>
+
+          <div className='partie1'>
             <div className='info'>
               <h5>Type : <span>{biendata?.type_biens} | </span></h5>
             </div>
@@ -496,55 +526,23 @@ export const ConsulteBien = ({user}) => {
             <h5>Description :</h5>
             <div>{biendata?.description}</div>
           </div>
-        </Col>
-      </div>
-      <div className='header-div-information'>
-        <h5>Information : </h5>
-      </div>
-      <div className='information'>
-        <div className='info'>
-          <h6>Addresse : <span>{biendata?.addresse} | </span></h6>
-        </div>
-        <div className='info'>
-          <h6>Ville : <span>{biendata?.ville} | </span></h6>
-        </div>
-        <div className='info'>
-          <h6>Gouvernorat : <span>{!biendata?.gouvernorats ? '-' : biendata?.gouvernorats} | </span></h6>
-        </div>
-        <div className='info'>
-          <h6>Prix : <span>{!biendata?.prix ? '-' : biendata?.prix} DT | </span></h6>
-        </div>
-        <div className='info'>
-          <h6>Propriétaire : <span>{!biendata?.propritair_name ? '-' : biendata?.propritair_name} | </span></h6>
-        </div>
-        <div className='info'>
-          <h6>Téléphone : <span>{!biendata?.proritaire_phone ? '-' : biendata?.proritaire_phone}</span></h6>
-        </div>
 
+        </div>
+        <div className='table-containre'>
+          {table()}
+        </div>
       </div>
-      <div className='talble-header'>
-        <h4> Caractéristique</h4>
-      </div>
-      <div className='table-containre'>
-        {table()}
-      </div>
+
       <div className='footer'>
-        <div className='edit'>
+        <div className='buttom_button'>
           <Button onClick={handleShowEdit} style={{ backgroundColor: '#FF9A8D' }} >
-            <FontAwesomeIcon icon={faEdit} /> Edit
+            <FontAwesomeIcon icon={faEdit} /><span>Edit</span> 
           </Button>
-        </div>
-        {(
-          <div className='valider'>
-          <Button onClick={handleShowEdit} style={{ backgroundColor: '#FF9A8D' }} >
-            <FontAwesomeIcon icon={faCheck} /> Valider
-          </Button>
-        </div>
-        )
-
-        }
-        
-
+            <Button style={{ backgroundColor: '#FF9A8D' }} >
+              <FontAwesomeIcon icon={faCheck} /><span>Valide</span> 
+            </Button>
+          </div>
+      
       </div>
       <Images showModal={showModal} handleClose={handleClose} biendata={biendata && biendata.id} />
       <Edit_biens showModalEdit={showModalEdit} handleCloseEdit={handleCloseEdit} biendata={biendata && biendata.id} />

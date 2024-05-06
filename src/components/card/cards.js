@@ -1,25 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { Carousel } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { Carousel } from 'react-bootstrap';
-import './cards.css'
-import { Examplair } from '../../utils/exmplair';
-import { VisiteBien } from '../../pages/visitebien/vistie';
+import './cards.css';
 
-export const Cards = () => {
-    const [data, setData] = useState([]);
-
-    useEffect(() => {
-        Examplair({ setData, url: "visiteur/random" });
-    }, []);
-
+export const Cards = ({data}) => {
     return (
-        <div>
+        
  <div className='cards'>
             {data ? (
                 data.map((item, index) => (
                     <Card key={index} style={{ width: '18rem' }}>
-                        <Carousel>
+                        <Carousel className='cards_carousel'>
                             {item.liste_images ? (
                                 item.liste_images.map((image, i) => (
                                     <Carousel.Item key={i}>
@@ -45,7 +37,7 @@ export const Cards = () => {
             )}
              
         </div>
-        </div>
+       
        
     );
 };

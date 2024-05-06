@@ -69,7 +69,7 @@ export const Biens = ({ showModal, handleClose }) => {
         description: '',
         etat: '',
         addresse: '',
-        gouvernorats: '',
+        gouvernant: '',
         ville: '',
         prix: '',
         surface: '',
@@ -1240,7 +1240,7 @@ export const Biens = ({ showModal, handleClose }) => {
                                     <Form.Label>Gouvernorat</Form.Label>
                                     <Form.Select name="gouvernant"
 
-                                        onChange={(e) => setInputsData({ ...inputsData, gouvernorats: e.target.value })}
+                                        onChange={(e) => setInputsData({ ...inputsData, gouvernant: e.target.value })}
 
                                     >
                                         {gouvernorats.map(gouv => <option key={gouv.key} value={gouv.value}>{gouv.key}</option>)}

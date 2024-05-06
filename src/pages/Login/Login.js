@@ -29,7 +29,7 @@ export const Log_in = ({ showModal, handleClose }) => {
           console.log("Votre compte est inactif. Veuillez contacter l'administrateur.");
           // Gérer le cas où le compte de l'utilisateur est inactif (par exemple, afficher un message d'erreur)
         } else if (result.user.role === 'Admin') {
-          navigate('/Users');
+          navigate('/usersPage');
         } else if (result.user.role === 'Courtier') {
           navigate('/Courtier/biens');
         } else {

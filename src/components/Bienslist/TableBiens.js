@@ -4,14 +4,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
-import { getData} from '../../utils/getData';
-import { putAnnonce } from '../../utils/putAnnonce';
-
-
-import { Biens } from './AddBiens';
-import { getUser } from '../../utils/getUser';
+import { getData } from '../../utils/getData';
 import { getDatabyuser } from '../../utils/getDataByUser';
-import { ConsulteBien } from './ConsulterBien';
+import { getUser } from '../../utils/getUser';
+import { putAnnonce } from '../../utils/putAnnonce';
+import { Biens } from './AddBiens';
 export const Table = () => {
 
 

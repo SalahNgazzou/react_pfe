@@ -1,13 +1,11 @@
-import React, { useState } from 'react'
-import './hero.css'
-import { FaSearch } from 'react-icons/fa';
+import React, { useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { postData } from '../../utils/postData';
-import { getData } from '../../utils/getData';
+import { FaSearch } from 'react-icons/fa';
+import './hero.css';
 // Importez votre image de fond
 
 
-export const Hero = () => {
+export const Hero = ({ type, gouvernant, categorie, prixMin, prixMax, setType, setGouvernant, setCategorie, setPrixMin, setPrixMax,searchData }) => {
   const types = [
 
     { key: "Duplex", value: "Duplex" },
@@ -51,22 +49,11 @@ export const Hero = () => {
 
 
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [data, setData] = useState([]);
-  const [type, setType] = useState('');
-  const [gouvernant, setGouvernant] = useState('');
-  const [categorie, setCategorie] = useState('');
-  const [prixMin, setPrixMin] = useState('');
-  const [prixMax, setPrixMax] = useState('');
 
-  const toggleAdvanced = () => {
-    setShowAdvanced(!showAdvanced);
 
-  }
-  const searchData = () => {
-    let item = { type, gouvernant, categorie, prixMin, prixMax }
-    getData({ setData, url: "visiteur", data: item })
-    console.log(data)
-  }
+
+  
+
 
   return (
     <div>
@@ -76,7 +63,7 @@ export const Hero = () => {
             <h1>Search Your Next Home</h1>
             <p>Find new & featured property located in your local city.</p>
           </div>
-          <form className='form-flex'>
+          <div className='form-flex'>
             <div className='box'>
               <Form.Label>Type</Form.Label>
               <Form.Select value={type}
@@ -119,39 +106,12 @@ export const Hero = () => {
                 onChange={(e) => setPrixMax(e.target.value)}
               />
             </div>
-            <div className='box'>
-              <h4 onClick={toggleAdvanced}>Advance Filter</h4>
-            </div>
+          
             <button className='btn1' onClick={searchData}>
               <FaSearch />
             </button>
 
-          </form>
-          {showAdvanced && (
-            <form className='form'>
-              <div className='box'>
-                <Form.Label>Nombre de chombre :</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="nbr_chombre"
-                />
-              </div>
-              <div className='box'>
-                <Form.Label>Nombre de salle de bain :</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="nbr_salle_bain"
-                />
-              </div>
-              <div className='box'>
-                <Form.Label>Surface (m²):</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="surface"
-                />
-              </div>
-            </form>
-          )}
+          </div>
         </div>
 
 

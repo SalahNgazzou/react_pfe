@@ -1,10 +1,9 @@
-import { getToken } from "./getToken";
-export const getData = async ({ setData, url }) => {
+export const getBien = async ({ setData, url }) => {
     try {
         const response = await fetch(`http://localhost:8000/api/${url}`, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${getToken()}`,
+               
                 "Content-Type": 'application/json',
                 "Accept": 'application/json'
             }

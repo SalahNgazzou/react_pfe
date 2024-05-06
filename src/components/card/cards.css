@@ -1,4 +1,4 @@
-.cards{
+.cards {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -6,19 +6,29 @@
     height: 400px;
     margin-top: 50px;
 }
-.cards img{
+
+.cards .carousel {
     width: 286px;
     height: 160px;
-    
+
 }
-.cards Button{
+
+.cards_carousel img {
+    width: 286px;
+    max-height: 160px;
+    border-radius: 5px;
+
+}
+
+.cards Button {
     background-color: #FF9A8F;
     color: #4A536B;
     border: none;
 }
- @media screen and (max-width: 800px) {
-    .cards{
+
+@media screen and (max-width: 800px) {
+    .cards {
         display: flex;
         flex-wrap: wrap;
     }
-} 
+}

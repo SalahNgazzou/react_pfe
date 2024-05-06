@@ -19,7 +19,7 @@ export const Sidebar = () => {
 
   function LogOut() {
     localStorage.clear();
-    Navigate('/');
+    
   }
 
   return (
@@ -46,10 +46,13 @@ export const Sidebar = () => {
               </a>
             </li>
             <li>
-              <Button variant="primary" onClick={LogOut} style={{ border: 'none', background: 'none', color: 'red', padding: '0px' }}>
+              <a href='/home'>
+              <button  onClick={LogOut} style={{ border: 'none', background: 'none', color: 'red', padding: '0px' }}>
                 <FaSignOutAlt /> {/* Icône de déconnexion */}
                 Logout
-              </Button>
+              </button>
+              </a>
+             
             </li>
           </ul>
         )}

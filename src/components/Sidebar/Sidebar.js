@@ -5,7 +5,7 @@ import { FaSignOutAlt } from 'react-icons/fa';
 import './sidebar.css'; // Import the CSS file
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-
+import { FaCalculator } from 'react-icons/fa';
 export const Sidebar = () => {
   const [user, setUser] = useState(null);
   const Navigate = useNavigate();
@@ -19,15 +19,15 @@ export const Sidebar = () => {
 
   function LogOut() {
     localStorage.clear();
-    
+
   }
 
   return (
     <div className="sidebar">
       {user && (
         <div className="profile">
-          <img src="/img/sedkii.jpg" alt="Profile" />
-          <h4>{user.name}</h4>
+          <img src="/img/ala.jpg" alt="Profile" />
+          <h4>{user.name+" "+user.last_name}</h4>
         </div>
       )}
       <nav>
@@ -39,20 +39,37 @@ export const Sidebar = () => {
                   <FaUser /> Users {/* Icône d'utilisateur */}
                 </a>
               </li>
+             
+            )}
+            {(user.role === "Admin" || user.role === "Courtier") && (
+              <li>
+                <a href='/PublierPage' style={{ color: '#4A536B' }}>
+                <FaHome /> Biens Publier {/* Icône d'utilisateur */}
+                </a>
+              </li>
+             
             )}
             <li>
-              <a href='/Admin/Biens' style={{ color: '#4A536B' }}>
-                <FaHome /> Biens
+              <a href='/en_attentePage' style={{ color: '#4A536B' }}>
+                <FaHome /> Biens En attente 
               </a>
             </li>
+            {( user.role === "Secrétaire") && (
+              <li>
+                <a href='/estimationsPage' style={{ color: '#4A536B' }}>
+                <FaCalculator /> Demandes d'estimation
+                </a>
+              </li>
+            )}
+
             <li>
               <a href='/home'>
-              <button  onClick={LogOut} style={{ border: 'none', background: 'none', color: 'red', padding: '0px' }}>
-                <FaSignOutAlt /> {/* Icône de déconnexion */}
-                Logout
-              </button>
+                <button onClick={LogOut} style={{ border: 'none', background: 'none', color: 'red', padding: '0px' }}>
+                  <FaSignOutAlt /> {/* Icône de déconnexion */}
+                  Logout
+                </button>
               </a>
-             
+
             </li>
           </ul>
         )}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Carousel,  Table } from 'react-bootstrap'
-import { useParams,useNavigate } from 'react-router-dom';
+import { Button, Carousel, Col, Row, Table } from 'react-bootstrap'
+import { useParams } from 'react-router-dom';
 import { Images } from '../Bienslist/addImages'
 import { Edit_biens } from '../Bienslist/Edit'
 import { ImagesDisplay } from '../Bienslist/ImagesDispaly'
@@ -12,19 +12,17 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import './consulter.css';
 import { getData } from '../../utils/getData';
-import { getUser } from '../../utils/getUser';
-import { putAnnonce } from '../../utils/putAnnonce';
 
 
-export const ConsulteBien = () => {
-const Navigate = useNavigate();
+export const ConsulteBienPublier = ({ user }) => {
+
   const { id } = useParams();
   const [biendata, setBienData] = useState(null);
   const [images, setImages] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalDelet, setShowModalDelet] = useState(false);
-  const [user, setUser] = useState(getUser());
+
 
   useEffect(() => {
     getData({ setData: setBienData, url: "biens/" + id });
@@ -35,11 +33,6 @@ const Navigate = useNavigate();
       setImages(biendata.images);
     }
   }, [biendata]);
-
-  const changeAnnonce=()=>{
-    putAnnonce({url:'biens',id:biendata.id})
-    Navigate('/en_attentePage')
-  }
 
   const handleShowEdit = () => setShowModalEdit(true);
   const handleCloseEdit = () => setShowModalEdit(false);
@@ -293,7 +286,7 @@ const Navigate = useNavigate();
               <tbody>
                 <tr>
                   <td style={{ width: '250px' }}>Usage autorisé</td>
-                  <td style={{ width: '250px' }}>{biendata?.usage_autorisé} </td>
+                  <td style={{ width: '250px' }}>{biendata?.usage_autorisé} (m²)</td>
                 </tr>
                 <tr>
                   <td>Acces aux services publique</td>
@@ -381,7 +374,7 @@ const Navigate = useNavigate();
               <tbody>
                 <tr>
                   <td style={{ width: '250px' }}>Type de commerce autorisé</td>
-                  <td style={{ width: '250px' }}>{biendata?.type_commerce_autorisé} </td>
+                  <td style={{ width: '250px' }}>{biendata?.type_commerce_autorisé} (m²)</td>
                 </tr>
                 <tr>
                   <td>Superficie  (m²)</td>
@@ -457,7 +450,7 @@ const Navigate = useNavigate();
     <div className='bien'>
       <div className='buttons'>
         <div className='back'>
-          <a href='/en_attentePage'>
+          <a href='/PublierPage'>
             <Button style={{ backgroundColor: '#FF9A8D' }}>
               <FontAwesomeIcon icon={faArrowLeft} />
             </Button>
@@ -543,15 +536,11 @@ const Navigate = useNavigate();
       <div className='footer'>
         <div className='buttom_button'>
           <Button onClick={handleShowEdit} style={{ backgroundColor: '#FF9A8D' }} >
-            <FontAwesomeIcon icon={faEdit} /><span>Edit</span>
+            <FontAwesomeIcon icon={faEdit} /><span>Edit</span> 
           </Button>
-          {user.role === "Admin" && (
-            <Button style={{ backgroundColor: '#FF9A8D' }} onClick={changeAnnonce}>
-              <FontAwesomeIcon icon={faCheck} /><span>Valider</span>
-            </Button>
-          )}
-        </div>
-
+            
+          </div>
+      
       </div>
       <Images showModal={showModal} handleClose={handleClose} biendata={biendata && biendata.id} />
       <Edit_biens showModalEdit={showModalEdit} handleCloseEdit={handleCloseEdit} biendata={biendata && biendata.id} />

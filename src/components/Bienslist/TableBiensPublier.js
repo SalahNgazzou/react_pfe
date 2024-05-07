@@ -1,16 +1,17 @@
+import { CheckCircleOutline, HighlightOff } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
+import { FaEye } from 'react-icons/fa';
 import IconButton from '@mui/material/IconButton';
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
-import { FaEye } from 'react-icons/fa';
 import { getData } from '../../utils/getData';
 import { getDatabyuser } from '../../utils/getDataByUser';
 import { getUser } from '../../utils/getUser';
 import { putAnnonce } from '../../utils/putAnnonce';
 import { Biens } from './AddBiens';
+import { Button } from 'react-bootstrap';
 import { putStatue } from '../../utils/putStatue';
-export const Table = () => {
+export const TableBiensPublier = () => {
 
 
     const columns = [
@@ -27,7 +28,7 @@ export const Table = () => {
             selector: (row) => row.categorie,
         },
         {
-            name: 'disponibilité',
+            
             name: 'disponibilité',
             cell: (row) => (
                 <Button
@@ -60,8 +61,8 @@ export const Table = () => {
             name: 'Consulter',
             cell: (row) => (
                 <div>
-                    <a href={`/BienMasquer/${row.id}`}>
-                        <IconButton aria-label="Consulter">
+                    <a href={`/BienPublier/${row.id}`}>
+                        <IconButton aria-label="Modifier">
                         <FaEye />
                         </IconButton>
                     </a>
@@ -84,12 +85,11 @@ export const Table = () => {
         setUser(loggedInUser);
         
         if (loggedInUser && loggedInUser.role === "Admin") {
-            getData({ setData, url: "biens" });
+            getData({ setData, url: "biens/publier" });
         }else if (loggedInUser && loggedInUser.id) {
             // Si l'utilisateur est authentifié et a un ID, récupérez les biens par son ID
-            getDatabyuser({ setData, url: `biens/BiensByUserEnAttente/${loggedInUser.id}` });
+            getDatabyuser({ setData, url: `biens/BiensByUserPublier/${loggedInUser.id}` });
         }
-       
     }, []);
 
     useEffect(() => {
@@ -126,8 +126,7 @@ export const Table = () => {
     };
 
     return (
-        <div>
-<div className='myDataTableContainer'>
+        <div className='myDataTableContainer'>
             <DataTable
                 columns={columns}
                 data={filter}
@@ -167,8 +166,6 @@ export const Table = () => {
             <Biens showModal={showModal} handleClose={handleClose}  />
             {/* {<ConsulteBien user={user} />}  */}
         </div>
-        </div>
-        
     );
 };
 

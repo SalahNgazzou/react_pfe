@@ -62,10 +62,10 @@ export const Log_in = ({ showModal, handleClose }) => {
             </div>
             <div className='form_container'>
               <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
+                <Form.Label>Adresse Email</Form.Label>
                 <Form.Control
                   type="email"
-                  placeholder="Enter email"
+                  placeholder="exemple@gmail.com"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}

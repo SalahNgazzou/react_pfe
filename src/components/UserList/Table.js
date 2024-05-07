@@ -38,7 +38,7 @@ export const Table = () => {
                 <IconButton
                     onClick={() => ChangeStatue(row.id)}
                     className={`btn ${row.statue === 'Activer' ? 'btn-success' : 'btn-danger'}`}
-                    aria-label={row.statue === 'Activer' ? 'Activer' : 'Inactive'}
+                    aria-label={row.statue === 'Activer' ? 'Activer' : 'Déactiver'}
                     style={{ color: row.statue === 'Activer' ? 'green' : 'red' }}
                 >
                     {row.statue === 'Activer' ? <CheckCircleOutline /> : <HighlightOff />}

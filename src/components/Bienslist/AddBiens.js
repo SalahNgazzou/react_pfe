@@ -4,7 +4,8 @@ import './add.css';
 import { postBien } from '../../utils/postData';
 import IconButton from '@mui/material/IconButton';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import SaveIcon from '@mui/icons-material/Save';
+import { FaSave } from 'react-icons/fa';
+
 
 export const Biens = ({ showModal, handleClose }) => {
     const types = [
@@ -60,6 +61,7 @@ export const Biens = ({ showModal, handleClose }) => {
     ];
     const [user, setUser] = useState(null);
     const [data, setData] = useState({});
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [inputsData, setInputsData] = useState({
         type_biens: '',
         categorie: '',
@@ -137,6 +139,9 @@ export const Biens = ({ showModal, handleClose }) => {
     };
     const ajouterBiens = async () => {
         const formData = new FormData();
+        if (!inputsData.type_biens || !inputsData.categorie || !inputsData.propritair_name || !inputsData.proritaire_phone || !inputsData.disponibilté || !inputsData.prix || !inputsData.description || !inputsData.etat || !inputsData.addresse || !inputsData.gouvernant || !inputsData.ville) {
+            alert("verifier les champs obilgatoire !");
+        }
         const { images, ...inputs } = inputsData;
         const data = {
             ...inputs,
@@ -153,7 +158,9 @@ export const Biens = ({ showModal, handleClose }) => {
             formData.append("images[]", file);
         }
         postBien({ url: "biens", data: formData })
-        handleClose();
+        setShowSuccessMessage(true);
+
+        setTimeout(handleClose, 2000);
     };
 
     const renderInputsBasedOnType = () => {
@@ -1148,10 +1155,10 @@ export const Biens = ({ showModal, handleClose }) => {
 
                     <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
 
-                        <h4>Bien</h4>
+                        <h4>Les champs qui contient (*) sont obilgatoire</h4>
 
                         <Form.Group className="custom-padding">
-                            <Form.Label>Type</Form.Label>
+                            <Form.Label>Type* :</Form.Label>
                             <Form.Select name="type_biens"
 
                                 onChange={(e) => setInputsData({ ...inputsData, type_biens: e.target.value })}
@@ -1164,7 +1171,7 @@ export const Biens = ({ showModal, handleClose }) => {
                         </Form.Group>
 
                         <Form.Group className="custom-padding">
-                            <Form.Label>Categorie</Form.Label>
+                            <Form.Label>Categorie* :</Form.Label>
                             <Form.Select name="categorie"
 
                                 onChange={(e) => setInputsData({ ...inputsData, categorie: e.target.value })}
@@ -1177,8 +1184,8 @@ export const Biens = ({ showModal, handleClose }) => {
                         <Row>
                             <Col>
                                 <Form.Group className="custom-padding">
-                                    <Form.Label>propritair name</Form.Label>
-                                    <Form.Control type="text" name="propritair_name"
+                                    <Form.Label>propritair name* :</Form.Label>
+                                    <Form.Control type="text" name="propritair_name" required
                                         onChange={(e) => setInputsData({ ...inputsData, propritair_name: e.currentTarget.value })}
 
                                     />
@@ -1187,8 +1194,8 @@ export const Biens = ({ showModal, handleClose }) => {
 
                             <Col>
                                 <Form.Group className="custom-padding">
-                                    <Form.Label>proritaire phone</Form.Label>
-                                    <Form.Control type="text" name="proritaire_phone"
+                                    <Form.Label>proritaire phone* :</Form.Label>
+                                    <Form.Control type="text" name="proritaire_phone" required
                                         onChange={(e) => setInputsData({ ...inputsData, proritaire_phone: e.currentTarget.value })}
 
                                     />
@@ -1196,9 +1203,9 @@ export const Biens = ({ showModal, handleClose }) => {
                             </Col>
                         </Row>
                         <Form.Group className="custom-padding">
-                            <Form.Label>disponibilté</Form.Label>
+                            <Form.Label>disponibilté* :</Form.Label>
                             <Form.Select name="disponibilté"
-
+required
                                 onChange={(e) => setInputsData({ ...inputsData, disponibilté: e.target.value })}
 
                             >
@@ -1208,7 +1215,7 @@ export const Biens = ({ showModal, handleClose }) => {
 
 
                         <Form.Group className="custom-padding">
-                            <Form.Label>Description:</Form.Label>
+                            <Form.Label>Description* :</Form.Label>
                             <Form.Control
                                 as="textarea"
                                 name="description"
@@ -1219,7 +1226,7 @@ export const Biens = ({ showModal, handleClose }) => {
                             />
                         </Form.Group>
                         <Form.Group className="custom-padding">
-                            <Form.Label>etat</Form.Label>
+                            <Form.Label>etat* :</Form.Label>
                             <Form.Control type="text" name="etat"
                                 onChange={(e) => setInputsData({ ...inputsData, etat: e.currentTarget.value })}
 
@@ -1228,7 +1235,7 @@ export const Biens = ({ showModal, handleClose }) => {
                         <Row>
                             <Col>
                                 <Form.Group className="custom-padding">
-                                    <Form.Label>Adresse</Form.Label>
+                                    <Form.Label>Adresse* :</Form.Label>
                                     <Form.Control type="text" name="addresse"
                                         onChange={(e) => setInputsData({ ...inputsData, addresse: e.currentTarget.value })}
 
@@ -1237,7 +1244,7 @@ export const Biens = ({ showModal, handleClose }) => {
                             </Col>
                             <Col>
                                 <Form.Group className="custom-padding">
-                                    <Form.Label>Gouvernorat</Form.Label>
+                                    <Form.Label>Gouvernorat* :</Form.Label>
                                     <Form.Select name="gouvernant"
 
                                         onChange={(e) => setInputsData({ ...inputsData, gouvernant: e.target.value })}
@@ -1249,7 +1256,7 @@ export const Biens = ({ showModal, handleClose }) => {
                             </Col>
                             <Col>
                                 <Form.Group className="custom-padding">
-                                    <Form.Label>Ville</Form.Label>
+                                    <Form.Label>Ville* :</Form.Label>
                                     <Form.Control type="text" name="ville"
 
 
@@ -1261,7 +1268,7 @@ export const Biens = ({ showModal, handleClose }) => {
                         </Row>
 
                         <Form.Group className="custom-padding">
-                            <Form.Label>Prix (DT):</Form.Label>
+                            <Form.Label>Prix* (DT):</Form.Label>
                             <div className="input-group">
                                 <Form.Control
                                     type="number"
@@ -1302,9 +1309,9 @@ export const Biens = ({ showModal, handleClose }) => {
                                 onChange={handleImageChange}
                             />
                             <label htmlFor="upload-button">
-                                <IconButton color="primary" aria-label="upload picture" component="span">
-                                    <CloudUploadIcon />
-                                </IconButton>
+                                <IconButton style={{backgroundColor:'#ff9a8f',color:'#4A536B',border:'none'}} aria-label="upload picture" component="span">
+                                    <CloudUploadIcon style={{backgroundColor:'#ff9a8f',color:'#4A536B',border:'none'}} />
+                                </IconButton >
                                 <span>Upload Images</span>
                             </label>
                         </div>
@@ -1312,12 +1319,16 @@ export const Biens = ({ showModal, handleClose }) => {
                     </div>
 
                 </Form>
-
+                {showSuccessMessage && (
+                    <div className="alert alert-success" role="alert">
+                        Le bien a été ajouté avec succès !
+                    </div>
+                )}
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" onClick={ajouterBiens}>
-
-                    Save
+                <Button style={{backgroundColor:'#ff9a8f',color:'#4A536B',border:'none'}} onClick={ajouterBiens}>
+                <FaSave />
+                           <span> Save</span>
                 </Button>
             </Modal.Footer>
         </Modal>

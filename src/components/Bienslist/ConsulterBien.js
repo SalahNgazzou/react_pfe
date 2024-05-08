@@ -25,7 +25,7 @@ const Navigate = useNavigate();
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalDelet, setShowModalDelet] = useState(false);
   const [user, setUser] = useState(getUser());
-
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   useEffect(() => {
     getData({ setData: setBienData, url: "biens/" + id });
   }, [id]);
@@ -38,7 +38,10 @@ const Navigate = useNavigate();
 
   const changeAnnonce=()=>{
     putAnnonce({url:'biens',id:biendata.id})
-    Navigate('/en_attentePage')
+    setShowSuccessMessage(true);
+    setTimeout(() => {
+      Navigate('/en_attentePage');
+  }, 2000);
   }
 
   const handleShowEdit = () => setShowModalEdit(true);
@@ -456,6 +459,7 @@ const Navigate = useNavigate();
   return (
     <div className='bien'>
       <div className='buttons'>
+      
         <div className='back'>
           <a href='/en_attentePage'>
             <Button style={{ backgroundColor: '#FF9A8D' }}>
@@ -550,6 +554,11 @@ const Navigate = useNavigate();
               <FontAwesomeIcon icon={faCheck} /><span>Valider</span>
             </Button>
           )}
+          {showSuccessMessage && (
+                    <div className="alert alert-success" role="alert">
+                        Le bien a été ajouté avec succès !
+                    </div>
+                )}
         </div>
 
       </div>

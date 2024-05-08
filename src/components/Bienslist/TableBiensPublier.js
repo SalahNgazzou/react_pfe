@@ -44,19 +44,7 @@ export const TableBiensPublier = () => {
                 </Button>
             )
         },
-       /*  {
-            name: 'Statue',
-            cell: (row) => (
-                <IconButton
-                    onClick={() => ChangeStatue(row.id)}
-                    className={`btn ${row.disponibilté === 'En cours' ? 'btn-danger' : 'btn-success'}`}
-                    aria-label={row.disponibilté === 'Activer' ? 'Activer' : 'Déactiver'}
-                    style={{ color: row.disponibilté === 'En cours' ? 'red' : 'green' }}
-                >
-                    {row.disponibilté === 'En cours' ?  <HighlightOff />:<CheckCircleOutline />}
-                </IconButton>
-            )
-        }, */
+      
         {
             name: 'Consulter',
             cell: (row) => (
@@ -90,7 +78,7 @@ export const TableBiensPublier = () => {
             // Si l'utilisateur est authentifié et a un ID, récupérez les biens par son ID
             getDatabyuser({ setData, url: `biens/BiensByUserPublier/${loggedInUser.id}` });
         }
-    }, []);
+    }, [data]);
 
     useEffect(() => {
         if (Array.isArray(data)) {
@@ -106,7 +94,7 @@ export const TableBiensPublier = () => {
     
     const ChangeStatue = async (id) => {
         try {
-            await putStatue({ url: "biens/changestatue", id });
+            await putStatue({ url: "biens/changestatue/", id });
             getData({ setData, url: "biens" });
         } catch (error) {
             // Gérer les erreurs de manière appropriée

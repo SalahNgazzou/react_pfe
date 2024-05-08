@@ -23,7 +23,7 @@ function Main() {
     <div>
 
       <BrowserRouter>
-        <Navbars/>
+         <Navbars/> 
         <Routes>
         <Route path="/estimation/:id" element={<ConsulterEstimation />} />
           <Route path="/estimation" element={<Estimation />} />

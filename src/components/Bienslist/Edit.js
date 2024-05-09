@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
-import { putBien, putData } from '../../utils/putData';
-import { postBien } from '../../utils/postData';
-import { ImagesDispaly } from '../ImagesDispaly/ImagesDispaly';
 import { getData } from '../../utils/getData';
+import { getUser } from '../../utils/getUser';
+import { FaSave } from 'react-icons/fa';
 
 
-export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
-    
+export const Edit_biens = ({ handleCloseEdit, biendata, showModalEdit }) => {
+
     const types = [
         { key: "", value: "" },
         { key: "Duplex", value: "Duplex" },
@@ -114,31 +113,29 @@ export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
         capacité_stockage: '',
         heuteur: '',
         condition_stockage: '',
-        
-    });
 
+    });
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+    const [user, setUser] = useState(getUser());
     useEffect(() => {
         getData({ setData: setInputsData, url: "biens/" + biendata });
-      }, [biendata]);
+    }, [biendata]);
     const modifierBiens = async () => {
-        try {
-            const response = await fetch(`http://localhost:8000/api/biens/edit/${inputsData.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(inputsData)
-            });
-    
-            if (!response.ok) {
-                throw new Error('Erreur lors de la mise à jour');
-            }
-    
-            console.log('Mise à jour réussie !');
-        } catch (error) {
-            console.error('Erreur lors de la mise à jour :', error);
+        if (!inputsData.type_biens || !inputsData.categorie || !inputsData.propritair_name || !inputsData.proritaire_phone || !inputsData.disponibilté || !inputsData.prix || !inputsData.description || !inputsData.etat || !inputsData.addresse || !inputsData.gouvernant || !inputsData.ville) {
+            alert("verifier les champs obilgatoire !");
         }
-        
+        const response = await fetch(`http://localhost:8000/api/biens/edit/${inputsData.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(inputsData)
+        });
+
+        setShowSuccessMessage(true);
+
+        setTimeout(handleCloseEdit, 2000);
+
     }
     const renderInputsBasedOnType = () => {
         switch (inputsData?.type_biens) {
@@ -1158,7 +1155,7 @@ export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
         }
     }
     return (
-        <Modal show={showModalEdit==true } onHide={handleCloseEdit} size="lg">
+        <Modal show={showModalEdit == true} onHide={handleCloseEdit} size="lg">
             <Modal.Header closeButton>
                 <Modal.Title>Edit Biens</Modal.Title>
             </Modal.Header>
@@ -1168,12 +1165,12 @@ export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
 
                     <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
 
-                        <h4>Bien</h4>
+                        <h4>Les champs qui contient (*) sont obilgatoire</h4>
 
 
 
                         <Form.Group className="custom-padding">
-                            <Form.Label>Categorie</Form.Label>
+                            <Form.Label>Categorie* :</Form.Label>
                             <Form.Select name="categorie"
                                 value={inputsData.categorie}
                                 onChange={(e) => setInputsData({ ...inputsData, categorie: e.target.value })}
@@ -1186,7 +1183,7 @@ export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
                         <Row>
                             <Col>
                                 <Form.Group className="custom-padding">
-                                    <Form.Label>propritair name</Form.Label>
+                                    <Form.Label>propritair name* :</Form.Label>
                                     <Form.Control type="text" name="propritair_name"
                                         value={inputsData.propritair_name}
                                         onChange={(e) => setInputsData({ ...inputsData, propritair_name: e.currentTarget.value })}
@@ -1197,7 +1194,7 @@ export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
 
                             <Col>
                                 <Form.Group className="custom-padding">
-                                    <Form.Label>proritaire phone</Form.Label>
+                                    <Form.Label>proritaire phone* :</Form.Label>
                                     <Form.Control type="text" name="proritaire_phone"
                                         value={inputsData.proritaire_phone}
                                         onChange={(e) => setInputsData({ ...inputsData, proritaire_phone: e.currentTarget.value })}
@@ -1207,7 +1204,7 @@ export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
                             </Col>
                         </Row>
                         <Form.Group className="custom-padding">
-                            <Form.Label>disponibilté</Form.Label>
+                            <Form.Label>disponibilté* :</Form.Label>
                             <Form.Select name="disponibilté"
                                 value={inputsData.disponibilté}
                                 onChange={(e) => setInputsData({ ...inputsData, disponibilté: e.target.value })}
@@ -1219,7 +1216,7 @@ export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
 
 
                         <Form.Group className="custom-padding">
-                            <Form.Label>Description:</Form.Label>
+                            <Form.Label>Description* :</Form.Label>
                             <Form.Control
                                 as="textarea"
                                 name="description"
@@ -1231,7 +1228,7 @@ export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
                             />
                         </Form.Group>
                         <Form.Group className="custom-padding">
-                            <Form.Label>etat</Form.Label>
+                            <Form.Label>etat* :</Form.Label>
                             <Form.Control type="text" name="etat"
                                 value={inputsData.etat}
                                 onChange={(e) => setInputsData({ ...inputsData, etat: e.currentTarget.value })}
@@ -1241,7 +1238,7 @@ export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
                         <Row>
                             <Col>
                                 <Form.Group className="custom-padding">
-                                    <Form.Label>Adresse</Form.Label>
+                                    <Form.Label>Adresse* :</Form.Label>
                                     <Form.Control type="text" name="addresse"
                                         value={inputsData.addresse}
                                         onChange={(e) => setInputsData({ ...inputsData, addresse: e.currentTarget.value })}
@@ -1251,7 +1248,7 @@ export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
                             </Col>
                             <Col>
                                 <Form.Group className="custom-padding">
-                                    <Form.Label>Gouvernorat</Form.Label>
+                                    <Form.Label>Gouvernorat* :</Form.Label>
                                     <Form.Select name="gouvernant"
                                         value={inputsData.gouvernorats}
                                         onChange={(e) => setInputsData({ ...inputsData, gouvernorats: e.target.value })}
@@ -1263,7 +1260,7 @@ export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
                             </Col>
                             <Col>
                                 <Form.Group className="custom-padding">
-                                    <Form.Label>Ville</Form.Label>
+                                    <Form.Label>Ville* :</Form.Label>
                                     <Form.Control type="text" name="ville"
 
                                         value={inputsData.ville}
@@ -1275,7 +1272,7 @@ export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
                         </Row>
 
                         <Form.Group className="custom-padding">
-                            <Form.Label>Prix (DT):</Form.Label>
+                            <Form.Label>Prix* (DT):</Form.Label>
                             <div className="input-group">
                                 <Form.Control
                                     type="number"
@@ -1292,42 +1289,34 @@ export const Edit_biens=({ handleCloseEdit, biendata ,showModalEdit})=> {
                                 </div>
                             </div>
                         </Form.Group>
-                        <Form.Group className="custom-padding">
-                            <Form.Label>Annonce</Form.Label>
-                            <Form.Select name="annonce"
-                                value={inputsData.annonce}
-                                onChange={(e) => setInputsData({ ...inputsData, annonce: e.target.value })}
-                            >
-                                {annonces.map(annonce => <option key={annonce.key} value={annonce.value}>{annonce.key}</option>)}
-                            </Form.Select>
-                        </Form.Group>
+                        {user && user.role === "Admin" && (
+                            <Form.Group className="custom-padding">
+                                <Form.Label>Annonce</Form.Label>
+                                <Form.Select
+                                    name="annonce"
+                                    onChange={(e) => setInputsData({ ...inputsData, annonce: e.target.value })}
+                                >
+                                    {annonces.map(annonce => (
+                                        <option key={annonce.key} value={annonce.value}>{annonce.key}</option>
+                                    ))}
+                                </Form.Select>
+                            </Form.Group>
+                        )}
                         {renderInputsBasedOnType()}
 
-
-                        {/* {
-                        {inputsData?.images.length>0 && <ImagesDispaly images={inputsData?.images ?? []}
-                            setImages={
-                                (imgs) => setInputsData({ ...inputsData, images: imgs })
-                            } setDeletedImages={(imgs) => setInputsData({ ...inputsData, deletedImages: [...inputsData.deletedImages,imgs] })} />
-                        }
-                        <label>
-                            Images :
-                            <input
-                                type="file"
-                                name="images"
-                                onChange={handleImageChange}
-                                multiple
-                            />
-                        </label> }
- */}
                     </div>
 
                 </Form>
-
+                {showSuccessMessage && (
+                    <div className="alert alert-success" role="alert">
+                        Le bien a été ajouté avec succès !
+                    </div>
+                )}
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" onClick={modifierBiens}>
-                    Save
+                <Button style={{ backgroundColor: '#ff9a8f', color: '#4A536B', border: 'none' }} onClick={modifierBiens}>
+                    <FaSave />
+                    <span> Save</span>
                 </Button>
             </Modal.Footer>
         </Modal>

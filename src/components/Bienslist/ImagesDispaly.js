@@ -3,6 +3,7 @@ import './ImagesDispaly.css'; // Import the CSS file
 import { backApi } from '../../constant';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { deleteData } from '../../utils/deleteData';
+import { FaTrash } from 'react-icons/fa';
 
 export const ImagesDisplay = ({ images, showModalDelet, handleCloseDelet }) => {
   const [deletedImages, setDeletedImages] = useState([]);
@@ -40,20 +41,14 @@ export const ImagesDisplay = ({ images, showModalDelet, handleCloseDelet }) => {
                   <span className='delete' onClick={() => handleDeleteImage(img?.id)}>X</span>
                   <img className='img' src={backApi + img?.src} /></div>
               )}</div>
-            {/* <input
-        type="file"
-        className='inputFile'
-        name="images"
-        onChange={handleImageChange}
-        multiple
-      /> */}
+            
           </div>
         </Form>
 
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={deleteImages}>
-          Delete
+        <Button style={{ backgroundColor: '#ff9a8f', color: '#4A536B', border: 'none' }} onClick={deleteImages}>
+          <FaTrash/><span>Delete</span>
         </Button>
       </Modal.Footer>
     </Modal>

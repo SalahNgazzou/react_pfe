@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Carousel, Col, Row, Table } from 'react-bootstrap'
-import { useParams } from 'react-router-dom';
-import { getData } from '../../utils/getData';
+import { Button, Carousel,  Table } from 'react-bootstrap'
+import { useParams,useNavigate } from 'react-router-dom';
 import { Images } from '../Bienslist/addImages'
 import { Edit_biens } from '../Bienslist/Edit'
 import { ImagesDisplay } from '../Bienslist/ImagesDispaly'
@@ -11,19 +10,22 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-
 import './consulter.css';
+import { getData } from '../../utils/getData';
+import { getUser } from '../../utils/getUser';
+import { putAnnonce } from '../../utils/putAnnonce';
 
-export const ConsulteBien = ({user}) => {
 
+export const ConsulteBien = () => {
+const Navigate = useNavigate();
   const { id } = useParams();
   const [biendata, setBienData] = useState(null);
   const [images, setImages] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalDelet, setShowModalDelet] = useState(false);
- 
-
+  const [user, setUser] = useState(getUser());
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   useEffect(() => {
     getData({ setData: setBienData, url: "biens/" + id });
   }, [id]);
@@ -33,6 +35,14 @@ export const ConsulteBien = ({user}) => {
       setImages(biendata.images);
     }
   }, [biendata]);
+
+  const changeAnnonce=()=>{
+    putAnnonce({url:'biens',id:biendata.id})
+    setShowSuccessMessage(true);
+    setTimeout(() => {
+      Navigate('/en_attentePage');
+  }, 2000);
+  }
 
   const handleShowEdit = () => setShowModalEdit(true);
   const handleCloseEdit = () => setShowModalEdit(false);
@@ -286,7 +296,7 @@ export const ConsulteBien = ({user}) => {
               <tbody>
                 <tr>
                   <td style={{ width: '250px' }}>Usage autorisé</td>
-                  <td style={{ width: '250px' }}>{biendata?.usage_autorisé} (m²)</td>
+                  <td style={{ width: '250px' }}>{biendata?.usage_autorisé} </td>
                 </tr>
                 <tr>
                   <td>Acces aux services publique</td>
@@ -374,7 +384,7 @@ export const ConsulteBien = ({user}) => {
               <tbody>
                 <tr>
                   <td style={{ width: '250px' }}>Type de commerce autorisé</td>
-                  <td style={{ width: '250px' }}>{biendata?.type_commerce_autorisé} (m²)</td>
+                  <td style={{ width: '250px' }}>{biendata?.type_commerce_autorisé} </td>
                 </tr>
                 <tr>
                   <td>Superficie  (m²)</td>
@@ -449,8 +459,9 @@ export const ConsulteBien = ({user}) => {
   return (
     <div className='bien'>
       <div className='buttons'>
+      
         <div className='back'>
-          <a href='/Admin/Biens'>
+          <a href='/en_attentePage'>
             <Button style={{ backgroundColor: '#FF9A8D' }}>
               <FontAwesomeIcon icon={faArrowLeft} />
             </Button>
@@ -467,20 +478,50 @@ export const ConsulteBien = ({user}) => {
         </div>
 
       </div>
-      <div className='carousel-container'>
-        <div className='carousel' >
-          <Carousel>
-            {images.map((image, index) => (
-              <Carousel.Item key={index}>
-                <img src={`http://localhost:8000/${image.src}`} alt={`Image ${index}`} />
-              </Carousel.Item>
-            ))}
-          </Carousel>
-        </div>
+
+      <div className='consulte_img' >
+        <Carousel >
+          {images.map((image, index) => (
+            <Carousel.Item key={index}>
+              <img src={`http://localhost:8000/${image.src}`} alt={`Image ${index}`} />
+            </Carousel.Item>
+          ))}
+        </Carousel>
       </div>
-      <div className='flex'>
-        <Col>
-          <div className='type_container'>
+      <div>
+        <div className='header-div-information'>
+          <h5>Information : </h5>
+        </div>
+        <div className='information'>
+          <div className='info'>
+            <h6>Addresse : <span>{biendata?.addresse} | </span></h6>
+          </div>
+          <div className='info'>
+            <h6>Ville : <span>{biendata?.ville} | </span></h6>
+          </div>
+          <div className='info'>
+            <h6>Gouvernorat : <span>{biendata?.gouvernant} | </span></h6>
+          </div>
+          <div className='info'>
+            <h6>Prix : <span>{!biendata?.prix ? '-' : biendata?.prix} DT | </span></h6>
+          </div>
+          <div className='info'>
+            <h6>Propriétaire : <span>{!biendata?.propritair_name ? '-' : biendata?.propritair_name} | </span></h6>
+          </div>
+          <div className='info'>
+            <h6>Téléphone : <span>{!biendata?.proritaire_phone ? '-' : biendata?.proritaire_phone}</span></h6>
+          </div>
+        </div>
+
+      </div>
+
+      <div className='talble-header'>
+        <h4> Caractéristique</h4>
+      </div>
+      <div className='conatiner2'>
+        <div className='type_container'>
+
+          <div className='partie1'>
             <div className='info'>
               <h5>Type : <span>{biendata?.type_biens} | </span></h5>
             </div>
@@ -496,54 +537,29 @@ export const ConsulteBien = ({user}) => {
             <h5>Description :</h5>
             <div>{biendata?.description}</div>
           </div>
-        </Col>
-      </div>
-      <div className='header-div-information'>
-        <h5>Information : </h5>
-      </div>
-      <div className='information'>
-        <div className='info'>
-          <h6>Addresse : <span>{biendata?.addresse} | </span></h6>
-        </div>
-        <div className='info'>
-          <h6>Ville : <span>{biendata?.ville} | </span></h6>
-        </div>
-        <div className='info'>
-          <h6>Gouvernorat : <span>{!biendata?.gouvernorats ? '-' : biendata?.gouvernorats} | </span></h6>
-        </div>
-        <div className='info'>
-          <h6>Prix : <span>{!biendata?.prix ? '-' : biendata?.prix} DT | </span></h6>
-        </div>
-        <div className='info'>
-          <h6>Propriétaire : <span>{!biendata?.propritair_name ? '-' : biendata?.propritair_name} | </span></h6>
-        </div>
-        <div className='info'>
-          <h6>Téléphone : <span>{!biendata?.proritaire_phone ? '-' : biendata?.proritaire_phone}</span></h6>
-        </div>
 
+        </div>
+        <div className='table-containre'>
+          {table()}
+        </div>
       </div>
-      <div className='talble-header'>
-        <h4> Caractéristique</h4>
-      </div>
-      <div className='table-containre'>
-        {table()}
-      </div>
+
       <div className='footer'>
-        <div className='edit'>
+        <div className='buttom_button'>
           <Button onClick={handleShowEdit} style={{ backgroundColor: '#FF9A8D' }} >
-            <FontAwesomeIcon icon={faEdit} /> Edit
+            <FontAwesomeIcon icon={faEdit} /><span>Edit</span>
           </Button>
+          {user.role === "Admin" && (
+            <Button style={{ backgroundColor: '#FF9A8D' }} onClick={changeAnnonce}>
+              <FontAwesomeIcon icon={faCheck} /><span>Valider</span>
+            </Button>
+          )}
+          {showSuccessMessage && (
+                    <div className="alert alert-success" role="alert">
+                        Le bien a été ajouté avec succès !
+                    </div>
+                )}
         </div>
-        {(
-          <div className='valider'>
-          <Button onClick={handleShowEdit} style={{ backgroundColor: '#FF9A8D' }} >
-            <FontAwesomeIcon icon={faCheck} /> Valider
-          </Button>
-        </div>
-        )
-
-        }
-        
 
       </div>
       <Images showModal={showModal} handleClose={handleClose} biendata={biendata && biendata.id} />

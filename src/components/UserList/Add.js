@@ -4,8 +4,8 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { postData } from '../../utils/postData';
 
  export const Popup = ({ showModal, handleClose }) => {
-  const roles = [{ key: "Admin", value: "Admin" }, { key: "Sécritaire", value: "Sécritaire" }, { key: "Courtier", value: " Courtier" }]
-  const statues = [{ key: "Active", value: "Active" }, { key: "Inactive", value: "Inactive" }]
+  const roles = [{ key: "Admin", value: "Admin" }, { key: "Secrétaire", value: "Secrétaire" }, { key: "Courtier", value: " Courtier" }]
+  const statues = [{ key: "Activer", value: "Activer" }, { key: "Déactiver", value: "Déactiver" }]
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -27,7 +27,7 @@ import { postData } from '../../utils/postData';
   return (
     <Modal show={showModal} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>User Information</Modal.Title>
+        <Modal.Title>Add User</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div style={{ maxHeight: '400px', overflowY: 'auto' }}>

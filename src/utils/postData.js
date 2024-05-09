@@ -21,7 +21,7 @@ export const postBien = async ({ url, data }) => {
     method: 'POST',
     body:data,
    headers:{
-    'Authorization': `Bearer ${getToken()}`,
+    //'Authorization': `Bearer ${getToken()}`,
    }
   });
 }

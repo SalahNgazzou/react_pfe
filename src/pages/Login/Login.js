@@ -1,17 +1,17 @@
-
 import './login.css';
 import { useState } from 'react';
 import { Button, Col, Container, Form, Modal, ModalBody, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 export const Log_in = ({ showModal, handleClose }) => {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   async function login() {
     try {
+      setLoading(true);
       let item = { email, password };
       let result = await fetch("http://localhost:8000/api/login", {
         method: "POST",
@@ -26,47 +26,46 @@ export const Log_in = ({ showModal, handleClose }) => {
 
       if (result && result.user && result.user.role && result.user.statue) {
         if (result.user.statue === 'Inactive') {
-          // Si le statut de l'utilisateur est "Inactive", affichez un message d'erreur ou effectuez une autre action appropriée
           console.log("Votre compte est inactif. Veuillez contacter l'administrateur.");
+          // Gérer le cas où le compte de l'utilisateur est inactif (par exemple, afficher un message d'erreur)
         } else if (result.user.role === 'Admin') {
-          // Si l'utilisateur est un admin et son statut est "Active", redirigez-le vers la page '/Users'
-          navigate('/Users');
+          navigate('/usersPage');
         } else if (result.user.role === 'Courtier') {
-          // Sinon, redirigez-le vers la page '/Courtier/biens'
           navigate('/Courtier/biens');
         } else {
-          navigate('/Secraitaire')
+          navigate('/estimationsPage');
         }
       }
 
       localStorage.setItem("user-info", JSON.stringify(result));
 
+      handleClose(); // Fermer la modal après la connexion réussie
 
     } catch (error) {
       console.error('Login failed:', error);
-      // Handle login failure (e.g., show an error message)
+      // Gérer les erreurs de connexion (par exemple, afficher un message d'erreur à l'utilisateur)
+    } finally {
+      setLoading(false);
     }
-    handleClose();
   }
+
   return (
-    <Modal show={showModal} onHide={handleClose} >
+    <Modal show={showModal} onHide={handleClose}>
       <Modal.Header closeButton>
 
       </Modal.Header>
-      <Modal.Body >
-
-
-        <Form >
+      <Modal.Body>
+        <Form>
           <div style={{ maxWidth: '400px', overflowY: 'auto' }}>
             <div className='title_login'>
               <h3>Login</h3>
             </div>
             <div className='form_container'>
               <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
+                <Form.Label>Adresse Email</Form.Label>
                 <Form.Control
                   type="email"
-                  placeholder="Enter email"
+                  placeholder="exemple@gmail.com"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -84,22 +83,13 @@ export const Log_in = ({ showModal, handleClose }) => {
               </Form.Group>
             </div>
             <div className='btn-login'>
-              <button  onClick={login}>
-                Login
+              <button onClick={login} disabled={loading}>
+                {loading ? 'Chargement...' : 'Login'}
               </button>
             </div>
-
           </div>
-
         </Form>
-
-
       </Modal.Body>
     </Modal>
-
-
   );
-
 }
-
-

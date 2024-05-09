@@ -1,0 +1,34 @@
+.cards {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 400px;
+    margin-top: 50px;
+}
+
+.cards .carousel {
+    width: 286px;
+    height: 160px;
+
+}
+
+.cards_carousel img {
+    width: 286px;
+    max-height: 160px;
+    border-radius: 5px;
+
+}
+
+.cards Button {
+    background-color: #FF9A8F;
+    color: #4A536B;
+    border: none;
+}
+
+@media screen and (max-width: 800px) {
+    .cards {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}

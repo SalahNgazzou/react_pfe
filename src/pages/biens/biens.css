@@ -1,0 +1,39 @@
+.cards_bien {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+.card {
+    width: calc(33.33% - 20px);
+    /* Adjust width to fit three cards per line with some margin */
+    margin: 10px;
+    /* Add margin between cards */
+}
+
+.cards_bien .carousel {
+    max-width: 286px;
+    max-height: 160px;
+
+}
+
+.cards_carousel_bien img {
+    width: 286px;
+    max-height: 160px;
+    border-radius: 5px;
+
+}
+
+.cards_bien Button {
+    background-color: #FF9A8F;
+    color: #4A536B;
+    border: none;
+}
+
+@media screen and (max-width: 800px) {
+    .cards_bien {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}

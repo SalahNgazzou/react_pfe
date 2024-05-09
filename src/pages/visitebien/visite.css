@@ -1,0 +1,153 @@
+/* Styles de base pour les éléments */
+.bien {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f3f2f2;
+    overflow-y: auto;
+}
+.les_deux{
+    width: 100%;
+    height: auto;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.donnee_container{
+    width: 50%;
+    height: 300px;
+    background-color: #fff;
+    margin: 5px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #AED6DC;
+}
+
+
+ .part1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #4A536B;
+    margin: 5px;
+    border-bottom:1px solid #4A536B;
+} 
+.part2 {
+    color: #4A536B;
+    margin: 5px;
+} 
+
+.table-contact{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.contact{
+    background-color: #FFF;
+    width: 30%;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #AED6DC;
+}
+.user-prop{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid #4A536B;
+    width: 100%;
+    height: 70px;
+}
+.user-prop img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+
+}
+.inputs{
+    display: block;
+    margin: 5px;
+    color: #4A536B;
+}
+.btn{
+    width: 100%;
+    height: 50px;
+    margin: 5px;
+    padding: auto;
+}
+.btn button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ff9a9f;
+    color: #4A536B;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px; /* Augmente la taille du texte */
+    padding: 10px 60px;
+}
+
+
+
+.carousel_container {
+    width: 50%;
+    /* Largeur du carrousel */
+    height: 300PX;
+    /* Hauteur du carrousel */
+    float: right;
+    /* Positionnement à droite */
+    margin: 5px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    /* Ombre */
+}
+
+.visite_img img {
+    border-radius: 5px;
+    width: 100%;
+    max-height: 300PX;
+    /* Assurez-vous que le carrousel occupe toute la hauteur de son conteneur */
+}
+
+
+.information {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+    width: 100%;
+    height: 50px;
+    padding: 12px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px #AED6DC;
+    color: #4A536B;
+    
+   
+}
+
+.header-div-information {
+    color: #4A536B;
+    min-height: 30px;
+    margin-top: 20px;
+
+   text-decoration: underline;
+}
+.table-containre{
+ 
+    width: 50%;
+    margin-top: 10px;
+}
+.talble-header{
+    margin-top: 10px;
+}
+.talble-header h4{
+display: flex;
+justify-content: flex-start;
+margin-left: 50px;
+color: #4A536B;
+text-decoration: underline;
+}
+

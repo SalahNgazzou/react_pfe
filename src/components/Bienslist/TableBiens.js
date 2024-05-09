@@ -1,17 +1,15 @@
-import { CheckCircleOutline, HighlightOff } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
+import { FaEye } from 'react-icons/fa';
 import { getData } from '../../utils/getData';
-import { putAnnonce } from '../../utils/putAnnonce';
-
-
-import { Biens } from './AddBiens';
-import { getUser } from '../../utils/getUser';
 import { getDatabyuser } from '../../utils/getDataByUser';
-import { ConsulteBien } from './ConsulterBien';
+import { getUser } from '../../utils/getUser';
+import { putAnnonce } from '../../utils/putAnnonce';
+import { Biens } from './AddBiens';
+import { putStatue } from '../../utils/putStatue';
 export const Table = () => {
 
 
@@ -29,29 +27,30 @@ export const Table = () => {
             selector: (row) => row.categorie,
         },
         {
-            name: 'Disponibilté',
-            selector: (row) => row.disponibilté,
-        },
-        {
-            name: 'Statue',
+           
+            name: 'disponibilité',
             cell: (row) => (
-                <IconButton
+                <Button
+                    className={`btn ${row.disponibilté === 'En cours' ? 'btn-success btn-sm' : 'btn-danger btn-sm'}`}
+                    style={{
+                        color: row.disponibilté === 'En cours' ? 'white' : 'white',
+                        backgroundColor: row.disponibilté === 'En cours' ? 'green' : 'red',
+                    }}
+                    aria-label={row.disponibilté === 'En cours' ? 'En cours' : row.disponibilté}
                     onClick={() => ChangeStatue(row.id)}
-                    className={`btn ${row.disponibilté === 'En cours' ? 'btn-danger' : 'btn-success'}`}
-                    aria-label={row.disponibilté === 'Publier' ? 'Publier' : 'Masquer'}
-                    style={{ color: row.disponibilté === 'En cours' ? 'red' : 'green' }}
                 >
-                    {row.disponibilté === 'En cours' ? <HighlightOff />:<CheckCircleOutline />}
-                </IconButton>
+                    {row.disponibilté}
+                </Button>
             )
         },
+      
         {
-            name: 'Modifier',
+            name: 'Consulter',
             cell: (row) => (
                 <div>
-                    <a href={`/bien/${row.id}`}>
-                        <IconButton aria-label="Modifier">
-                            <EditIcon />
+                    <a href={`/BienMasquer/${row.id}`}>
+                        <IconButton aria-label="Consulter">
+                        <FaEye />
                         </IconButton>
                     </a>
                 </div>
@@ -76,7 +75,7 @@ export const Table = () => {
             getData({ setData, url: "biens" });
         }else if (loggedInUser && loggedInUser.id) {
             // Si l'utilisateur est authentifié et a un ID, récupérez les biens par son ID
-            getDatabyuser({ setData, url: `biens/BiensByUser/${loggedInUser.id}` });
+            getDatabyuser({ setData, url: `biens/BiensByUserEnAttente/${loggedInUser.id}` });
         }
        
     }, []);
@@ -95,7 +94,7 @@ export const Table = () => {
     
     const ChangeStatue = async (id) => {
         try {
-            await putAnnonce({ url: "biens/changestatue", id });
+            await putStatue({ url: "biens/changestatue", id });
             getData({ setData, url: "biens" });
         } catch (error) {
             // Gérer les erreurs de manière appropriée
@@ -115,7 +114,8 @@ export const Table = () => {
     };
 
     return (
-        <div className='myDataTableContainer'>
+        <div>
+<div className='myDataTableContainer'>
             <DataTable
                 columns={columns}
                 data={filter}
@@ -153,8 +153,10 @@ export const Table = () => {
                
             />
             <Biens showModal={showModal} handleClose={handleClose}  />
-            {<ConsulteBien user={user} />} 
+            {/* {<ConsulteBien user={user} />}  */}
         </div>
+        </div>
+        
     );
 };
 

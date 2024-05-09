@@ -1,0 +1,35 @@
+.estimation {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-image: url("../../../public/img/estimation-bien-immobilier.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.estimation_form {
+    width: 50%;
+    height: auto;
+    padding: 20px;
+    margin: 5px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #5b5b7e38;
+}
+
+.btn_envoyer {
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    color: #4A536B;
+    background-color: #ff9a8f;
+}
+.title{
+    color: #fff;
+}

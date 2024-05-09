@@ -38,7 +38,7 @@ export const Table = () => {
                 <IconButton
                     onClick={() => ChangeStatue(row.id)}
                     className={`btn ${row.statue === 'Activer' ? 'btn-success' : 'btn-danger'}`}
-                    aria-label={row.statue === 'Activer' ? 'Activer' : 'Inactive'}
+                    aria-label={row.statue === 'Activer' ? 'Activer' : 'Déactiver'}
                     style={{ color: row.statue === 'Activer' ? 'green' : 'red' }}
                 >
                     {row.statue === 'Activer' ? <CheckCircleOutline /> : <HighlightOff />}
@@ -110,8 +110,8 @@ export const Table = () => {
             style: {
                 fontWeight: "bold",
                 fontSize: '14px',
-                backgroundColor: "#4A536B",
-                color: "white"
+                backgroundColor: "#FF9A8D",
+                color: "#4A536B"
             },
         },
     }
@@ -139,7 +139,7 @@ export const Table = () => {
                             width: '50px', // taille du bouton
                             height: '50px' // taille du bouton
                         }}>
-                        <AddIcon style={{ color: 'white' }} />
+                        <AddIcon style={{  color: '#4A536B'  }} />
                     </IconButton>
 
                 }

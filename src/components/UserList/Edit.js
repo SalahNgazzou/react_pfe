@@ -22,7 +22,7 @@ const EditPopup = ({ handleCloseEdit, userdata }) => {
     let item = { name, last_name, cin, birth, email, role, addresse, num_phone };
     console.log(item);
 
-    putData({ url: "users", data: item, id: userdata.id })
+    putData({ url: "users/update", data: item, id: userdata.id })
     handleCloseEdit();
   }
 
@@ -30,7 +30,7 @@ const EditPopup = ({ handleCloseEdit, userdata }) => {
 
     <Modal show={!userdata ? false : true} onHide={handleCloseEdit}>
       <Modal.Header closeButton>
-        <Modal.Title>User Information</Modal.Title>
+        <Modal.Title>Edit User</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div style={{ maxHeight: '400px', overflowY: 'auto' }}>

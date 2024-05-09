@@ -33,7 +33,7 @@ export const Log_in = ({ showModal, handleClose }) => {
         } else if (result.user.role === 'Courtier') {
           navigate('/Courtier/biens');
         } else {
-          navigate('/Secretaire');
+          navigate('/estimationsPage');
         }
       }
 

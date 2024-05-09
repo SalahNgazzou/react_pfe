@@ -4,12 +4,12 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { postData } from '../../utils/postData';
 import { putData } from '../../utils/putData';
 import { FaPaperPlane } from 'react-icons/fa';
-export const Repondre = ({ showModal, handleClose, data }) => {
+export const RepondreRecherche = ({ showModal, handleClose, data }) => {
 
     const Navigate = useNavigate();
 
-    const id = data.id;
-    const email = data.email;
+    const id = data?.id;
+    const email = data?.email;
     const [object, setObject] = useState('');
     const [message, setMessage] = useState('');
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);

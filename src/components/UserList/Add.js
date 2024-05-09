@@ -4,7 +4,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { postData } from '../../utils/postData';
 
  export const Popup = ({ showModal, handleClose }) => {
-  const roles = [{ key: "Admin", value: "Admin" }, { key: "Sécritaire", value: "Sécritaire" }, { key: "Courtier", value: " Courtier" }]
+  const roles = [{ key: "Admin", value: "Admin" }, { key: "Secrétaire", value: "Secrétaire" }, { key: "Courtier", value: " Courtier" }]
   const statues = [{ key: "Activer", value: "Activer" }, { key: "Déactiver", value: "Déactiver" }]
 
   const [name, setName] = useState('')

@@ -8,8 +8,8 @@ export const Repondre = ({ showModal, handleClose, data }) => {
 
     const Navigate = useNavigate();
 
-    const id = data.id;
-    const email = data.email;
+    const id = data?.id;
+    const email = data?.email;
     const [object, setObject] = useState('');
     const [message, setMessage] = useState('');
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);

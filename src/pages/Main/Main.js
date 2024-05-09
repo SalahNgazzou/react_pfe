@@ -30,7 +30,7 @@ function Main() {
     <div>
 
       <BrowserRouter>
-        <Navbars />
+       
         <Routes>
           <Route path="/estimation/:id" element={<ConsulterEstimation />} />
           <Route path="/recherche/:id" element={<ConsulterRecherche />} />

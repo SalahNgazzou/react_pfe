@@ -7,6 +7,7 @@ import './ConsulterRecherche.css'
 import { Repondre } from '../../components/estimation_liste/Repondre';
 import { deleteData } from '../../utils/deleteData';
 import { getUser } from '../../utils/getUser';
+import { RepondreRecherche } from '../../components/recherche_liste/repondreRecherche';
 export const ConsulterRecherche = () => {
     const navigate = useNavigate();
 
@@ -120,7 +121,7 @@ export const ConsulterRecherche = () => {
                                     <FaTrash />   Supprimer
                                 </button>
                             </Col>
-                            {(user.role === "Secrétaire") && (
+                            {(user.role != "Secrétaire") && (
                                 <Col>
                                     <button className='btn_repondre' onClick={handleShow}>
                                         <FaReply />  Répondre
@@ -133,7 +134,7 @@ export const ConsulterRecherche = () => {
                     </Col>
                 )}
             </div>
-            <Repondre showModal={showModal} handleClose={handleClose} data={recherche} />
+            <RepondreRecherche showModal={showModal} handleClose={handleClose} data={recherche} />
         </div>
     )
 }

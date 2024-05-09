@@ -16,6 +16,13 @@ import { EstimationPages } from '../SecritairePages/estimationPages'
 import { ConsulterEstimation } from '../estimation/ConsulterEstimation'
 import { BiensPublier } from '../AdminPages/BiensPublier'
 import { ConsulteBienPublier } from '../../components/Bienslist/ConsulterBienPublier'
+import { ConsulterRecherche } from '../demandeRecherche/ConsulterRecherche'
+import { RecherchePages } from '../SecritairePages/recherchePages'
+import { Conatct } from '../Contact/Conatct'
+import { ContactsPage } from '../SecritairePages/contactsPage'
+import { ConsulterContact } from '../Contact/consulterContact'
+import {GraphComponent} from '../../components/BiComponant/bi'
+import { Tableau_de_bord } from '../Tableau de bord'
 
 function Main() {
 
@@ -23,11 +30,14 @@ function Main() {
     <div>
 
       <BrowserRouter>
-         <Navbars/> 
+        <Navbars />
         <Routes>
-        <Route path="/estimation/:id" element={<ConsulterEstimation />} />
+          <Route path="/estimation/:id" element={<ConsulterEstimation />} />
+          <Route path="/recherche/:id" element={<ConsulterRecherche />} />
           <Route path="/estimation" element={<Estimation />} />
+          <Route path="/recherche" element={<Recherche />} />
           <Route path="/estimationsPage" element={<EstimationPages />} />
+          <Route path="/recherchesPage" element={<RecherchePages />} />
           <Route path="/nos_biens" element={<Biens />} />
           <Route path="/demande_de_recherche" element={<Recherche />} />
           <Route path="/visite/:id" element={<VisiteBien />} />
@@ -35,9 +45,13 @@ function Main() {
           <Route path="/BienMasquer/:id" element={<ProtectRoute cmp={<ConsulteBien />} />} />
           <Route path="/usersPage" element={<ProtectAdmin cmp={<UsersPage />} />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/contact/:id" element={<ConsulterContact />} />
           <Route path='/en_attentePage' element={<BiensPage />} />
+          <Route path='/bi' element={<Tableau_de_bord />} />
+          <Route path='/contactsPage' element={<ContactsPage />} />
           <Route path='/PublierPage' element={<BiensPublier />} />
           <Route path='/Courtier/Biens' element={<BiensCourtier />} />
+          <Route path="/contact" element={<Conatct />} />
           {/* <Route path="/Courtier/biens" element={<ConsulterBien />} /> */}
         </Routes>
       </BrowserRouter>

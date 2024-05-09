@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './recherche.css';
 import { Col, Form, Row } from 'react-bootstrap';
+import { PostEstimation } from '../../utils/VisiteurUtils/postEstimation';
 
 export const Recherche = () => {
     const types = [
@@ -43,12 +44,42 @@ export const Recherche = () => {
         { key: 'Tunis', value: 'Tunis' },
         { key: 'Zaghouan', value: 'Zaghouan' }
     ];
+    const [name, setName] = useState('');
+    const [last_name, setLastName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [type, setType] = useState('');
+    const [categorie, setCategorie] = useState('');
+    const [gouvernant, setGouvernant] = useState('');
+    const [ville, setVille] = useState('');
+    const [prix_min, setPrixMin] = useState('');
+    const [prix_max, setPrixMax] = useState('');
+    const etat = 'en attente';
+
+    const Envoyer = () => {
+        if (!name || !last_name || !phone || !email || !type || !categorie || !gouvernant || !ville || !prix_min || !prix_max ) {
+            alert('Tous les champs sont obligatoire !')
+        }
+        let item = { name, last_name, phone, email, type, categorie, gouvernant, ville, prix_min, prix_max, etat }
+        PostEstimation({ url: "visiteur/recherche", items: item })
+        setName('');
+        setLastName('');
+        setPhone('');
+        setEmail('');
+        setType('');
+        setCategorie('');
+        setGouvernant('');
+        setVille('');
+        setPrixMin('');
+        setPrixMax('');
+
+    }
     return (
         <div className='recherche'>
             <div className='form_recherche'>
                 <div className='recherch_title'>
-                    <h1>Estimez Votre Bien Immobilier</h1>
-                    <h5>C'est Gratuit Et En Ligne En Plus !</h5>
+                    <h1>Cherchez Votre Bien Immobilier Ici</h1>
+                    <h6>Faire Une Demande De Recherche Gratuit Et En Ligne En Plus !</h6>
                 </div>
                 <Col>
                     <Row>
@@ -58,10 +89,10 @@ export const Recherche = () => {
                             <Form.Label>Nom :</Form.Label>
                             <Form.Control
                                 type="text"
-                                name="nom"
+                                name="name"
                                 required
-                            /*   value={prixMin}
-                              onChange={(e) => setPrixMin(e.target.value)} */
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                             />
 
 
@@ -73,10 +104,10 @@ export const Recherche = () => {
                             <Form.Label>Prénom :</Form.Label>
                             <Form.Control
                                 type="text"
-                                name="prenom"
+                                name="last_name"
                                 required
-                            /*   value={prixMin}
-                              onChange={(e) => setPrixMin(e.target.value)} */
+                                value={last_name}
+                                onChange={(e) => setLastName(e.target.value)}
                             />
 
 
@@ -91,10 +122,10 @@ export const Recherche = () => {
                             <Form.Label>Email :</Form.Label>
                             <Form.Control
                                 type="email"
-                                name="prenom"
+                                name="email"
                                 required
-                            /* value={prixMin}
-                            onChange={(e) => setPrixMin(e.target.value)} */
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </Col>
 
@@ -104,10 +135,10 @@ export const Recherche = () => {
                             <Form.Label>Télephone :</Form.Label>
                             <Form.Control
                                 type="number"
-                                name="prenom"
+                                name="phone"
                                 required
-                            /* value={prixMin}
-                            onChange={(e) => setPrixMin(e.target.value)} */
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
                             />
                         </Col>
 
@@ -116,6 +147,8 @@ export const Recherche = () => {
                         <Col>
                             <Form.Label>Type : </Form.Label>
                             <Form.Select required
+                                value={type}
+                                onChange={(e) => setType(e.target.value)}
                             >
                                 <option disabled value="">Villa</option>
                                 {types.map(type => <option key={type.key} value={type.value}>{type.key}</option>)}
@@ -123,7 +156,7 @@ export const Recherche = () => {
                         </Col>
                         <Col>
                             <Form.Label>Categorie :</Form.Label>
-                            <Form.Select name="categorie" required /* value={categorie} onChange={(e) => setCategorie(e.target.value)} */
+                            <Form.Select name="categorie" required value={categorie} onChange={(e) => setCategorie(e.target.value)}
                             >
                                 <option disabled value="">A vendre/ A louée </option>
                                 {categories.map(cat => <option key={cat.value} value={cat.value}>{cat.key}</option>)}
@@ -134,8 +167,8 @@ export const Recherche = () => {
                         <Col>
                             <Form.Label>Gouvernorat</Form.Label>
                             <Form.Select name="gouvernant" required
+                                value={gouvernant} onChange={(e) => setGouvernant(e.target.value)}
 
-                            // onChange={(e) => setInputsData({ ...inputsData, gouvernant: e.target.value })}
 
                             >
                                 {gouvernorats.map(gouv => <option key={gouv.key} value={gouv.value}>{gouv.key}</option>)}
@@ -150,8 +183,8 @@ export const Recherche = () => {
                                 type="text"
                                 name="ville"
                                 required
-                            /* value={prixMin}
-                            onChange={(e) => setPrixMin(e.target.value)} */
+                                value={ville}
+                                onChange={(e) => setVille(e.target.value)}
                             />
                         </Col>
 
@@ -164,8 +197,8 @@ export const Recherche = () => {
                             <Form.Control
                                 type="number"
                                 name="prix_min"
-                            /*   value={prixMin}
-                              onChange={(e) => setPrixMin(e.target.value)} */
+                                value={prix_min}
+                                onChange={(e) => setPrixMin(e.target.value)}
                             />
 
 
@@ -178,15 +211,15 @@ export const Recherche = () => {
                             <Form.Control
                                 type="number"
                                 name="prix_max"
-                            /*   value={prixMin}
-                              onChange={(e) => setPrixMin(e.target.value)} */
+                                value={prix_max}
+                                onChange={(e) => setPrixMax(e.target.value)}
                             />
 
 
                         </Col>
 
                     </Row>
-                    <button className='btn_envoyer'>
+                    <button className='btn_envoyer ' onClick={Envoyer}>
                         Envoyer
                     </button>
 

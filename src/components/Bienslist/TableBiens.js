@@ -27,7 +27,7 @@ export const Table = () => {
             selector: (row) => row.categorie,
         },
         {
-            name: 'disponibilité',
+           
             name: 'disponibilité',
             cell: (row) => (
                 <Button
@@ -43,19 +43,7 @@ export const Table = () => {
                 </Button>
             )
         },
-       /*  {
-            name: 'Statue',
-            cell: (row) => (
-                <IconButton
-                    onClick={() => ChangeStatue(row.id)}
-                    className={`btn ${row.disponibilté === 'En cours' ? 'btn-danger' : 'btn-success'}`}
-                    aria-label={row.disponibilté === 'Activer' ? 'Activer' : 'Déactiver'}
-                    style={{ color: row.disponibilté === 'En cours' ? 'red' : 'green' }}
-                >
-                    {row.disponibilté === 'En cours' ?  <HighlightOff />:<CheckCircleOutline />}
-                </IconButton>
-            )
-        }, */
+      
         {
             name: 'Consulter',
             cell: (row) => (

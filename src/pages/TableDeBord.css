@@ -1,0 +1,26 @@
+.dashborad {
+    padding: 20px;
+    background-color: gray;
+}
+
+.biens {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 200px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.type_demender {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    height: 300px;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-top: 10px;
+}

@@ -17,7 +17,7 @@ export const Navbars = () => {
 
   const navLinkStyle = {
     color: '#4A536B',
-    fontSize: '1.2rem', // Augmentation de la taille de la police
+    fontSize: '16px', // Augmentation de la taille de la police
     marginRight: '20px'
   };
 

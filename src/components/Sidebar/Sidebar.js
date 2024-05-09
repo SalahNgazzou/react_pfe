@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { FaUser } from 'react-icons/fa';
+import { FaEnvelope, FaSearch, FaUser } from 'react-icons/fa';
 import { FaHome } from 'react-icons/fa';
 import { FaSignOutAlt } from 'react-icons/fa';
 import './sidebar.css'; // Import the CSS file
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { FaCalculator } from 'react-icons/fa';
+import { BiStats } from 'react-icons/bi';
+
 export const Sidebar = () => {
   const [user, setUser] = useState(null);
   const Navigate = useNavigate();
@@ -27,7 +29,7 @@ export const Sidebar = () => {
       {user && (
         <div className="profile">
           <img src="/img/ala.jpg" alt="Profile" />
-          <h4>{user.name+" "+user.last_name}</h4>
+          <h4>{user.name + " " + user.last_name}</h4>
         </div>
       )}
       <nav>
@@ -39,29 +41,47 @@ export const Sidebar = () => {
                   <FaUser /> Users {/* Icône d'utilisateur */}
                 </a>
               </li>
-             
+
             )}
             {(user.role === "Admin" || user.role === "Courtier") && (
               <li>
                 <a href='/PublierPage' style={{ color: '#4A536B' }}>
-                <FaHome /> Biens Publier {/* Icône d'utilisateur */}
+                  <FaHome /> Biens Publier {/* Icône d'utilisateur */}
                 </a>
               </li>
-             
+
             )}
             <li>
               <a href='/en_attentePage' style={{ color: '#4A536B' }}>
-                <FaHome /> Biens En attente 
+                <FaHome /> Biens En attente
               </a>
             </li>
-            {( user.role === "Secrétaire") && (
+            {(user.role === "Secrétaire") && (
               <li>
                 <a href='/estimationsPage' style={{ color: '#4A536B' }}>
-                <FaCalculator /> Demandes d'estimation
+                  <FaCalculator /> Demandes d'estimation
                 </a>
               </li>
             )}
-
+            <li>
+              <a href='/recherchesPage' style={{ color: '#4A536B' }}>
+                <FaSearch /> Demandes Recherche
+              </a>
+            </li>
+            {(user.role === "Secrétaire") && (
+              <li>
+                <a href='/contactPage' style={{ color: '#4A536B' }}>
+                  <FaEnvelope /> Messages
+                </a>
+              </li>
+            )}
+            {(user.role === "Admin") && (
+              <li>
+                <a href='' style={{ color: '#4A536B' }}>
+                <BiStats />Tableau de bord
+                </a>
+              </li>
+            )}
             <li>
               <a href='/home'>
                 <button onClick={LogOut} style={{ border: 'none', background: 'none', color: 'red', padding: '0px' }}>

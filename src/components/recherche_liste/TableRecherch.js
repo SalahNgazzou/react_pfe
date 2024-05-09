@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import { FaEye } from 'react-icons/fa';
 
-export const TableEsimation=()=> {
+export const TableRecherche = () => {
     const columns = [
         {
             name: 'id',
@@ -20,17 +20,17 @@ export const TableEsimation=()=> {
             selector: (row) => row.categorie,
         },
         {
-            name: 'Adresse',
-            selector: (row) => row.adresse,
+            name: 'Gouvernorat',
+            selector: (row) => row.gouvernant,
         },
-       
+
         {
             name: 'Consulter',
             cell: (row) => (
                 <div>
-                    <a href={`/estimation/${row.id}`}>
+                    <a href={`/recherche/${row.id}`}>
                         <IconButton aria-label="Consulter">
-                        <FaEye />
+                            <FaEye />
                         </IconButton>
                     </a>
                 </div>
@@ -43,8 +43,8 @@ export const TableEsimation=()=> {
     const [filter, setFilter] = useState([]);
 
     useEffect(() => {
-        getData({ setData, url: "estimation" });
-    }, [])
+        getData({ setData, url: "recherche" });
+    }, [data])
 
     useEffect(() => {
         if (Array.isArray(data)) {
@@ -68,32 +68,32 @@ export const TableEsimation=()=> {
             },
         },
     }
-  return (
-    <div className='myDataTableContainer'>
-    <DataTable
-        columns={columns}
-        data={filter}
-        customStyles={tableHeaderstyle}
-        pagination
-        striped
-        selectableRows
-        fixedHeader
-        selectableRowsHighlight
-        highlightOnHover
-        
-        subHeader
-        subHeaderComponent={
-            <input
-                type='text'
-                className='w-25 form-control'
-                placeholder='Search...'
-                value={recherche}
-                onChange={(e) => setRecherche(e.target.value)}
+    return (
+        <div className='myDataTableContainer'>
+            <DataTable
+                columns={columns}
+                data={filter}
+                customStyles={tableHeaderstyle}
+                pagination
+                striped
+                selectableRows
+                fixedHeader
+                selectableRowsHighlight
+                highlightOnHover
+
+                subHeader
+                subHeaderComponent={
+                    <input
+                        type='text'
+                        className='w-25 form-control'
+                        placeholder='Search...'
+                        value={recherche}
+                        onChange={(e) => setRecherche(e.target.value)}
+                    />
+                }
+
             />
-        }
-       
-    />
-   
-</div>
-  )
+
+        </div>
+    )
 }

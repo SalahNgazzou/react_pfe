@@ -17,13 +17,13 @@ export const Repondre = ({ showModal, handleClose, data }) => {
         let item = { email, object, message }
 
         postData({ url: 'send-email', data: item })
-        putData({ url: 'estimation', id: id })
+        putData({ url: 'recherche', id: id })
         if (!object || !message) {
             alert('Veuillez remplir tous les champs.')
         } else {
             setShowSuccessMessage(true);
             setTimeout(() => {
-                Navigate('/estimationsPage');
+                Navigate('/recherchesPage');
             }, 2000);
 
         }
@@ -51,7 +51,7 @@ export const Repondre = ({ showModal, handleClose, data }) => {
                 </Form>
                 {showSuccessMessage && (
                     <div className="alert alert-success" role="alert">
-                        Email a été envoyer avec succès !
+                      Email a été envoyer avec succès !
                     </div>
                 )}
             </Modal.Body>

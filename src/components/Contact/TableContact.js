@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import DataTable from 'react-data-table-component';
 import { getData } from '../../utils/getData';
-import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
 import { FaEye } from 'react-icons/fa';
+import DataTable from 'react-data-table-component';
+import { IconButton } from '@mui/material';
 
-export const TableEsimation=()=> {
+export const TableContact=()=> {
     const columns = [
         {
             name: 'id',
             selector: (row) => row.id,
         },
         {
-            name: 'Type',
-            selector: (row) => row.type,
+            name: 'Nom',
+            selector: (row) => row.name,
         },
         {
-            name: 'Categorie',
-            selector: (row) => row.categorie,
+            name: 'Prénom',
+            selector: (row) => row.last_name,
         },
         {
             name: 'Adresse',
@@ -28,7 +27,7 @@ export const TableEsimation=()=> {
             name: 'Consulter',
             cell: (row) => (
                 <div>
-                    <a href={`/estimation/${row.id}`}>
+                    <a href={`/contact/${row.id}`}>
                         <IconButton aria-label="Consulter">
                         <FaEye />
                         </IconButton>
@@ -43,17 +42,18 @@ export const TableEsimation=()=> {
     const [filter, setFilter] = useState([]);
 
     useEffect(() => {
-        getData({ setData, url: "estimation" });
+        getData({ setData, url: "contact" });
     }, [])
 
     useEffect(() => {
         if (Array.isArray(data)) {
             const res = data.filter((item) => {
-                return item.type.toLowerCase().match(recherche.toLocaleLowerCase());
+                const type_biens = item.name || ''; // Assurez-vous que type_biens est défini ou utilisez une chaîne vide par défaut
+                return type_biens.toLowerCase().includes(recherche.toLowerCase()); // Utilisez includes() pour vérifier si la chaîne contient la recherche
             });
             setFilter(res);
         } else {
-            // Handle the case where data is not an array (e.g., setFilter to an empty array)
+            // Gérez le cas où data n'est pas un tableau (par exemple, setFilter à un tableau vide)
             setFilter([]);
         }
     }, [data, recherche]);

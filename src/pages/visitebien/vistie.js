@@ -6,14 +6,19 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import './visite.css'
 import { FaBed, FaPaperPlane, FaRuler, FaCar, FaShower, FaMapMarkerAlt, FaCouch, FaTree, FaSwimmingPool, FaFire, FaSnowflake } from 'react-icons/fa';
 import { getBien } from '../../utils/VisiteurUtils/getBien';
+import { PostEstimation } from '../../utils/VisiteurUtils/postEstimation';
 export const VisiteBien = () => {
 
   const { id } = useParams();
   const [biendata, setBienData] = useState(null);
   const [images, setImages] = useState([]);
   const [message, setMessage] = useState("Bonjour,je suis interessé(e)");
-
-
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+const id_bien = id;
+const id_user=biendata &&biendata.user_details.id;
+const etat = 'en attente '
   useEffect(() => {
     getBien({ setData: setBienData, url: "visiteur/" + id });
   }, [id]);
@@ -25,7 +30,10 @@ export const VisiteBien = () => {
     }
   }, [biendata]);
 
-
+const envoyer=()=>{
+let item={id_bien,id_user,name,phone,email,message,etat}
+PostEstimation({url:'visiteur/commentair',items:item})
+}
   const table = () => {
     switch (biendata?.type_biens) {
       case 'Villa':
@@ -496,7 +504,7 @@ export const VisiteBien = () => {
         </div>
         <div className='contact'>
           {biendata && (
-            <form >
+            <div >
               <div className='user-prop'>
                 <img src='/img/sedkii.jpg' alt="Photo de profil" />
                 <h4>{biendata.user_details.name +" "+biendata.user_details.last_name}</h4>
@@ -508,6 +516,8 @@ export const VisiteBien = () => {
                   id="name"
                   name="name"
                   required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
                 <Form.Label htmlFor="phone">Téléphone :</Form.Label>
                 <Form.Control
@@ -515,6 +525,8 @@ export const VisiteBien = () => {
                   id="phone"
                   name="phone"
                   required
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                 />
                 <Form.Label htmlFor="email">Email :</Form.Label>
                 <Form.Control
@@ -522,6 +534,8 @@ export const VisiteBien = () => {
                   id="email"
                   name="email"
                   required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <Form.Label htmlFor="message">Message :</Form.Label>
                 <Form.Control
@@ -536,11 +550,11 @@ export const VisiteBien = () => {
                 />
               </div>
               <div className='btn'>
-                <button type="submit">
+                <button  onClick={envoyer}>
                   <FaPaperPlane /> Envoyer
                 </button>
               </div>
-            </form>
+            </div>
           )}
         </div>
       </div>

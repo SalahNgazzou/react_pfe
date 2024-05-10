@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaEnvelope, FaSearch, FaUser } from 'react-icons/fa';
+import { FaComment, FaEnvelope, FaSearch, FaUser } from 'react-icons/fa';
 import { FaHome } from 'react-icons/fa';
 import { FaSignOutAlt } from 'react-icons/fa';
 import './sidebar.css'; // Import the CSS file
@@ -56,6 +56,14 @@ export const Sidebar = () => {
                 <FaHome /> Biens En attente
               </a>
             </li>
+            {(user.role === "Admin" || user.role === "Courtier") && (
+              <li>
+                <a href='/commentaire' style={{ color: '#4A536B' }}>
+                  <FaComment /> Commentaires {/* Icône d'utilisateur */}
+                </a>
+              </li>
+
+            )}
             {(user.role === "Secrétaire") && (
               <li>
                 <a href='/estimationsPage' style={{ color: '#4A536B' }}>
@@ -77,7 +85,7 @@ export const Sidebar = () => {
             )}
             {(user.role === "Admin") && (
               <li>
-                <a href='' style={{ color: '#4A536B' }}>
+                <a href='Dashbored' style={{ color: '#4A536B' }}>
                 <BiStats />Tableau de bord
                 </a>
               </li>

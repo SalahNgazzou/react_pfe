@@ -1,0 +1,66 @@
+.dashborad {
+    padding: 20px;
+    background-color: gray;
+}
+
+.biens {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.type_demender {
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.total_bien{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   border: 1px solid ;
+    color: black;
+    width: 250px;
+    height: 50px;
+    border-radius: 5px;
+}
+.total_a_louer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   border: 1px solid;
+    color: black;
+    width: 250px;
+    height: 50px;
+    border-radius: 5px;
+}
+.total_a_vendre{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   border: 1px solid;
+    color: black;
+    width: 250px;
+    height: 50px;
+    border-radius: 5px;
+}
+.bien_vendu{
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    width: 100%;
+    height: 500px;
+    background-color: #fff;
+    margin-top: 10px;
+    border-radius: 5px;
+}

@@ -22,7 +22,10 @@ import { Conatct } from '../Contact/Conatct'
 import { ContactsPage } from '../SecritairePages/contactsPage'
 import { ConsulterContact } from '../Contact/consulterContact'
 import {GraphComponent} from '../../components/BiComponant/bi'
-import { Tableau_de_bord } from '../Tableau de bord'
+import { Tableau_de_bord } from '../../components/BiComponant/Tableau de bord'
+import { Dashboard } from '@mui/icons-material'
+import { CommentairPage } from '../CourtierPages/CommentairPages'
+import { ConsulterCommentair } from '../Commentaire/ConsulterCommentair'
 
 function Main() {
 
@@ -30,7 +33,7 @@ function Main() {
     <div>
 
       <BrowserRouter>
-       
+        
         <Routes>
           <Route path="/estimation/:id" element={<ConsulterEstimation />} />
           <Route path="/recherche/:id" element={<ConsulterRecherche />} />
@@ -41,13 +44,15 @@ function Main() {
           <Route path="/nos_biens" element={<Biens />} />
           <Route path="/demande_de_recherche" element={<Recherche />} />
           <Route path="/visite/:id" element={<VisiteBien />} />
+          <Route path="/commentaire/:id" element={<ConsulterCommentair />} />
           <Route path="/BienPublier/:id" element={<ProtectRoute cmp={<ConsulteBienPublier />} />} />
           <Route path="/BienMasquer/:id" element={<ProtectRoute cmp={<ConsulteBien />} />} />
           <Route path="/usersPage" element={<ProtectAdmin cmp={<UsersPage />} />} />
           <Route path="/home" element={<Home />} />
           <Route path="/contact/:id" element={<ConsulterContact />} />
           <Route path='/en_attentePage' element={<BiensPage />} />
-          <Route path='/bi' element={<Tableau_de_bord />} />
+          <Route path='/Dashbored' element={<Tableau_de_bord />} />
+          <Route path='/commentaire' element={<CommentairPage />} />
           <Route path='/contactsPage' element={<ContactsPage />} />
           <Route path='/PublierPage' element={<BiensPublier />} />
           <Route path='/Courtier/Biens' element={<BiensCourtier />} />

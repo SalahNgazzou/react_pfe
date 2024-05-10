@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
-export const GraphComponent = () => {
+export const PlusLouer = () => {
   const chartRef = useRef(null); // Ref to the canvas element
 
   useEffect(() => {
@@ -12,15 +12,15 @@ export const GraphComponent = () => {
       data: {
         labels: ['Villa', 'Appartement', 'Duplex', 'Terrain', 'Local commercial', 'Parking/Garage', 'usine', 'Entropot','Immeuble'],
         datasets: [{
-          label: 'Type de bien le plus vendu',
-          data: [28, 48, 40, 19, 96, 27, 100, 70,90],
+          label: 'Type de bien le plus Louer',
+          data: [30, 80, 14, 95, 3, 27, 80, 60,50],
           fill: true,
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgb(54, 162, 235)',
-          pointBackgroundColor: 'rgb(54, 162, 235)',
+          backgroundColor: 'rgba(255, 99, 132, 0.2)', // Nouvelle couleur pour la zone de remplissage
+          borderColor: 'rgb(255, 99, 132)', // Nouvelle couleur de la bordure
+          pointBackgroundColor: 'rgb(255, 99, 132)', // Nouvelle couleur des points
           pointBorderColor: '#fff',
           pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgb(54, 162, 235)'
+          pointHoverBorderColor: 'rgb(255, 99, 132)'
         }]
       },
       options: {

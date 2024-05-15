@@ -28,7 +28,7 @@ export const Sidebar = () => {
     <div className="sidebar">
       {user && (
         <div className="profile">
-          <img src="/img/ala.jpg" alt="Profile" />
+          <img src={"http://localhost:8000/uploads/profiles/"+user.image} alt="Profile" />
           <h4>{user.name + " " + user.last_name}</h4>
         </div>
       )}

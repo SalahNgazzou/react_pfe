@@ -9,14 +9,14 @@ export const Popup = ({ showModal, handleClose }) => {
 
   const [inputsData, setInputsData] = useState({
     name: '',
-    last_name: '', // Corrected variable name to "last_name"
+    last_name: '', 
     email: '',
     role: '',
     cin: '',
-    birth: '', // Corrected variable name to "birth"
-    num_phone: '', // Corrected variable name to "num_phone"
-    addresse: '', // Corrected variable name to "address"
-    statue: '', // Corrected variable name to "statue"
+    birth: '', 
+    num_phone: '', 
+    addresse: '', 
+    statue: '', 
     image: null
   });
 

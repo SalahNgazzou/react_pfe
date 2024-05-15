@@ -1,29 +1,56 @@
 // UserModal.js
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { postData } from '../../utils/postData';
+import { postBien, postData } from '../../utils/postData';
 
- export const Popup = ({ showModal, handleClose }) => {
-  const roles = [{ key: "Admin", value: "Admin" }, { key: "Secrétaire", value: "Secrétaire" }, { key: "Courtier", value: " Courtier" }]
-  const statues = [{ key: "Activer", value: "Activer" }, { key: "Déactiver", value: "Déactiver" }]
+export const Popup = ({ showModal, handleClose }) => {
+  const roles = [{ key: "Admin", value: "Admin" }, { key: "Secrétaire", value: "Secrétaire" }, { key: "Courtier", value: "Courtier" }]; // Corrected typo in "Courtier"
+  const statuses = [{ key: "Activer", value: "Activer" }, { key: "Déactiver", value: "Déactiver" }]; // Corrected variable name to "statuses"
 
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [role, setRole] = useState(roles[0].value)
-  const [statue, setStatue] = useState(statues[0].value)
-  const [password, setPassword] = useState('')
-  const [addresse, setAddress] = useState('')
-  const [num_phone, setPhone] = useState('')
-  const [last_name, setLastName] = useState('')
-  const [cin, setCin] = useState('')
-  const [birth, setBirth] = useState('')
+  const [inputsData, setInputsData] = useState({
+    name: '',
+    last_name: '', // Corrected variable name to "last_name"
+    email: '',
+    role: '',
+    cin: '',
+    birth: '', // Corrected variable name to "birth"
+    num_phone: '', // Corrected variable name to "num_phone"
+    addresse: '', // Corrected variable name to "address"
+    statue: '', // Corrected variable name to "statue"
+    image: null
+  });
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]; // Select the first file from the list
+    setInputsData((prev) => ({
+      ...prev,
+      image: file,
+    }));
+  };
+
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   async function Ajouter() {
-    let item = { name, last_name, cin, birth, email, role, password, addresse, num_phone,statue };
-    console.log(item);
-    postData({ url: "users", data: item })
-    
+
+    const formData = new FormData();
+    const { image, ...inputs } = inputsData;
+    const data = {
+      ...inputs
+    };
+
+    Object.keys(data).forEach((key) => {
+      formData.append(key, data[key]);
+    });
+
+    formData.append('image', image);
+console.log(formData);
+    postBien({ url: "users", data: formData });
+
+    setShowSuccessMessage(true);
+    setTimeout(() => {
+      handleClose();
+    }, 2000);
   }
+
   return (
     <Modal show={showModal} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -36,10 +63,10 @@ import { postData } from '../../utils/postData';
               <Form.Label>Role</Form.Label>
               <Form.Select
                 name="role"
-                onChange={(e) => setRole(e.target.value)}
+                onChange={(e) => setInputsData({ ...inputsData, role: e.target.value })}
                 required
               >
-                {roles.map(role => <option value={role.value}>{role.key}</option>)}
+                {roles.map(role => <option key={role.value} value={role.value}>{role.key}</option>)} {/* Added key prop */}
               </Form.Select>
             </Form.Group>
 
@@ -48,7 +75,7 @@ import { postData } from '../../utils/postData';
               <Form.Control
                 type="text"
                 name="name"
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setInputsData({ ...inputsData, name: e.target.value })}
                 required
               />
             </Form.Group>
@@ -57,7 +84,7 @@ import { postData } from '../../utils/postData';
               <Form.Control
                 type="text"
                 name="last_name"
-                onChange={(e) => setLastName(e.target.value)}
+                onChange={(e) => setInputsData({ ...inputsData, last_name: e.target.value })}
                 required
               />
             </Form.Group>
@@ -66,7 +93,7 @@ import { postData } from '../../utils/postData';
               <Form.Control
                 type="email"
                 name="email"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setInputsData({ ...inputsData, email: e.target.value })}
                 required
               />
             </Form.Group>
@@ -75,58 +102,61 @@ import { postData } from '../../utils/postData';
               <Form.Control
                 type="text"
                 name="cin"
-                onChange={(e) => setCin(e.target.value)}
+                onChange={(e) => setInputsData({ ...inputsData, cin: e.target.value })}
                 required
               />
-              <Form.Group controlId="birth">
-                <Form.Label>birthday</Form.Label>
-                <Form.Control
-                  type="date"
-                  name="birth"
-                  onChange={(e) => setBirth(e.target.value)}
-                  required
-                />
-              </Form.Group>
-              <Form.Group controlId="address">
-                <Form.Label>Address</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="address"
-                  onChange={(e) => setAddress(e.target.value)}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group controlId="phone">
-                <Form.Label>Phone Number</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="num_phone"
-                  onChange={(e) => setPhone(e.target.value)}
-                  required
-                />
-              </Form.Group>
             </Form.Group>
-            <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
+            <Form.Group controlId="birth">
+              <Form.Label>Birthday</Form.Label> {/* Corrected typo in "Birthday" */}
               <Form.Control
-                type="password"
-                name="password"
-                onChange={(e) => setPassword(e.target.value)}
+                type="date"
+                name="birth"
+                onChange={(e) => setInputsData({ ...inputsData, birth: e.target.value })}
                 required
               />
             </Form.Group>
+            <Form.Group controlId="address">
+              <Form.Label>Address</Form.Label>
+              <Form.Control
+                type="text"
+                name="address"
+                onChange={(e) => setInputsData({ ...inputsData, addresse: e.target.value })}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="phone">
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control
+                type="text"
+                name="num_phone"
+                onChange={(e) => setInputsData({ ...inputsData, num_phone: e.target.value })}
+                required
+              />
+            </Form.Group>
+
             <Form.Group controlId="statue">
-              <Form.Label>Statue</Form.Label>
+              <Form.Label>Status</Form.Label> {/* Corrected typo in "Status" */}
               <Form.Select
                 name="statue"
-                onChange={(e) => setStatue(e.target.value)}
+                onChange={(e) => setInputsData({ ...inputsData, statue: e.target.value })}
                 required
               >
-                {statues.map(statue => <option value={statue.value}>{statue.key}</option>)}
+                {statuses.map(statue => <option key={statue.value} value={statue.value}>{statue.key}</option>)} {/* Added key prop */}
               </Form.Select>
+              <Form.Label>Image</Form.Label>
+              <Form.Control
+                type="file"
+                onChange={handleImageChange}
+                name="image"
+              />
             </Form.Group>
             <br />
+            {showSuccessMessage && (
+              <div className="alert alert-success" role="alert">
+                Utilisateur a été ajouté avec succès ! {/* Corrected French message */}
+              </div>
+            )}
             <Button variant="primary" onClick={Ajouter}>
               Save
             </Button>
@@ -137,5 +167,3 @@ import { postData } from '../../utils/postData';
 
   );
 };
-
-

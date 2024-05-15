@@ -13,13 +13,13 @@ const EditPopup = ({ handleCloseEdit, userdata }) => {
   const [role, setRole] = useState(userdata?.role)
   const [addresse, setAddress] = useState(userdata?.addresse)
   const [num_phone, setPhone] = useState(userdata?.num_phone)
+  const [image, setImage] = useState(null);
 
-  console.log(userdata);
 
 
   async function Modifier() {
 
-    let item = { name, last_name, cin, birth, email, role, addresse, num_phone };
+    let item = { name, last_name, cin, birth, email, role, addresse, num_phone ,image};
     console.log(item);
 
     putData({ url: "users/update", data: item, id: userdata.id })
@@ -117,6 +117,12 @@ const EditPopup = ({ handleCloseEdit, userdata }) => {
                   required
                 />
               </Form.Group>
+              <Form.Label>Image</Form.Label>
+                <Form.Control
+                  type="file"
+                  onChange={(e) => setImage(e.target.files[0])}
+                  name='image'
+                />
             </Form.Group>
 
             <br />

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Chart from 'chart.js/auto';
+import { getToken } from '../../utils/getToken';
 
 export const TypeDemander = () => {
   const [chart, setChart] = useState(null);
@@ -8,7 +9,12 @@ export const TypeDemander = () => {
     const fetchData = async () => {
       try {
         // Récupérer les données depuis l'API RESTful
-        const response = await fetch('http://localhost:8000/api/bi/type_demander');
+        const response = await fetch('http://localhost:8000/api/bi/type_demander', {
+          headers: {
+              'Authorization': `Bearer ${getToken()}`,
+              'Content-Type': 'application/json' // Facultatif, en fonction de votre API
+          }
+      });
         const data = await response.json();
         const customColors = [
             'rgba(255, 99, 132, 0.2)',

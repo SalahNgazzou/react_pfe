@@ -46,12 +46,12 @@ function Main() {
           <Route path="/visite/:id" element={<VisiteBien />} />
           <Route path="/commentaire/:id" element={<ConsulterCommentair />} />
           <Route path="/BienPublier/:id" element={<ProtectRoute cmp={<ConsulteBienPublier />} />} />
-          <Route path="/BienMasquer/:id" element={<ProtectRoute cmp={<ConsulteBien />} />} />
+          <Route path="/BienMasquer/:id" element={<ProtectAdmin cmp={<ConsulteBien />} />} />
           <Route path="/usersPage" element={<ProtectAdmin cmp={<UsersPage />} />} />
           <Route path="/home" element={<Home />} />
           <Route path="/contact/:id" element={<ConsulterContact />} />
           <Route path='/en_attentePage' element={<BiensPage />} />
-          <Route path='/Dashbored' element={<Tableau_de_bord />} />
+          <Route path='/Dashbored' element={<ProtectAdmin cmp={<Tableau_de_bord />} />}/>
           <Route path='/commentaire' element={<CommentairPage />} />
           <Route path='/contactsPage' element={<ContactsPage />} />
           <Route path='/PublierPage' element={<BiensPublier />} />

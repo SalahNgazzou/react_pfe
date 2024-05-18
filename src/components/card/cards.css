@@ -1,5 +1,6 @@
 .cards {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
     width: 100%;
@@ -20,10 +21,13 @@
 
 }
 
-.cards Button {
+.cards button {
     background-color: #FF9A8F;
     color: #4A536B;
     border: none;
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
 }
 
 @media screen and (max-width: 800px) {

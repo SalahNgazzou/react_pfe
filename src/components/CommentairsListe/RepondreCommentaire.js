@@ -17,7 +17,7 @@ export const RepondreCommentaire = ({ showModal, handleClose, data }) => {
         let item = { email, object, message }
 
         postData({ url: 'send-email', data: item })
-        putData({ url: 'contact', id: id })
+        putData({ url: 'commentaire', id: id })
         if (!object || !message) {
             alert('Veuillez remplir tous les champs.')
         } else {

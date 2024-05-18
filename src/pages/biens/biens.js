@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getBien } from '../../utils/VisiteurUtils/getBien';
 import { Button, Card, Carousel } from 'react-bootstrap';
 import './biens.css'
+import { Navbars } from '../../components/header/header';
 export const Biens=()=> {
     const [data,setData]=useState([]);
 
@@ -10,6 +11,7 @@ export const Biens=()=> {
       }, []);
   return (
     <div>
+        <Navbars />
     <div className='cards_bien'>
                {data ? (
                    data.map((item, index) => (

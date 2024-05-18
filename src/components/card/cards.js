@@ -1,6 +1,5 @@
 import React from 'react';
 import { Carousel } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './cards.css';
 
@@ -26,7 +25,7 @@ export const Cards = ({data}) => {
                             <Card.Text>Prix : {item.prix} (DT)</Card.Text>
                             <Card.Text>Addresse : {item.ville + " , " + item.gouvernant}</Card.Text>
                             <a href={`/visite/${item.id}`}>
-                                <Button >Visite</Button>
+                                <button >Visite</button>
                             </a>
 
                         </Card.Body>

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './recherche.css';
 import { Col, Form, Row } from 'react-bootstrap';
 import { PostEstimation } from '../../utils/VisiteurUtils/postEstimation';
+import { Navbars } from '../../components/header/header';
 
 export const Recherche = () => {
     const types = [
@@ -57,7 +58,7 @@ export const Recherche = () => {
     const etat = 'en attente';
 
     const Envoyer = () => {
-        if (!name || !last_name || !phone || !email || !type || !categorie || !gouvernant || !ville || !prix_min || !prix_max ) {
+        if (!name || !last_name || !phone || !email || !type || !categorie || !gouvernant || !ville || !prix_min || !prix_max) {
             alert('Tous les champs sont obligatoire !')
         }
         let item = { name, last_name, phone, email, type, categorie, gouvernant, ville, prix_min, prix_max, etat }
@@ -75,158 +76,162 @@ export const Recherche = () => {
 
     }
     return (
-        <div className='recherche'>
-            <div className='form_recherche'>
-                <div className='recherch_title'>
-                    <h1>Cherchez Votre Bien Immobilier Ici</h1>
-                    <h6>Faire Une Demande De Recherche Gratuit Et En Ligne En Plus !</h6>
+        <div>
+            <Navbars />
+
+            <div className='recherche'>
+                <div className='form_recherche'>
+                    <div className='recherch_title'>
+                        <h1>Cherchez Votre Bien Immobilier Ici</h1>
+                        <h6>Faire Une Demande De Recherche Gratuit Et En Ligne En Plus !</h6>
+                    </div>
+                    <Col>
+                        <Row>
+
+                            <Col>
+
+                                <Form.Label>Nom :</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="name"
+                                    required
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+
+
+                            </Col>
+
+
+                            <Col>
+
+                                <Form.Label>Prénom :</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="last_name"
+                                    required
+                                    value={last_name}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                />
+
+
+                            </Col>
+
+                        </Row>
+
+
+
+                        <Row>
+                            <Col>
+                                <Form.Label>Email :</Form.Label>
+                                <Form.Control
+                                    type="email"
+                                    name="email"
+                                    required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </Col>
+
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Label>Télephone :</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    name="phone"
+                                    required
+                                    value={phone}
+                                    onChange={(e) => setPhone(e.target.value)}
+                                />
+                            </Col>
+
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Label>Type : </Form.Label>
+                                <Form.Select required
+                                    value={type}
+                                    onChange={(e) => setType(e.target.value)}
+                                >
+                                    <option disabled value="">Villa</option>
+                                    {types.map(type => <option key={type.key} value={type.value}>{type.key}</option>)}
+                                </Form.Select>
+                            </Col>
+                            <Col>
+                                <Form.Label>Categorie :</Form.Label>
+                                <Form.Select name="categorie" required value={categorie} onChange={(e) => setCategorie(e.target.value)}
+                                >
+                                    <option disabled value="">A vendre/ A louée </option>
+                                    {categories.map(cat => <option key={cat.value} value={cat.value}>{cat.key}</option>)}
+                                </Form.Select>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Label>Gouvernorat</Form.Label>
+                                <Form.Select name="gouvernant" required
+                                    value={gouvernant} onChange={(e) => setGouvernant(e.target.value)}
+
+
+                                >
+                                    {gouvernorats.map(gouv => <option key={gouv.key} value={gouv.value}>{gouv.key}</option>)}
+                                </Form.Select>
+                            </Col>
+
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Label>Ville :</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="ville"
+                                    required
+                                    value={ville}
+                                    onChange={(e) => setVille(e.target.value)}
+                                />
+                            </Col>
+
+                        </Row>
+                        <Row>
+
+                            <Col>
+
+                                <Form.Label>Prix Minimum :</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    name="prix_min"
+                                    value={prix_min}
+                                    onChange={(e) => setPrixMin(e.target.value)}
+                                />
+
+
+                            </Col>
+
+
+                            <Col>
+
+                                <Form.Label>Prix Maximum :</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    name="prix_max"
+                                    value={prix_max}
+                                    onChange={(e) => setPrixMax(e.target.value)}
+                                />
+
+
+                            </Col>
+
+                        </Row>
+                        <button className='btn_envoyer ' onClick={Envoyer}>
+                            Envoyer
+                        </button>
+
+
+                    </Col>
+
+
                 </div>
-                <Col>
-                    <Row>
-
-                        <Col>
-
-                            <Form.Label>Nom :</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="name"
-                                required
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-
-
-                        </Col>
-
-
-                        <Col>
-
-                            <Form.Label>Prénom :</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="last_name"
-                                required
-                                value={last_name}
-                                onChange={(e) => setLastName(e.target.value)}
-                            />
-
-
-                        </Col>
-
-                    </Row>
-
-
-
-                    <Row>
-                        <Col>
-                            <Form.Label>Email :</Form.Label>
-                            <Form.Control
-                                type="email"
-                                name="email"
-                                required
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </Col>
-
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Form.Label>Télephone :</Form.Label>
-                            <Form.Control
-                                type="number"
-                                name="phone"
-                                required
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                            />
-                        </Col>
-
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Form.Label>Type : </Form.Label>
-                            <Form.Select required
-                                value={type}
-                                onChange={(e) => setType(e.target.value)}
-                            >
-                                <option disabled value="">Villa</option>
-                                {types.map(type => <option key={type.key} value={type.value}>{type.key}</option>)}
-                            </Form.Select>
-                        </Col>
-                        <Col>
-                            <Form.Label>Categorie :</Form.Label>
-                            <Form.Select name="categorie" required value={categorie} onChange={(e) => setCategorie(e.target.value)}
-                            >
-                                <option disabled value="">A vendre/ A louée </option>
-                                {categories.map(cat => <option key={cat.value} value={cat.value}>{cat.key}</option>)}
-                            </Form.Select>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Form.Label>Gouvernorat</Form.Label>
-                            <Form.Select name="gouvernant" required
-                                value={gouvernant} onChange={(e) => setGouvernant(e.target.value)}
-
-
-                            >
-                                {gouvernorats.map(gouv => <option key={gouv.key} value={gouv.value}>{gouv.key}</option>)}
-                            </Form.Select>
-                        </Col>
-
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Form.Label>Ville :</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="ville"
-                                required
-                                value={ville}
-                                onChange={(e) => setVille(e.target.value)}
-                            />
-                        </Col>
-
-                    </Row>
-                    <Row>
-
-                        <Col>
-
-                            <Form.Label>Prix Minimum :</Form.Label>
-                            <Form.Control
-                                type="number"
-                                name="prix_min"
-                                value={prix_min}
-                                onChange={(e) => setPrixMin(e.target.value)}
-                            />
-
-
-                        </Col>
-
-
-                        <Col>
-
-                            <Form.Label>Prix Maximum :</Form.Label>
-                            <Form.Control
-                                type="number"
-                                name="prix_max"
-                                value={prix_max}
-                                onChange={(e) => setPrixMax(e.target.value)}
-                            />
-
-
-                        </Col>
-
-                    </Row>
-                    <button className='btn_envoyer ' onClick={Envoyer}>
-                        Envoyer
-                    </button>
-
-
-                </Col>
-
-
             </div>
         </div>
     )

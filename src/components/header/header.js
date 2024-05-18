@@ -26,7 +26,7 @@ export const Navbars = () => {
   return (
     <Navbar expand="lg" className="custom-navbar">
       <Container fluid>
-        <Navbar.Brand href="/home"><img src='/img/logo5.png' width="250"
+        <Navbar.Brand href="/"><img src='/img/logo5.png' width="250"
           height="50"
           className="d-inline-block align-top"
           alt="Logo" /></Navbar.Brand>
@@ -37,7 +37,7 @@ export const Navbars = () => {
             style={{ maxHeight: '100px', color: '#fff', display:"flex",justifyContent:"space-between" ,alignItems:'center'}}
             navbarScroll
           >
-            <Nav.Link href="/home" style={{ ...navLinkStyle}}>Home</Nav.Link>
+            <Nav.Link href="/" style={{ ...navLinkStyle}}>Home</Nav.Link>
             <Nav.Link href="/nos_biens" style={{ ...navLinkStyle}}>Nos Biens</Nav.Link>
             <Nav.Link href="/estimation" style={{ ...navLinkStyle}}>Estimez Votre Bien Immobilier</Nav.Link>
             <Nav.Link href="/demande_de_recherche" style={{ ...navLinkStyle}}>Demande de Recherche  </Nav.Link>

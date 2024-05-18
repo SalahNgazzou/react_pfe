@@ -1,10 +1,10 @@
 import { React } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { UsersPage } from '../AdminPages/UsersPage'
-import { ProtectRoute } from '../../utils/protectroute'
+import { ProtectRoute } from '../../utils/protacts/protectroute'
 import { BiensPage } from '../AdminPages/BiensPages'
 import { ConsulteBien } from '../../components/Bienslist/ConsulterBien'
-import { ProtectAdmin } from '../../utils/protectadmin'
+import { ProtectAdmin } from '../../utils/protacts/protectadmin'
 import { BiensCourtier } from '../CourtierPages/BiensPagesCourtier'
 import { Navbars } from '../../components/header/header'
 import { Home } from '../Home'
@@ -33,7 +33,7 @@ function Main() {
     <div>
 
       <BrowserRouter>
-        <Navbars />
+        
         <Routes>
           <Route path="/estimation/:id" element={<ConsulterEstimation />} />
           <Route path="/recherche/:id" element={<ConsulterRecherche />} />
@@ -48,7 +48,7 @@ function Main() {
           <Route path="/BienPublier/:id" element={<ProtectRoute cmp={<ConsulteBienPublier />} />} />
           <Route path="/BienMasquer/:id" element={<ProtectAdmin cmp={<ConsulteBien />} />} />
           <Route path="/usersPage" element={<ProtectAdmin cmp={<UsersPage />} />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/contact/:id" element={<ConsulterContact />} />
           <Route path='/en_attentePage' element={<BiensPage />} />
           <Route path='/Dashbored' element={<ProtectAdmin cmp={<Tableau_de_bord />} />}/>

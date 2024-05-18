@@ -91,7 +91,7 @@ export const Sidebar = () => {
               </li>
             )}
             <li>
-              <a href='/home'>
+              <a href='/'>
                 <button onClick={LogOut} style={{ border: 'none', background: 'none', color: 'red', padding: '0px' }}>
                   <FaSignOutAlt /> {/* Icône de déconnexion */}
                   Logout

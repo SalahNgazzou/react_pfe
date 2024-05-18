@@ -82,6 +82,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
     background-color: #ff9a9f;
     color: #4A536B;
     border: none;

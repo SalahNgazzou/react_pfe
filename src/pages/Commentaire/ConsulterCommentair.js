@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Carousel, Col, Row } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getData } from '../../utils/getData';
 import { backApi } from '../../constant/backApi'
 import './ConsulterCommentaire.css';
 import { FaReply, FaTrash } from 'react-icons/fa';
 import { RepondreCommentaire } from '../../components/CommentairsListe/RepondreCommentaire';
+import { deleteData } from '../../utils/deleteData';
 
 export const ConsulterCommentair = () => {
+    const Navigate = useNavigate();
     const { id } = useParams();
     const [showModal, setShowModal] = useState(false);
     const [comment, setComment] = useState({});
@@ -23,8 +25,15 @@ export const ConsulterCommentair = () => {
     const handleShow = () => setShowModal(true);
     const handleClose = () => setShowModal(false);
 
-    // Extraire les images du bien
+    const Delete = () => {
+        alert('Est ce que vrairment tu veux supprimer cette demande ')
+        deleteData({ url: `commentaire/${id}` })
+        setShowSuccessMessage(true);
+        setTimeout(() => {
+            Navigate('/commentaire');
+        }, 2000);
 
+    }
 
     return (
         <div className='ConsulterCommentair'>
@@ -110,11 +119,15 @@ export const ConsulterCommentair = () => {
                                     </Col>
                                 </Row>
                             </div>
-
+                            {showSuccessMessage && (
+                    <div className="alert alert-success" role="alert">
+                       Commentaire a été supprimer  avec succès !
+                    </div>
+                )}
                             <Row>
                                 {/* Afficher le commentaire */}
                                 <Col>
-                                    <button className='btn_supprimer'>
+                                    <button className='btn_supprimer' onClick={Delete}>
                                         <FaTrash />  Supprimer
                                     </button>
 

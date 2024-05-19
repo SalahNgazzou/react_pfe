@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Hero } from '../components/hero/hero'
 import { Cards } from '../components/card/cards'
-import { searchData} from '../utils/VisiteurUtils/searchData';
+import { searchData } from '../utils/VisiteurUtils/searchData';
 import { Examplair } from '../utils/exmplair';
+import { Navbars } from '../components/header/header';
 
 export const Home = () => {
 
@@ -14,7 +15,7 @@ export const Home = () => {
   const [data, setData] = useState([]);
 
   const searchBien = () => {
-    let item = { type_biens,gouvernant, categorie, prix_min, prix_max }
+    let item = { type_biens, gouvernant, categorie, prix_min, prix_max }
     console.log(item)
     searchData({ setData, url: "visiteur", items: item })
     console.log(data)
@@ -24,9 +25,9 @@ export const Home = () => {
   }, []);
   return (
     <div>
-
+      <Navbars />
       <Hero searchData={searchBien} type={type_biens} gouvernant={gouvernant} categorie={categorie} prixMin={prix_min} prixMax={prix_max} setType={setType} setGouvernant={setGouvernant} setCategorie={setCategorie} setPrixMin={setPrixMin} setPrixMax={setPrixMax} />
-      <Cards data={data}/>
+      <Cards data={data} />
     </div>
   )
 }

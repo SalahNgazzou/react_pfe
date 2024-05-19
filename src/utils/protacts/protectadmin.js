@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { getUser } from './getUser';
+import { getUser } from '../getUser';
 
 export const ProtectAdmin = ({cmp}) => {
     const [user, setUser] = useState();

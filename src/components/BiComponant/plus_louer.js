@@ -1,27 +1,27 @@
-import React, { useEffect, useRef } from 'react';
-import Chart from 'chart.js/auto';
+import React, { useState, useEffect, useRef } from "react";
+import Chart from "chart.js/auto";
 
-export const GraphComponent = () => {
-  const chartRef = useRef(null);
+export const PlusLouer = () => {
+  const chartRef = useRef(null); // Ref to the canvas element
 
   useEffect(() => {
     // Fonction pour récupérer les données de l'API
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/bi/typesBiensLesPlusVendus');
+        const response = await fetch('http://localhost:8000/api/bi/typesBiensLesPluslouer');
         const data = await response.json();
 
         // Données récupérées de l'API
         const chartData = [
-          data.nombre_villas_vendues,
-          data.nombre_appartements_vendues,
-          data.nombre_duplex_vendues,
-          data.nombre_terrain_vendues,
-          data.nombre_LocalCommercial_vendues,
-          data.nombre_parking_vendues,
-          data.nombre_usine_vendues,
-          data.nombre_entrepot_vendues,
-          data.nombre_immeuble_vendues
+          data.nombre_villas_Louée,
+          data.nombre_appartements_Louée,
+          data.nombre_duplex_Louée,
+          data.nombre_terrain_Louée,
+          data.nombre_LocalCommercial_Louée,
+          data.nombre_parking_Louée,
+          data.nombre_usine_Louée,
+          data.nombre_entrepot_Louée,
+          data.nombre_immeuble_Louée
         ];
 
         // Initialiser le graphique avec les données récupérées
@@ -31,15 +31,15 @@ export const GraphComponent = () => {
           data: {
             labels: ['Villa', 'Appartement', 'Duplex', 'Terrain', 'Local commercial', 'Parking/Garage', 'Usine', 'Entrepot', 'Immeuble'],
             datasets: [{
-              label: 'Type de bien le plus vendu',
+              label: 'Type de bien le plus louée',
               data: chartData,
               fill: true,
-              backgroundColor: 'rgba(54, 162, 235, 0.2)',
-              borderColor: 'rgb(54, 162, 235)',
-              pointBackgroundColor: 'rgb(54, 162, 235)',
+              backgroundColor: 'rgba(255, 99, 132, 0.2)', // Changer la couleur de fond
+              borderColor: 'rgb(255, 99, 132)', // Changer la couleur de bordure
+              pointBackgroundColor: 'rgb(255, 99, 132)', // Changer la couleur des points
               pointBorderColor: '#fff',
               pointHoverBackgroundColor: '#fff',
-              pointHoverBorderColor: 'rgb(54, 162, 235)'
+              pointHoverBorderColor: 'rgb(255, 99, 132)'
             }]
           },
           options: {
@@ -62,12 +62,9 @@ export const GraphComponent = () => {
 
     fetchData();
   }, []);
-
   return (
     <div>
       <canvas ref={chartRef} width="400" height="100"></canvas>
     </div>
   );
 };
-
-

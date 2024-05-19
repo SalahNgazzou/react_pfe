@@ -6,14 +6,19 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import './visite.css'
 import { FaBed, FaPaperPlane, FaRuler, FaCar, FaShower, FaMapMarkerAlt, FaCouch, FaTree, FaSwimmingPool, FaFire, FaSnowflake } from 'react-icons/fa';
 import { getBien } from '../../utils/VisiteurUtils/getBien';
+import { PostEstimation } from '../../utils/VisiteurUtils/postEstimation';
 export const VisiteBien = () => {
 
   const { id } = useParams();
   const [biendata, setBienData] = useState(null);
   const [images, setImages] = useState([]);
   const [message, setMessage] = useState("Bonjour,je suis interessé(e)");
-
-
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const id_bien = id;
+  const id_user = biendata && biendata.user_details.id;
+  const etat = 'en attente '
   useEffect(() => {
     getBien({ setData: setBienData, url: "visiteur/" + id });
   }, [id]);
@@ -25,7 +30,10 @@ export const VisiteBien = () => {
     }
   }, [biendata]);
 
-
+  const envoyer = () => {
+    let item = { id_bien, id_user, name, phone, email, message, etat }
+    PostEstimation({ url: 'visiteur/commentair', items: item })
+  }
   const table = () => {
     switch (biendata?.type_biens) {
       case 'Villa':
@@ -436,7 +444,7 @@ export const VisiteBien = () => {
     <div className='bien'>
       <div className='buttons'>
         <div className='back'>
-          <a href='/home'>
+          <a href='/'>
             <Button style={{ backgroundColor: '#FF9A8D' }}>
               <FontAwesomeIcon icon={faArrowLeft} />
             </Button>
@@ -495,57 +503,92 @@ export const VisiteBien = () => {
           {table()}
         </div>
         <div className='contact'>
-          {biendata && (
-            <form >
-              <div className='user-prop'>
-                <img src='/img/sedkii.jpg' alt="Photo de profil" />
-                <h4>{biendata.user_details.name +" "+biendata.user_details.last_name}</h4>
+          <Col>
+            {biendata && (
+              <div >
+                <Row>
+                  <Col>
+                    <div className='user-prop'>
+                      <img src={'http://localhost:8000/uploades/profiles'+biendata.user_details.image} alt="Photo de profil" />
+                      <h4>{biendata.user_details.name + " " + biendata.user_details.last_name}</h4>
+                    </div>
+                  </Col>
+                </Row>
+                <div className='inputs'>
+                  <Row>
+                    <Col>
+                      <Form.Label htmlFor="name">Nom et Prénom :</Form.Label>
+                      <Form.Control
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Form.Label htmlFor="phone">Téléphone :</Form.Label>
+                      <Form.Control
+                        type="text"
+                        id="phone"
+                        name="phone"
+                        required
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Form.Label htmlFor="email">Email :</Form.Label>
+                      <Form.Control
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Form.Label htmlFor="message">Message :</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        id="message"
+                        name="message"
+                        rows={2}
+                        placeholder="Enter Message"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        required
+                      />
+                    </Col>
+                  </Row>
+                </div>
+
+                <Row>
+                  <Col>
+                    <div className='btn'>
+                    <button onClick={envoyer}>
+                      <FaPaperPlane /> Envoyer
+                    </button>
+                  </div>
+                </Col>
+              </Row>
+
+                
               </div>
-              <div className='inputs'>
-                <Form.Label htmlFor="name">Nom et Prénom :</Form.Label>
-                <Form.Control
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                />
-                <Form.Label htmlFor="phone">Téléphone :</Form.Label>
-                <Form.Control
-                  type="text"
-                  id="phone"
-                  name="phone"
-                  required
-                />
-                <Form.Label htmlFor="email">Email :</Form.Label>
-                <Form.Control
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                />
-                <Form.Label htmlFor="message">Message :</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  id="message"
-                  name="message"
-                  rows={2}
-                  placeholder="Enter Message"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  required
-                />
-              </div>
-              <div className='btn'>
-                <button type="submit">
-                  <FaPaperPlane /> Envoyer
-                </button>
-              </div>
-            </form>
-          )}
-        </div>
-      </div>
+            )}
+      </Col>
     </div>
+      </div >
+    </div >
   );
-  
+
 }
 

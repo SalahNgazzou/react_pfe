@@ -20,6 +20,7 @@ export const Edit_biens = ({ handleCloseEdit, biendata, showModalEdit }) => {
         { key: "Immeuble", value: "Immeuble" }
     ];
     const dispo = [{ key: "", value: "" }, { key: "En cours", value: "En cours" }, { key: "Vendu", value: "Vendu" }, { key: "Louée", value: "Louée" }];
+    const etats = [{ key: "", value: "" }, { key: "Neuf", value: "Neuf" }, { key: "Ancienne", value: "Ancienne" }];
     const exicte = [{ key: "", value: "" }, { key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
     const annonces = [{ key: "", value: "" }, { key: "Masquer", value: "Masquer" }, { key: "Publier", value: "Publier" }];
     const commerces = [{ key: "", value: "" }, { key: "Boutique", value: "Boutique" }, { key: "Restaurant", value: "Restaurant" }, { key: "Bureau", value: "Bureau" }, { key: "Autre", value: "Autre" }];
@@ -1157,7 +1158,7 @@ export const Edit_biens = ({ handleCloseEdit, biendata, showModalEdit }) => {
     return (
         <Modal show={showModalEdit == true} onHide={handleCloseEdit} size="lg">
             <Modal.Header closeButton>
-                <Modal.Title>Edit Biens</Modal.Title>
+                <Modal.Title>Modifier Biens</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
@@ -1229,11 +1230,17 @@ export const Edit_biens = ({ handleCloseEdit, biendata, showModalEdit }) => {
                         </Form.Group>
                         <Form.Group className="custom-padding">
                             <Form.Label>etat* :</Form.Label>
-                            <Form.Control type="text" name="etat"
-                                value={inputsData.etat}
+                            <Form.Select
+                                required
+                                name="etat"
                                 onChange={(e) => setInputsData({ ...inputsData, etat: e.currentTarget.value })}
-
-                            />
+                            >
+                                {etats.map(etat => (
+                                    <option key={etat.value} value={etat.value}>
+                                        {etat.key}
+                                    </option>
+                                ))}
+                            </Form.Select>
                         </Form.Group>
                         <Row>
                             <Col>
@@ -1309,7 +1316,7 @@ export const Edit_biens = ({ handleCloseEdit, biendata, showModalEdit }) => {
                 </Form>
                 {showSuccessMessage && (
                     <div className="alert alert-success" role="alert">
-                        Le bien a été ajouté avec succès !
+                        Le bien a été modifier avec succès !
                     </div>
                 )}
             </Modal.Body>

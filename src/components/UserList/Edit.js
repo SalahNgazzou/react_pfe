@@ -1,49 +1,28 @@
 // UserModal.js
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { putBien, putData } from '../../utils/putData';
+import { putData } from '../../utils/putData';
 
 const EditPopup = ({ handleCloseEdit, userdata }) => {
   const roles = [{ key: "Admin", value: "Admin" }, { key: "Sécritaire", value: "Sécritaire" }, { key: "Courtier", value: "Courtier" }]
- 
-  const [inputsData, setInputsData] = useState({
-    name: userdata.name,
-    last_name: userdata.last_name, 
-    email: userdata.email,
-    role: userdata.role,
-    cin: userdata.cin,
-    birth: userdata.birth, 
-    num_phone: userdata.num_phone, 
-    addresse: userdata.addresse, 
-    image: null
-  });
+  const [name, setName] = useState(userdata?.name);
+  const [cin, setCin] = useState(userdata?.cin);
+  const [birth, setBirth] = useState(userdata?.birth);
+  const [last_name, setLastName] = useState(userdata?.last_name);
+  const [email, setEmail] = useState(userdata?.email)
+  const [role, setRole] = useState(userdata?.role)
+  const [addresse, setAddress] = useState(userdata?.addresse)
+  const [num_phone, setPhone] = useState(userdata?.num_phone)
+  const [password, setPassword] = useState(null);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0]; // Select the first file from the list
-    setInputsData((prev) => ({
-      ...prev,
-      image: file,
-    }));
-  };
 
 
   async function Modifier() {
 
-    const formData = new FormData();
-    const { image, ...inputs } = inputsData;
-    const data = {
-      ...inputs
-    };
+    let item = { name, last_name, cin, birth, email, role, addresse, num_phone ,password};
+    console.log(item);
 
-    Object.keys(data).forEach((key) => {
-      formData.append(key, data[key]);
-    });
-
-    formData.append('image', image);
-console.log(formData);
-    
-
-    putBien({ url: "users/update", data: formData, id: userdata.id })
+    putData({ url: "users/update", data: item, id: userdata.id })
     handleCloseEdit();
   }
 
@@ -51,7 +30,7 @@ console.log(formData);
 
     <Modal show={!userdata ? false : true} onHide={handleCloseEdit}>
       <Modal.Header closeButton>
-        <Modal.Title>Edit User</Modal.Title>
+        <Modal.Title>Modifier Utilisateur</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
@@ -60,8 +39,9 @@ console.log(formData);
               <Form.Label>Role</Form.Label>
               <Form.Select
                 name="role"
-                
-                onChange={(e) => setInputsData({ ...inputsData, role: e.target.value })}                required
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                required
               >
                 {roles.map(role => <option value={role.value}>{role.key}</option>)}
               </Form.Select>
@@ -72,8 +52,9 @@ console.log(formData);
               <Form.Control
                 type="text"
                 name="name"
-               value={inputsData.name}
-                onChange={(e) => setInputsData({ ...inputsData, name: e.target.value })}                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
               />
             </Form.Group>
             <Form.Group controlId="last_name">
@@ -81,8 +62,8 @@ console.log(formData);
               <Form.Control
                 type="text"
                 name="last_name"
-                value={inputsData.last_name}
-                onChange={(e) => setInputsData({ ...inputsData, last_name: e.target.value })}
+                value={last_name}
+                onChange={(e) => setLastName(e.target.value)}
                 required
               />
             </Form.Group>
@@ -91,18 +72,28 @@ console.log(formData);
               <Form.Control
                 type="email"
                 name="email"
-                value={inputsData.email}
-                onChange={(e) => setInputsData({ ...inputsData, email: e.target.value })}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </Form.Group>
+            <Form.Group controlId="password">
+              <Form.Label>Mot de passe :</Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                placeholder='Entre une nouvelle mot de passe '
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              </Form.Group>
             <Form.Group controlId="cin">
               <Form.Label>CIN</Form.Label>
               <Form.Control
                 type="text"
                 name="cin"
-                value={inputsData.cin}
-                onChange={(e) => setInputsData({ ...inputsData, cin: e.target.value })}
+                value={cin}
+                onChange={(e) => setCin(e.target.value)}
                 required
               />
               <Form.Group controlId="birth">
@@ -110,8 +101,8 @@ console.log(formData);
                 <Form.Control
                   type="date"
                   name="birth"
-                  value={inputsData.birth}
-                  onChange={(e) => setInputsData({ ...inputsData, birth: e.target.value })}
+                  value={birth}
+                  onChange={(e) => setBirth(e.target.value)}
                   required
                 />
               </Form.Group>
@@ -120,8 +111,8 @@ console.log(formData);
                 <Form.Control
                   type="text"
                   name="address"
-                  value={inputsData.addresse}
-                  onChange={(e) => setInputsData({ ...inputsData, addresse: e.target.value })}
+                  value={addresse}
+                  onChange={(e) => setAddress(e.target.value)}
                   required
                 />
               </Form.Group>
@@ -131,17 +122,11 @@ console.log(formData);
                 <Form.Control
                   type="text"
                   name="num_phone"
-                  value={inputsData.num_phone}
-                  onChange={(e) => setInputsData({ ...inputsData, num_phone: e.target.value })}
+                  value={num_phone}
+                  onChange={(e) => setPhone(e.target.value)}
                   required
                 />
               </Form.Group>
-              <Form.Label>Image</Form.Label>
-                <Form.Control
-                  type="file"
-                  onChange={handleImageChange}
-                  name='image'
-                />
             </Form.Group>
 
             <br />

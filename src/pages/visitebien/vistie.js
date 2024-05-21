@@ -509,7 +509,7 @@ export const VisiteBien = () => {
                 <Row>
                   <Col>
                     <div className='user-prop'>
-                      <img src={'http://localhost:8000/uploades/profiles'+biendata.user_details.image} alt="Photo de profil" />
+                      <img src={`http://localhost:8000/uploads/profiles/${biendata.user_details.image}`} alt="Photo de profil" />
                       <h4>{biendata.user_details.name + " " + biendata.user_details.last_name}</h4>
                     </div>
                   </Col>

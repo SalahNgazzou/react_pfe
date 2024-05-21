@@ -1,7 +1,7 @@
 // UserModal.js
 import React, { useState } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { postBien, postData } from '../../utils/postData';
+import { Button, Form, Modal } from 'react-bootstrap';
+import { postBien } from '../../utils/postData';
 
 export const Popup = ({ showModal, handleClose }) => {
   const roles = [{ key: "Admin", value: "Admin" }, { key: "Secrétaire", value: "Secrétaire" }, { key: "Courtier", value: "Courtier" }]; // Corrected typo in "Courtier"
@@ -9,14 +9,14 @@ export const Popup = ({ showModal, handleClose }) => {
 
   const [inputsData, setInputsData] = useState({
     name: '',
-    last_name: '', 
+    last_name: '',
     email: '',
     role: '',
     cin: '',
-    birth: '', 
-    num_phone: '', 
-    addresse: '', 
-    statue: '', 
+    birth: '',
+    num_phone: '',
+    addresse: '',
+    statue: '',
     image: null
   });
 
@@ -32,29 +32,34 @@ export const Popup = ({ showModal, handleClose }) => {
   async function Ajouter() {
 
     const formData = new FormData();
-    const { image, ...inputs } = inputsData;
-    const data = {
-      ...inputs
-    };
+    if (!inputsData.name || !inputsData.last_name || !inputsData.cin || !inputsData.email || !inputsData.role || !inputsData.statue || !inputsData.addresse || !inputsData.birth || !inputsData.image) {
+      alert("Tout les champs sont obligatoire");
+      setShowSuccessMessage(false);
+    }
+    else {
+      const { image, ...inputs } = inputsData;
+      const data = {
+        ...inputs
+      };
 
-    Object.keys(data).forEach((key) => {
-      formData.append(key, data[key]);
-    });
+      Object.keys(data).forEach((key) => {
+        formData.append(key, data[key]);
+      });
 
-    formData.append('image', image);
-console.log(formData);
-    postBien({ url: "users", data: formData });
+      formData.append('image', image);
 
-    setShowSuccessMessage(true);
-    setTimeout(() => {
-      handleClose();
-    }, 2000);
+      postBien({ url: "users", data: formData });
+
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        handleClose();
+      }, 2000);
+    }
   }
-
   return (
     <Modal show={showModal} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Add User</Modal.Title>
+        <Modal.Title>Ajouter Utilisateur</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
@@ -157,8 +162,8 @@ console.log(formData);
                 Utilisateur a été ajouté avec succès ! {/* Corrected French message */}
               </div>
             )}
-            <Button variant="primary" onClick={Ajouter}>
-              Save
+            <Button style={{ backgroundColor: '#ff9a8f', color: '#4A536B', border: 'none', }} onClick={Ajouter}>
+              Modifier
             </Button>
           </Form>
         </div>

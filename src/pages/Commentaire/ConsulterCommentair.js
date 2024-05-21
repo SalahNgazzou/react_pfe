@@ -19,7 +19,7 @@ export const ConsulterCommentair = () => {
     const [email, setEmail] = useState(comment.email)
     useEffect(() => {
         // Récupérer le commentaire et le bien associé avec les images
-        getData({ setData: setComment, url: `commentaire/bien/${id}` });
+        getData({ setData: setComment, url: `commentaires/bien/${id}` });
     }, [id]);
 
     const handleShow = () => setShowModal(true);
@@ -27,7 +27,7 @@ export const ConsulterCommentair = () => {
 
     const Delete = () => {
         alert('Est ce que vrairment tu veux supprimer cette demande ')
-        deleteData({ url: `commentaire/${id}` })
+        deleteData({ url: `commentaires/${id}` })
         setShowSuccessMessage(true);
         setTimeout(() => {
             Navigate('/commentaire');
@@ -143,7 +143,7 @@ export const ConsulterCommentair = () => {
 
                 </Col>
             </div>
-            <RepondreCommentaire showModal={showModal} handleClose={handleClose} data={comment} />
+            <RepondreCommentaire showModal={showModal} handleClose={handleClose} data={comment} id={id} />
         </div>
     );
 };

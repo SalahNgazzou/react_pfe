@@ -22,6 +22,7 @@ export const Biens = ({ showModal, handleClose }) => {
     ];
 
     const dispo = [{ key: "", value: "" }, { key: "En cours", value: "En cours" }, { key: "Vendu", value: "Vendu" }, { key: "Louée", value: "Louée" }];
+    const etats = [{ key: "", value: "" }, { key: "Neuf", value: "Neuf" }, { key: "Ancienne", value: "Ancienne" }];
     const exicte = [{ key: "", value: "" }, { key: "Oui", value: "Oui" }, { key: "Non", value: "Non" }];
     const annonces = [{ key: "", value: "" }, { key: "Masquer", value: "Masquer" }, { key: "Publier", value: "Publier" }];
     const commerces = [{ key: "", value: "" }, { key: "Boutique", value: "Boutique" }, { key: "Restaurant", value: "Restaurant" }, { key: "Bureau", value: "Bureau" }, { key: "Autre", value: "Autre" }];
@@ -157,6 +158,7 @@ export const Biens = ({ showModal, handleClose }) => {
         for (const file of images) {
             formData.append("images[]", file);
         }
+        
         postBien({ url: "biens", data: formData })
         setShowSuccessMessage(true);
 
@@ -1147,7 +1149,7 @@ export const Biens = ({ showModal, handleClose }) => {
     return (
         <Modal show={showModal} onHide={handleClose} size="lg">
             <Modal.Header closeButton>
-                <Modal.Title>Add Bien</Modal.Title>
+                <Modal.Title>Ajouter Bien</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
@@ -1205,7 +1207,7 @@ export const Biens = ({ showModal, handleClose }) => {
                         <Form.Group className="custom-padding">
                             <Form.Label>disponibilté* :</Form.Label>
                             <Form.Select name="disponibilté"
-required
+                                required
                                 onChange={(e) => setInputsData({ ...inputsData, disponibilté: e.target.value })}
 
                             >
@@ -1227,10 +1229,17 @@ required
                         </Form.Group>
                         <Form.Group className="custom-padding">
                             <Form.Label>etat* :</Form.Label>
-                            <Form.Control type="text" name="etat"
+                            <Form.Select
+                                required
+                                name="etat"
                                 onChange={(e) => setInputsData({ ...inputsData, etat: e.currentTarget.value })}
-
-                            />
+                            >
+                                {etats.map(etat => (
+                                    <option key={etat.value} value={etat.value}>
+                                        {etat.key}
+                                    </option>
+                                ))}
+                            </Form.Select>
                         </Form.Group>
                         <Row>
                             <Col>
@@ -1309,8 +1318,8 @@ required
                                 onChange={handleImageChange}
                             />
                             <label htmlFor="upload-button">
-                                <IconButton style={{backgroundColor:'#ff9a8f',color:'#4A536B',border:'none'}} aria-label="upload picture" component="span">
-                                    <CloudUploadIcon style={{backgroundColor:'#ff9a8f',color:'#4A536B',border:'none'}} />
+                                <IconButton style={{ backgroundColor: '#ff9a8f', color: '#4A536B', border: 'none' }} aria-label="upload picture" component="span">
+                                    <CloudUploadIcon style={{ backgroundColor: '#ff9a8f', color: '#4A536B', border: 'none' }} />
                                 </IconButton >
                                 <span>Upload Images</span>
                             </label>
@@ -1326,11 +1335,11 @@ required
                 )}
             </Modal.Body>
             <Modal.Footer>
-                <Button style={{backgroundColor:'#ff9a8f',color:'#4A536B',border:'none'}} onClick={ajouterBiens}>
-                <FaSave />
-                           <span> Save</span>
+                <Button style={{ backgroundColor: '#ff9a8f', color: '#4A536B', border: 'none' }} onClick={ajouterBiens}>
+                    <FaSave />
+                    <span> Save</span>
                 </Button>
             </Modal.Footer>
-        </Modal>
+        </Modal >
     );
 };

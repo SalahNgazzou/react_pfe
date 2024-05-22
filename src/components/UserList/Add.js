@@ -163,7 +163,7 @@ export const Popup = ({ showModal, handleClose }) => {
               </div>
             )}
             <Button style={{ backgroundColor: '#ff9a8f', color: '#4A536B', border: 'none', }} onClick={Ajouter}>
-              Modifier
+              Ajouter
             </Button>
           </Form>
         </div>

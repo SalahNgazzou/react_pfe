@@ -16,9 +16,13 @@ export const Home = () => {
 
   const searchBien = () => {
     let item = { type_biens, gouvernant, categorie, prix_min, prix_max }
-    console.log(item)
     searchData({ setData, url: "visiteur", items: item })
-    console.log(data)
+    setType('')
+    setGouvernant('')
+    setCategorie('')
+    setPrixMax('')
+    setPrixMin('')
+
   }
   useEffect(() => {
     Examplair({ setData, url: "visiteur/random" });

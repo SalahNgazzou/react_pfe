@@ -130,8 +130,8 @@ const EditPopup = ({ handleCloseEdit, userdata }) => {
             </Form.Group>
 
             <br />
-            <Button variant="primary" onClick={Modifier}>
-              Save
+            <Button style={{ backgroundColor: '#ff9a8f', color: '#4A536B', border: 'none', }} onClick={Modifier}>
+              Modifier
             </Button>
 
           </Form>

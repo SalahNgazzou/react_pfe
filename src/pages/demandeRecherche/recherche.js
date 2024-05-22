@@ -55,24 +55,32 @@ export const Recherche = () => {
     const [ville, setVille] = useState('');
     const [prix_min, setPrixMin] = useState('');
     const [prix_max, setPrixMax] = useState('');
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
     const etat = 'en attente';
 
     const Envoyer = () => {
         if (!name || !last_name || !phone || !email || !type || !categorie || !gouvernant || !ville || !prix_min || !prix_max) {
             alert('Tous les champs sont obligatoire !')
         }
-        let item = { name, last_name, phone, email, type, categorie, gouvernant, ville, prix_min, prix_max, etat }
-        PostEstimation({ url: "visiteur/recherche", items: item })
-        setName('');
-        setLastName('');
-        setPhone('');
-        setEmail('');
-        setType('');
-        setCategorie('');
-        setGouvernant('');
-        setVille('');
-        setPrixMin('');
-        setPrixMax('');
+        else{
+            let item = { name, last_name, phone, email, type, categorie, gouvernant, ville, prix_min, prix_max, etat }
+            PostEstimation({ url: "visiteur/recherche", items: item })
+            setName('');
+            setLastName('');
+            setPhone('');
+            setEmail('');
+            setType('');
+            setCategorie('');
+            setGouvernant('');
+            setVille('');
+            setPrixMin('');
+            setPrixMax('');
+
+            setTimeout(() => {
+                setShowSuccessMessage(true);
+            }, 2000);
+        }
 
     }
     return (
@@ -223,6 +231,11 @@ export const Recherche = () => {
                             </Col>
 
                         </Row>
+                        {showSuccessMessage && (
+                            <div className="alert alert-success" role="alert">
+                                Votre demande à été envoyer avec succès !
+                            </div>
+                        )}
                         <button className='btn_envoyer ' onClick={Envoyer}>
                             Envoyer
                         </button>

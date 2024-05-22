@@ -16,6 +16,8 @@ export const VisiteBien = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
   const id_bien = id;
   const id_user = biendata && biendata.user_details.id;
   const etat = 'en attente '
@@ -32,7 +34,20 @@ export const VisiteBien = () => {
 
   const envoyer = () => {
     let item = { id_bien, id_user, name, phone, email, message, etat }
-    PostEstimation({ url: 'visiteur/commentair', items: item })
+    if (!name || !phone || !email || !message) {
+      alert("Tout les champs sont obligatoire")
+    }
+    else {
+      PostEstimation({ url: 'visiteur/commentair', items: item })
+      setMessage('')
+      setEmail('')
+      setName('')
+      setPhone('')
+
+      setTimeout(() => {
+        setShowSuccessMessage(true);
+      }, 2000);
+    }
   }
   const table = () => {
     switch (biendata?.type_biens) {
@@ -569,23 +584,33 @@ export const VisiteBien = () => {
                       />
                     </Col>
                   </Row>
+                  {showSuccessMessage && (
+                    <Row>
+                      <Col>
+                        <div className="alert alert-success" role="alert">
+                          Commentaire a été envoyer avec succès !
+                        </div>
+                      </Col>
+                    </Row>
+
+                  )}
                 </div>
 
                 <Row>
                   <Col>
                     <div className='btn'>
-                    <button onClick={envoyer}>
-                      <FaPaperPlane /> Envoyer
-                    </button>
-                  </div>
-                </Col>
-              </Row>
+                      <button onClick={envoyer}>
+                        <FaPaperPlane /> Envoyer
+                      </button>
+                    </div>
+                  </Col>
+                </Row>
 
-                
+
               </div>
             )}
-      </Col>
-    </div>
+          </Col>
+        </div>
       </div >
     </div >
   );

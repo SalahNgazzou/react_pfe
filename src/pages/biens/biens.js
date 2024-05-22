@@ -31,7 +31,7 @@ export const Biens=()=> {
                                <Card.Text>Prix : {item.prix} (DT)</Card.Text>
                                <Card.Text>Addresse : {item.ville + " , " + item.gouvernant}</Card.Text>
                                <a href={`/visite/${item.id}`}>
-                                   <Button >Visite</Button>
+                                   <Button style={{color:'#4A536B',backgroundColor:'#FF9A8F'}}>Visite</Button>
                                </a>
    
                            </Card.Body>

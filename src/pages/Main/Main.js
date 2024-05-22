@@ -1,7 +1,7 @@
 import { React } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { UsersPage } from '../AdminPages/UsersPage'
-import { ProtectRoute } from '../../utils/protacts/protectroute'
+import { ProtectRoute, ProtectSecretaire } from '../../utils/protacts/protectSecretaire'
 import { BiensPage } from '../AdminPages/BiensPages'
 import { ConsulteBien } from '../../components/Bienslist/ConsulterBien'
 import { ProtectAdmin } from '../../utils/protacts/protectadmin'
@@ -21,11 +21,13 @@ import { RecherchePages } from '../SecritairePages/recherchePages'
 import { Conatct } from '../Contact/Conatct'
 import { ContactsPage } from '../SecritairePages/contactsPage'
 import { ConsulterContact } from '../Contact/consulterContact'
-import {GraphComponent} from '../../components/BiComponant/bi'
+import { GraphComponent } from '../../components/BiComponant/bi'
 import { Tableau_de_bord } from '../../components/BiComponant/Tableau de bord'
 import { Dashboard } from '@mui/icons-material'
 import { CommentairPage } from '../CourtierPages/CommentairPages'
 import { ConsulterCommentair } from '../Commentaire/ConsulterCommentair'
+import { ProtectCourtierAdmin } from '../../utils/protacts/protectCourtierAdmin'
+import { ProtectCourtierSecretaire } from '../../utils/protacts/protectCourtierSecretaire'
 
 function Main() {
 
@@ -33,31 +35,38 @@ function Main() {
     <div>
 
       <BrowserRouter>
-        
+
         <Routes>
-          <Route path="/estimation/:id" element={<ConsulterEstimation />} />
-          <Route path="/recherche/:id" element={<ConsulterRecherche />} />
-          <Route path="/estimation" element={<Estimation />} />
-          <Route path="/recherche" element={<Recherche />} />
-          <Route path="/estimationsPage" element={<EstimationPages />} />
-          <Route path="/recherchesPage" element={<RecherchePages />} />
-          <Route path="/nos_biens" element={<Biens />} />
-          <Route path="/demande_de_recherche" element={<Recherche />} />
-          <Route path="/visite/:id" element={<VisiteBien />} />
-          <Route path="/commentaire/:id" element={<ConsulterCommentair />} />
-          <Route path="/BienPublier/:id" element={<ProtectRoute cmp={<ConsulteBienPublier />} />} />
-          <Route path="/BienMasquer/:id" element={<ProtectAdmin cmp={<ConsulteBien />} />} />
-          <Route path="/usersPage" element={<ProtectAdmin cmp={<UsersPage />} />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/contact/:id" element={<ConsulterContact />} />
-          <Route path='/en_attentePage' element={<BiensPage />} />
-          <Route path='/Dashbored' element={<ProtectAdmin cmp={<Tableau_de_bord />} />}/>
-          <Route path='/commentaire' element={<CommentairPage />} />
-          <Route path='/contactsPage' element={<ContactsPage />} />
-          <Route path='/PublierPage' element={<BiensPublier />} />
-          <Route path='/Courtier/Biens' element={<BiensCourtier />} />
-          <Route path="/contact" element={<Conatct />} />
+          {/* <Route path="/recherche" element={<Recherche />} /> */}
+          {/* <Route path='/Courtier/Biens' element={<ProtectCourtier cmp={<BiensCourtier />} />} /> */}
           {/* <Route path="/Courtier/biens" element={<ConsulterBien />} /> */}
+
+          {/*  admin */}
+          <Route path="/usersPage" element={<ProtectAdmin cmp={<UsersPage />} />} />
+          <Route path='/Dashbored' element={<ProtectAdmin cmp={<Tableau_de_bord />} />} />
+          {/* secrétaire */}
+          <Route path="/contact/:id" element={<ProtectSecretaire cmp={<ConsulterContact />} />} />
+          <Route path="/estimation/:id" element={<ProtectSecretaire cmp={<ConsulterEstimation />} />} />
+          <Route path="/estimationsPage" element={<ProtectSecretaire cmp={<EstimationPages />} />} />
+          <Route path='/contactsPage' element={<ProtectSecretaire cmp={<ContactsPage />} />} />
+          {/*   courtier / admin */}
+          <Route path="/commentaire/:id" element={<ProtectCourtierAdmin cmp={<ConsulterCommentair />} />} />
+          <Route path="/BienPublier/:id" element={<ProtectCourtierAdmin cmp={<ConsulteBienPublier />} />} />
+          <Route path="/BienMasquer/:id" element={<ProtectCourtierAdmin cmp={<ConsulteBien />} />} />
+          <Route path='/PublierPage' element={<ProtectCourtierAdmin cmp={<BiensPublier />} />} />
+          <Route path='/en_attentePage' element={<ProtectCourtierAdmin cmp={<BiensPage />} />} />
+          <Route path='/commentaire' element={<ProtectCourtierAdmin cmp={<CommentairPage />} />} />
+          {/* courtier/secrétaire */}
+          <Route path="/recherche/:id" element={<ProtectCourtierSecretaire cmp={<ConsulterRecherche />} />}/>
+          <Route path="/recherchesPage" element={<ProtectCourtierSecretaire cmp={<RecherchePages />} />}/>
+          {/* visiteur */}
+          <Route path="/contact" element={<Conatct />} />
+          <Route path="/visite/:id" element={<VisiteBien />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/demande_de_recherche" element={<Recherche />} />
+          <Route path="/estimation" element={<Estimation />} />
+          <Route path="/nos_biens" element={<Biens />} />
+
         </Routes>
       </BrowserRouter>
 

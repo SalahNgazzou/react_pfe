@@ -25,21 +25,29 @@ export const Estimation = () => {
     const [categorie, setCategorie] = useState('');
     const [adresse, setAdresse] = useState('');
     const [message, setMessage] = useState('');
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
     const etat = 'en attente';
     const ajouter = () => {
         if (!name || !last_name || !email || !type || !categorie || !adresse || !message) {
             alert('Veuillez remplir tous les champs.');
             return; // Arrêter l'exécution si un champ est vide
         }
-        let item = { name, last_name, email, type, categorie, adresse, message, etat }
-        PostEstimation({ url: "visiteur/estimation", items: item })
-        setName('');
-        setLastName('');
-        setEmail('');
-        setType('');
-        setCategorie('');
-        setAdresse('');
-        setMessage('');
+         else{
+            let item = { name, last_name, email, type, categorie, adresse, message, etat }
+            PostEstimation({ url: "visiteur/estimation", items: item })
+            setName('');
+            setLastName('');
+            setEmail('');
+            setType('');
+            setCategorie('');
+            setAdresse('');
+            setMessage('');
+
+            setTimeout(() => {
+                setShowSuccessMessage(true);
+            }, 2000);
+         }
     }
     return (
         <div>
@@ -156,6 +164,11 @@ export const Estimation = () => {
                             </Col>
 
                         </Row>
+                        {showSuccessMessage && (
+                            <div className="alert alert-success" role="alert">
+                                Votre demande à été envoyer avec succès !
+                            </div>
+                        )}
                         <Row>
                             <Col>
                                 <button className='btn_envoyer' onClick={ajouter}>

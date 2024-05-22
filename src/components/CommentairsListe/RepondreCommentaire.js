@@ -4,20 +4,19 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { postData } from '../../utils/postData';
 import { putData } from '../../utils/putData';
 import { FaPaperPlane } from 'react-icons/fa';
-export const RepondreCommentaire = ({ showModal, handleClose, data }) => {
+export const RepondreCommentaire = ({ showModal, handleClose, data,id }) => {
 
     const Navigate = useNavigate();
 
-    const id = data?.id;
+    
     const email = data?.email;
     const [object, setObject] = useState('');
     const [message, setMessage] = useState('');
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const SendMail = () => {
         let item = { email, object, message }
-
         postData({ url: 'send-email', data: item })
-        putData({ url: 'commentaire', id: id })
+        putData({ url: 'commentaires', id: id })
         if (!object || !message) {
             alert('Veuillez remplir tous les champs.')
         } else {

@@ -23,7 +23,7 @@ export const RepondreContact = ({ showModal, handleClose, data }) => {
         } else {
             setShowSuccessMessage(true);
             setTimeout(() => {
-                Navigate('/contactPage');
+                Navigate('/contactsPage');
             }, 2000);
 
         }

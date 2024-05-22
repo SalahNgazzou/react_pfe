@@ -20,5 +20,5 @@ export const putBien = async ({url,data,id}) => {
       'Authorization': `Bearer ${getToken()}`,
     }
   });
-  console.log(data);
+  
 }

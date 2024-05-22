@@ -11,16 +11,28 @@ export const Conatct = () => {
     const [phone, setPhone] = useState('');
     const [adresse, setAdresse] = useState('');
     const [message, setMessage] = useState('');
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
     const etat = 'en attente';
     const Envoyer = () => {
         let item = { name, last_name, phone, email, adresse, message, etat }
-        PostEstimation({ url: 'visiteur/contact', items: item })
-        setName('');
-        setLastName('');
-        setEmail('');
-        setPhone('');
-        setAdresse('');
-        setMessage('');
+        if (!name || !last_name || !phone || !email || !adresse || !message) {
+            alert('Tout les champs sont obligatoire')
+        }
+        else {
+            PostEstimation({ url: 'visiteur/contact', items: item })
+            setName('');
+            setLastName('');
+            setEmail('');
+            setPhone('');
+            setAdresse('');
+            setMessage('');
+
+            setTimeout(() => {
+                setShowSuccessMessage(true);
+            }, 2000);
+        }
+
     }
     return (
         <div>
@@ -111,6 +123,11 @@ export const Conatct = () => {
                                     onChange={(e) => setMessage(e.target.value)} />
                             </Col>
                         </Row>
+                        {showSuccessMessage && (
+                            <div className="alert alert-success" role="alert">
+                                Message à été envoyer avec succès !
+                            </div>
+                        )}
                         <Row>
                             <Col>
                                 <Button style={{ backgroundColor: '#ff9a8f', color: '#4A536B', border: 'none' }} onClick={Envoyer}>

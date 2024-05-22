@@ -46,9 +46,9 @@ export const TableCommentaire = () => {
     const id=user.id
     useEffect(() => {
         if(user && user.role==='Admin'){
-            getData({ setData, url: "commentaire" });
+            getData({ setData, url: "commentaires" });
         }else{
-            getData({ setData, url: `commentaire/${id}` });
+            getData({ setData, url: `commentaires/${id}` });
         }
        
     }, [data])

@@ -33,12 +33,12 @@ export const Log_in = ({ showModal, handleClose }) => {
       }
 
       if (result && result.user && result.user.role && result.user.statue) {
-        if (result.user.statue === 'Inactive') {
+        if (result.user.statue === 'Déactiver') {
           setError("Votre compte est inactif. Veuillez contacter l'administrateur.");
         } else if (result.user.role === 'Admin') {
           navigate('/usersPage');
         } else if (result.user.role === 'Courtier') {
-          navigate('/Courtier/biens');
+          navigate('/PublierPage');
         } else {
           navigate('/estimationsPage');
         }
